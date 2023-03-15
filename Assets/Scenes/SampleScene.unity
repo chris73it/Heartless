@@ -178,6 +178,8 @@ MonoBehaviour:
   jumpVelocity: 20
   groundHeight: 0
   isGrounded: 1
+  avatarUp: {fileID: 70782589}
+  avatarDown: {fileID: 70782592}
 --- !u!136 &70782592
 CapsuleCollider:
   m_ObjectHideFlags: 0
