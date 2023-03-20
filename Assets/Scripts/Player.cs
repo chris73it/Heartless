@@ -1,25 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     public float gravity;
-    public Vector3 velocity;
-    public float jumpVelocity = 20;
-    public float groundHeight = 0;
-    public bool isGrounded = false;
+    public float jumpVelocity;
+    float velocityY = 0;
+    public float groundHeight;
+    public bool isGrounded = true;
     Animator animator;
     public CapsuleCollider avatarUp;
     public CapsuleCollider avatarDown;
 
-    // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isGrounded)
@@ -27,12 +23,11 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.W))
             {
                 isGrounded = false;
-                //avatarDown.disabled = !avatarDown.enabled;
                 avatarUp.enabled = true;
                 avatarDown.enabled = false;
                 animator.SetBool("Jump", true);
                 animator.SetBool("Slide", false);
-                velocity.y = jumpVelocity;
+                velocityY = jumpVelocity;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
@@ -41,16 +36,11 @@ public class Player : MonoBehaviour
                 animator.SetBool("Slide", true);
             }
         }
-        else
-        {
-            animator.SetBool("Jump", false);
-            isGrounded = true;
-        }
     }
 
     public void SlidingOver()
     {
-        Debug.Log("lidingOver");
+        Debug.Log("SlidingOver");
         avatarUp.enabled = true;
         avatarDown.enabled = false;
         animator.SetBool("Slide", false);
@@ -60,19 +50,20 @@ public class Player : MonoBehaviour
     {
         Vector3 pos = transform.position;
 
-        if (isGrounded)
+        if (animator.GetBool("Jump"))
         {
-            pos.y += velocity.y * Time.fixedDeltaTime;
-           velocity.y += gravity * Time.fixedDeltaTime;
+            velocityY += gravity * Time.fixedDeltaTime;
+            pos.y += velocityY * Time.fixedDeltaTime;
 
             if (pos.y <= groundHeight)
             {
                 pos.y = groundHeight;
-                //isGrounded = true;
+                animator.SetBool("Jump", false);
+                isGrounded = true;
+                velocityY = 0;
             }
         }
 
         transform.position = pos;
     }
-
 }
