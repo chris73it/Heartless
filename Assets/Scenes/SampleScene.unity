@@ -174,8 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: -100
-  velocity: {x: 0, y: 0, z: 0}
-  jumpVelocity: 20
+  jumpVelocity: 30
   groundHeight: 0
   isGrounded: 1
   avatarUp: {fileID: 70782589}
