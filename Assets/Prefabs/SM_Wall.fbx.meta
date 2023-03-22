@@ -8,22 +8,22 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: fire
-    second: {fileID: 2100000, guid: a71c21a4f890380418c4c07439b4bbf3, type: 2}
+    second: {fileID: 2100000, guid: 3751c0bd84541a843973cc048f113a47, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: wall1
-    second: {fileID: 2100000, guid: ba7f62e51af3a9d41966bb5da36aa153, type: 2}
+    second: {fileID: 2100000, guid: c496938b100ee5548809a091b8a6126f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: wall2
-    second: {fileID: 2100000, guid: f7bd13302cda4124ab56adf7ebe80a5d, type: 2}
+    second: {fileID: 2100000, guid: 8309703ef5293ad4384a8a3e26a05915, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: woodtrim
-    second: {fileID: 2100000, guid: eead9b250fc4c754a8f8e74705d78073, type: 2}
+    second: {fileID: 2100000, guid: 5bd1ce445d12d6a4d823713386c106fb, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
