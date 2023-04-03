@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6cfea2bacf3e24c86cd48c2e609a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: -100
+  defaultGravity: -100
   jumpVelocity: 30
   groundHeight: 0
   isGrounded: 1

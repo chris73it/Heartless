@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float gravity;
+    public float defaultGravity;
+    float heavyGravity;
     public float jumpVelocity;
     float velocityY = 0;
     public float groundHeight;
@@ -10,9 +11,13 @@ public class Player : MonoBehaviour
     Animator animator;
     public CapsuleCollider avatarUp;
     public CapsuleCollider avatarDown;
+    float normalGravity;
 
     void Start()
     {
+        heavyGravity = defaultGravity * 3;
+        normalGravity = defaultGravity;
+        
         animator = GetComponent<Animator>();
     }
 
@@ -49,10 +54,19 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 pos = transform.position;
+        if (isGrounded == false)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                defaultGravity = heavyGravity;
+            }
+        }
+        
 
         if (animator.GetBool("Jump"))
         {
-            velocityY += gravity * Time.fixedDeltaTime;
+            
+            velocityY += defaultGravity * Time.fixedDeltaTime;
             pos.y += velocityY * Time.fixedDeltaTime;
 
             if (pos.y <= groundHeight)
@@ -61,6 +75,7 @@ public class Player : MonoBehaviour
                 animator.SetBool("Jump", false);
                 isGrounded = true;
                 velocityY = 0;
+                defaultGravity = normalGravity;
             }
         }
 
