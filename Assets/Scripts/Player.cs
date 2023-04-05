@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float jumpVelocity;
     float velocityY = 0;
     public float groundHeight;
+    public float ceilingHeight;
     public bool isGrounded = true;
     Animator animator;
     public CapsuleCollider avatarUp;
@@ -86,20 +87,40 @@ public class Player : MonoBehaviour
         }
 
 
+        ///////////testtiem
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hit, 5, layerMask))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * hit.distance, Color.red);
+            Debug.Log("Did Hit");
+            ceilingHeight = 1.42f;
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * 5, Color.white);
+            Debug.Log("Did not Hit");
+            ceilingHeight = 5.95f;
+        }
 
-       
 
 
 
 
 
-            Vector3 pos = transform.position;
+
+
+        Vector3 pos = transform.position;
 
         //testing 5testing 124
         if (pos.y != groundHeight)
         {
             isGrounded = false;
         }
+
+        if (pos.y >= ceilingHeight)
+        {
+            pos.y = ceilingHeight;
+        }
+
 
 
 
