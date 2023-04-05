@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+       
         if (isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -41,6 +42,10 @@ public class Player : MonoBehaviour
                 animator.SetBool("Slide", true);
             }
         }
+        else
+        {
+            animator.SetBool("Jump", true); ///hopefully
+        }
     }
 
     public void SlidingOver()
@@ -53,8 +58,53 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 pos = transform.position;
-        if (isGrounded == false)
+
+
+
+
+
+        // Bit shift the index of the layer (10) to get a bit mask
+        int layerMask = 1 << 10;
+
+        // This would cast rays only against colliders in layer 10.
+        // But instead we want to collide against everything except layer 10. The ~ operator does this, it inverts a bitmask.
+        //layerMask = ~layerMask;
+
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 5, layerMask)) 
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
+            Debug.Log("Did Hit");
+            groundHeight = 3.51f;
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 5, Color.white);
+            Debug.Log("Did not Hit");
+            groundHeight = 0;
+        }
+
+
+
+       
+
+
+
+
+
+            Vector3 pos = transform.position;
+
+        //testing 5testing 124
+        if (pos.y != groundHeight)
+        {
+            isGrounded = false;
+        }
+
+
+
+
+            if (isGrounded == false)
         {
             if (Input.GetKeyDown(KeyCode.S))
             {

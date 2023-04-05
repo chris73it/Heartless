@@ -350,7 +350,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6321aa269b2ba9443a1d2054bd56e3be, type: 3}
   m_Name: 
@@ -811,6 +811,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 1400837729}
     m_Modifications:
+    - target: {fileID: 1005346783884533289, guid: e6569f647f2322749bd270b2de2b5c84,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3879798893772927300, guid: e6569f647f2322749bd270b2de2b5c84,
         type: 3}
       propertyPath: m_RootOrder
@@ -871,7 +876,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bck_Platform (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4410049264265285666, guid: e6569f647f2322749bd270b2de2b5c84,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8933478404663736980, guid: e6569f647f2322749bd270b2de2b5c84,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4410049264265285666, guid: e6569f647f2322749bd270b2de2b5c84, type: 3}
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: e6569f647f2322749bd270b2de2b5c84, type: 3}
 --- !u!1 &700150619
