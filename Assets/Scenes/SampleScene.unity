@@ -176,6 +176,7 @@ MonoBehaviour:
   defaultGravity: -100
   jumpVelocity: 30
   groundHeight: 0
+  ceilingHeight: 0
   isGrounded: 1
   avatarUp: {fileID: 70782589}
   avatarDown: {fileID: 70782592}
@@ -350,14 +351,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6321aa269b2ba9443a1d2054bd56e3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalSmooth: 0.5
+  verticalSmooth: 0.2
   minVerticalCameraPos: 2.9
-  maxVerticalCameraPos: 4.7
+  maxVerticalCameraPos: 3.5
 --- !u!4 &332256018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3879798893772927300, guid: e6569f647f2322749bd270b2de2b5c84,

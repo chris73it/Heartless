@@ -136,7 +136,11 @@ public class Player : MonoBehaviour
 
         if (animator.GetBool("Jump"))
         {
-            
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                defaultGravity = heavyGravity;
+            }
+
             velocityY += defaultGravity * Time.fixedDeltaTime;
             pos.y += velocityY * Time.fixedDeltaTime;
 
