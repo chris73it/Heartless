@@ -2,22 +2,29 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float gravity;
+    public float defaultGravity;
+    float heavyGravity;
     public float jumpVelocity;
     float velocityY = 0;
     public float groundHeight;
+    public float ceilingHeight;
     public bool isGrounded = true;
     Animator animator;
     public CapsuleCollider avatarUp;
     public CapsuleCollider avatarDown;
+    float normalGravity;
 
     void Start()
     {
+        heavyGravity = defaultGravity * 3;
+        normalGravity = defaultGravity;
+        
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
+       
         if (isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -36,6 +43,10 @@ public class Player : MonoBehaviour
                 animator.SetBool("Slide", true);
             }
         }
+        else
+        {
+            animator.SetBool("Jump", true); ///hopefully
+        }
     }
 
     public void SlidingOver()
@@ -48,11 +59,89 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
+
+
+
+        // Bit shift the index of the layer (10) to get a bit mask
+        int layerMask = 1 << 10;
+
+        // This would cast rays only against colliders in layer 10.
+        // But instead we want to collide against everything except layer 10. The ~ operator does this, it inverts a bitmask.
+        //layerMask = ~layerMask;
+
+        RaycastHit hit;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 5, layerMask)) 
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
+            Debug.Log("Did Hit");
+            groundHeight = 3.51f;
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 5, Color.white);
+            Debug.Log("Did not Hit");
+            groundHeight = 0;
+        }
+
+
+        ///////////testtiem
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hit, 5, layerMask))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * hit.distance, Color.red);
+            Debug.Log("Did Hit");
+            ceilingHeight = 1.42f;
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * 5, Color.white);
+            Debug.Log("Did not Hit");
+            ceilingHeight = 5.95f;
+        }
+
+
+
+
+
+
+
+
         Vector3 pos = transform.position;
+
+        //testing 5testing 124
+        if (pos.y != groundHeight)
+        {
+            isGrounded = false;
+        }
+
+        if (pos.y >= ceilingHeight)
+        {
+            pos.y = ceilingHeight;
+        }
+
+
+
+
+
+            if (isGrounded == false)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                defaultGravity = heavyGravity;
+            }
+        }
+        
 
         if (animator.GetBool("Jump"))
         {
-            velocityY += gravity * Time.fixedDeltaTime;
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                defaultGravity = heavyGravity;
+            }
+
+            velocityY += defaultGravity * Time.fixedDeltaTime;
             pos.y += velocityY * Time.fixedDeltaTime;
 
             if (pos.y <= groundHeight)
@@ -61,6 +150,7 @@ public class Player : MonoBehaviour
                 animator.SetBool("Jump", false);
                 isGrounded = true;
                 velocityY = 0;
+                defaultGravity = normalGravity;
             }
         }
 
