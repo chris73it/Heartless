@@ -155,7 +155,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70782586}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.3
   m_Height: 1.8
@@ -180,6 +180,7 @@ MonoBehaviour:
   isGrounded: 1
   avatarUp: {fileID: 70782589}
   avatarDown: {fileID: 70782592}
+  death: 0
 --- !u!136 &70782592
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -188,12 +189,31 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 70782586}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   m_Radius: 0.3
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!1 &129303760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1355403225186950049, guid: 4ca480b7dd901d3479f917f176bb06fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 632460593}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &129303764
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129303760}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.000001, y: 6.5058227, z: 14.692021}
+  m_Center: {x: -1.9999995, y: -3.2529113, z: 7.34601}
 --- !u!1 &180939145
 GameObject:
   m_ObjectHideFlags: 0

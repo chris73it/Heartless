@@ -620,6 +620,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_FloorPitfall
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 629d14ee6c2c5684486499ba420512ea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 629d14ee6c2c5684486499ba420512ea, type: 3}
@@ -629,3 +634,35 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6981789708781881933}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7792675885221492508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 629d14ee6c2c5684486499ba420512ea,
+    type: 3}
+  m_PrefabInstance: {fileID: 6981789708781881933}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &7498294312026298565
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792675885221492508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37, y: 6.5058227, z: 14.692018}
+  m_Center: {x: -0.17, y: -3.2529113, z: 7.346009}
+--- !u!65 &7736453009569548342
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7792675885221492508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37, y: 6.5058227, z: 14.692018}
+  m_Center: {x: -3.81, y: -3.2529113, z: 7.346009}
