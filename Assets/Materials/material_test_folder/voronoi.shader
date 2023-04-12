@@ -123,7 +123,6 @@ Shader "Unlit/voronoi" {
                 return float3(minDistToCell, random, minEdgeDistance);
             }
 
-
             fixed4 frag(v2f i) : SV_Target{
                 float2 value = i.uv.xy * _CellSize;
                 float3 noise = voronoiNoise(value, _VoronoiType);
