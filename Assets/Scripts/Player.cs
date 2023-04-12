@@ -17,8 +17,31 @@ public class Player : MonoBehaviour
     public bool death;
     public float hp = 2; // default is 2
 
+
+    //things from level manager
+    Vector3 leftMovement;
+    Vector3 leftThreshold;
+    Vector3 rightThreshold;
+    public GameObject[] backgroundPrefabs;
+    GameObject level;
+    Quaternion rotation;
+
+   
+    
     void Start()
     {
+
+        rotation = Quaternion.Euler(0, 90, 0);
+
+        level = GameObject.Find("Level");
+        var backgroundManager = level.GetComponent<BackgroundManager>();
+        leftMovement = backgroundManager.leftMovement;
+        leftThreshold = backgroundManager.leftThreshold;
+        rightThreshold = backgroundManager.rightThreshold;
+        backgroundPrefabs = backgroundManager.backgroundPrefabs;
+
+
+
         heavyGravity = defaultGravity * 3;
         normalGravity = defaultGravity;
         
@@ -192,7 +215,7 @@ public class Player : MonoBehaviour
         if (death == true)
         {
             ///place dead things here
-            Debug.Log("you dead LOL");
+            //Debug.Log("you dead LOL");
         }
 
         transform.position = pos;
@@ -202,13 +225,17 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag  == "Barrier")
         {
             hp = hp - 1;
-            Debug.Log("Ouch Wall!!!");
+            //Debug.Log("Ouch Wall!!!");
+            leftMovement *= 0.5f;
+            Destroy(other.gameObject);
+            
+
         }
 
         if (other.gameObject.tag == "Spikes")
         {
             hp = hp - 2;
-            Debug.Log("Ouch Spikes!!!");
+            //Debug.Log("Ouch Spikes!!!");
         }
     }
 }

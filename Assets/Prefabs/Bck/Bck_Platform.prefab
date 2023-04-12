@@ -46,7 +46,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9528302, g: 0.74051476, b: 0.4539427, a: 1}
   m_Intensity: 7
-  m_Range: 12
+  m_Range: 8
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -212,7 +212,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 0.9528302, g: 0.74051476, b: 0.4539427, a: 1}
   m_Intensity: 7
-  m_Range: 12
+  m_Range: 8
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -555,24 +555,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8933478404663736980}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.000001, y: 0.36, z: 6.0458856}
-  m_Center: {x: -2.0000017, y: 3.33, z: 3.022942}
---- !u!65 &4410049264265285666
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8933478404663736980}
-  m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 4.000001, y: 0.36, z: 6.0458856}
-  m_Center: {x: -2.0000017, y: 3.4, z: 3.022942}
+  m_Center: {x: -2.0000017, y: 3.33, z: 3.022942}
 --- !u!1001 &8591599901099938439
 PrefabInstance:
   m_ObjectHideFlags: 0
