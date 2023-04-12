@@ -7,9 +7,13 @@ public class Treadmill : MonoBehaviour {
     Vector3 leftThreshold;
     Vector3 rightThreshold;
     public GameObject[] backgroundPrefabs;
+    GameObject level;
+    Quaternion rotation;
 
     void Start() {
-        GameObject level = GameObject.Find("Level");
+        rotation = Quaternion.Euler(0, 90, 0);
+
+        level = GameObject.Find("Level");
         var backgroundManager = level.GetComponent<BackgroundManager>();
         leftMovement = backgroundManager.leftMovement;
         leftThreshold = backgroundManager.leftThreshold;
@@ -23,7 +27,8 @@ public class Treadmill : MonoBehaviour {
         if (transform.position.z < leftThreshold.z) {
             int index = Random.Range(0, backgroundPrefabs.Length);
 
-            Instantiate(backgroundPrefabs[index], rightThreshold, Quaternion.identity);
+            var instance = Instantiate(backgroundPrefabs[index], rightThreshold, rotation);
+            instance.transform.parent = level.transform;
 
             Destroy(gameObject);
         }
