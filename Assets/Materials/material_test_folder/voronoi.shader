@@ -96,16 +96,16 @@ Shader "Unlit/voronoi" {
 
                 float minEdgeDistance = 10;
                 [unroll]
-                for (int x2 = -1; x2 <= 1; x2++) {
+                for(int x2=-1; x2<=1; x2++){
                     [unroll]
-                    for (int y2 = -1; y2 <= 1; y2++) {
-                        float cell = baseCell + float2(x2, y2);
+                    for(int y2=-1; y2<=1; y2++){
+                        float2 cell = baseCell + float2(x2, y2);
                         float2 cellPosition = cell + rand2dTo2d(cell);
-                        float toCell = cellPosition - value;
+                        float2 toCell = cellPosition - value;
 
                         float2 diffToClosestCell = abs(closestCell - cell);
                         bool isClosestCell = diffToClosestCell.x + diffToClosestCell.y < 0.1;
-                        if (!isClosestCell) {
+                        if(!isClosestCell){
                             float2 toCenter = (toClosestCell + toCell) * 0.5;
                             float2 cellDifference = normalize(toCell - toClosestCell);
                             float edgeDistance = dot(toCenter, cellDifference);
@@ -116,7 +116,7 @@ Shader "Unlit/voronoi" {
 
                 float random = rand2dTo1d(closestCell);
 
-                /*if (type == 1) { return random; }
+                /*f (type == 1) { return random; }
                 if (type == 2)  { return minEdgeDistance; }
                 else            { return minDistToCell; }
                 */
