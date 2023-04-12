@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     public CapsuleCollider avatarDown;
     float normalGravity;
     public bool death;
+    public float hp = 2; // default is 2
 
     void Start()
     {
@@ -77,13 +78,13 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit2, 6, layerMask2))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit2.distance, Color.green);
-            Debug.Log("Did Hit");
+           // Debug.Log("Did Hit");
             minGroundHeight = 0;
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 6, Color.cyan);
-            Debug.Log("Did not Hit");
+            //Debug.Log("Did not Hit");
             minGroundHeight = -6;
         }
 
@@ -99,13 +100,13 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 5, layerMask)) 
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit.distance, Color.blue);
-            Debug.Log("Did Hit");
+            //Debug.Log("Did Hit");
             groundHeight = 3.51f;
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 5, Color.white);
-            Debug.Log("Did not Hit");
+            //Debug.Log("Did not Hit");
             groundHeight = minGroundHeight;
         }
 
@@ -114,21 +115,21 @@ public class Player : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hit, 5, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * hit.distance, Color.red);
-            Debug.Log("Did Hit");
+           // Debug.Log("Did Hit");
             ceilingHeight = 1.42f;
         }
         else
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.up) * 5, Color.white);
-            Debug.Log("Did not Hit");
+            //Debug.Log("Did not Hit");
             ceilingHeight = 5.95f;
         }
 
 
 
+
+
        
-
-
 
 
 
@@ -184,8 +185,30 @@ public class Player : MonoBehaviour
         {
             death = true;
         }
-
+        if (hp <= 0)
+        {
+            death = true;
+        }
+        if (death == true)
+        {
+            ///place dead things here
+            Debug.Log("you dead LOL");
+        }
 
         transform.position = pos;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag  == "Barrier")
+        {
+            hp = hp - 1;
+            Debug.Log("Ouch Wall!!!");
+        }
+
+        if (other.gameObject.tag == "Spikes")
+        {
+            hp = hp - 2;
+            Debug.Log("Ouch Spikes!!!");
+        }
     }
 }
