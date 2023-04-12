@@ -490,6 +490,8 @@ GameObject:
   - component: {fileID: 6490689284892396456}
   - component: {fileID: 7907287502233076749}
   - component: {fileID: 5357211386674802887}
+  - component: {fileID: 1714930794388701129}
+  - component: {fileID: 2839082501285009965}
   m_Layer: 11
   m_Name: SM_FloorPitfall2
   m_TagString: Untagged
@@ -563,6 +565,32 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1714930794388701129
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861539572365807890}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37, y: 6.5058227, z: 14.692018}
+  m_Center: {x: -0.17, y: -3.2529113, z: 7.346009}
+--- !u!65 &2839082501285009965
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5861539572365807890}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.37, y: 6.5058227, z: 14.692018}
+  m_Center: {x: -3.8, y: -3.2529113, z: 7.346009}
 --- !u!1001 &2429438144146523881
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,12 +7,14 @@ public class Player : MonoBehaviour
     public float jumpVelocity;
     float velocityY = 0;
     public float groundHeight;
+    float minGroundHeight = 0; // testing 
     public float ceilingHeight;
     public bool isGrounded = true;
     Animator animator;
     public CapsuleCollider avatarUp;
     public CapsuleCollider avatarDown;
     float normalGravity;
+    public bool death;
 
     void Start()
     {
@@ -62,7 +64,28 @@ public class Player : MonoBehaviour
 
 
 
+         // testing for pitfalls
+        // Bit shift the index of the layer (11) to get a bit mask
+        int layerMask2 = 1 << 11; //1 << 11;
 
+        // This would cast rays only against colliders in layer 11.
+        // But instead we want to collide against everything except layer 10. The ~ operator does this, it inverts a bitmask.
+        //layerMask = ~layerMask;
+
+        RaycastHit hit2;
+        // Does the ray intersect any objects excluding the player layer
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit2, 6, layerMask2))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit2.distance, Color.green);
+            Debug.Log("Did Hit");
+            minGroundHeight = 0;
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 6, Color.cyan);
+            Debug.Log("Did not Hit");
+            minGroundHeight = -6;
+        }
 
         // Bit shift the index of the layer (10) to get a bit mask
         int layerMask = 1 << 10;
@@ -83,7 +106,7 @@ public class Player : MonoBehaviour
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 5, Color.white);
             Debug.Log("Did not Hit");
-            groundHeight = 0;
+            groundHeight = minGroundHeight;
         }
 
 
@@ -103,6 +126,8 @@ public class Player : MonoBehaviour
 
 
 
+       
+
 
 
 
@@ -121,7 +146,7 @@ public class Player : MonoBehaviour
             pos.y = ceilingHeight;
         }
 
-
+        
 
 
 
@@ -153,6 +178,13 @@ public class Player : MonoBehaviour
                 defaultGravity = normalGravity;
             }
         }
+
+        // death checks
+        if (pos.y < -4)
+        {
+            death = true;
+        }
+
 
         transform.position = pos;
     }
