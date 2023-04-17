@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     float normalGravity;
     public bool death;
     public float hp = 2; // default is 2
+    public GameObject button;
+    public float frank = 0; //hp manager
 
 
     //things from level manager
@@ -50,6 +52,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        frank = frank + (1 * Time.deltaTime);
+        if (frank >=4)
+        {
+            //Debug.Log("hi frank"); // good job frank!!!
+            frank = 0;
+            hp = 2;
+        }
+
        
         if (isGrounded)
         {
@@ -215,7 +225,9 @@ public class Player : MonoBehaviour
         if (death == true)
         {
             ///place dead things here
+            button.SetActive(true);
             //Debug.Log("you dead LOL");
+            Time.timeScale = 0;
         }
 
         transform.position = pos;
@@ -225,6 +237,7 @@ public class Player : MonoBehaviour
         if(other.gameObject.tag  == "Barrier")
         {
             hp = hp - 1;
+            frank = 0;
             //Debug.Log("Ouch Wall!!!");
             leftMovement *= 0.5f;
             Destroy(other.gameObject);
