@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     float normalGravity;
     public bool death;
     public float hp = 2; // default is 2
+    public float frank = 0; //variable for health check
 
 
     //things from level manager
@@ -50,7 +51,16 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-       
+
+
+        frank = frank + (1 * Time.deltaTime);
+        if (frank >= 4)
+        {
+            //Debug.Log("Hi Frank"); // good job frank!!!
+            frank = 0;
+            hp = 2;
+        }
+
         if (isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -226,6 +236,8 @@ public class Player : MonoBehaviour
         {
             hp = hp - 1;
             //Debug.Log("Ouch Wall!!!");
+
+            frank = 0;
             leftMovement *= 0.5f;
             Destroy(other.gameObject);
             
