@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         frank = frank + (1 * Time.deltaTime);
-        if (frank >= 4)
+        if (frank >= 3)
         {
             //Debug.Log("Hi Frank"); // good job frank!!!
 
