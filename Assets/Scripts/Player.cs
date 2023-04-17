@@ -53,14 +53,14 @@ public class Player : MonoBehaviour
     void Update()
     {
         frank = frank + (1 * Time.deltaTime);
-        if (frank >=4)
+        if (frank >= 4)
         {
-            //Debug.Log("hi frank"); // good job frank!!!
+            //Debug.Log("Hi Frank"); // good job frank!!!
+
             frank = 0;
             hp = 2;
         }
 
-       
         if (isGrounded)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -239,6 +239,8 @@ public class Player : MonoBehaviour
             hp = hp - 1;
             frank = 0;
             //Debug.Log("Ouch Wall!!!");
+
+            frank = 0;
             leftMovement *= 0.5f;
             Destroy(other.gameObject);
             
