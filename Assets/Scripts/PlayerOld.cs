@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerNew : MonoBehaviour
+public class PlayerOld : MonoBehaviour
 {
     public float defaultGravity;
     float heavyGravity;
@@ -63,7 +63,7 @@ public class PlayerNew : MonoBehaviour
 
         if (isGrounded)
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W)) 
             {
                 isGrounded = false;
                 avatarUp.enabled = true;
@@ -242,8 +242,9 @@ public class PlayerNew : MonoBehaviour
 
             frank = 0;
             leftMovement *= 0.5f;
-            Destroy(other.gameObject);
-            
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+
 
         }
 

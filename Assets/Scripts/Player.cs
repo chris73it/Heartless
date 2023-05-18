@@ -20,6 +20,12 @@ public class Player : MonoBehaviour
     public float frank = 0; //hp manager
 
 
+    /* control inputs
+    public Controls playerControls;
+    private InputAction Jump;
+    */
+
+
     //things from level manager
     Vector3 leftMovement;
     Vector3 leftThreshold;
@@ -28,8 +34,22 @@ public class Player : MonoBehaviour
     GameObject level;
     Quaternion rotation;
 
-   
-    
+
+    /*
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Enable();
+    }
+    private void Awake()
+    {
+        playerControls = new Controls();
+    }
+    */
     void Start()
     {
 
@@ -43,7 +63,7 @@ public class Player : MonoBehaviour
         backgroundPrefabs = backgroundManager.backgroundPrefabs;
 
 
-
+        
         heavyGravity = defaultGravity * 3;
         normalGravity = defaultGravity;
         
@@ -158,7 +178,7 @@ public class Player : MonoBehaviour
             ceilingHeight = 5.95f;
         }
 
-
+        
 
 
 
@@ -242,8 +262,9 @@ public class Player : MonoBehaviour
 
             frank = 0;
             leftMovement *= 0.5f;
-            Destroy(other.gameObject);
-            
+            other.gameObject.SetActive(false);
+            //Destroy(other.gameObject);
+
 
         }
 
