@@ -27,11 +27,11 @@ namespace HeroicArcade.CC.Core
 
         [SerializeField] SlideInputEvent slideInputEvent;
         [SerializeField] JumpInputEvent jumpInputEvent;
-        [SerializeField] JumpInputEvent forwardInputEvent;
-        [SerializeField] JumpInputEvent backInputEvent;
+        [SerializeField] ForwardInputEvent forwardInputEvent;
+        [SerializeField] BackInputEvent backInputEvent;
 
 
-        Controls controls;
+        public Controls controls;
         private void Awake()
         {
             controls = new Controls();
@@ -51,44 +51,50 @@ namespace HeroicArcade.CC.Core
         }
 
         //private Vector2 moveInput;
-        [HideInInspector] public bool IsSlidePressed;
+        [HideInInspector] bool IsSlidePressed;
         private void OnSlide(InputAction.CallbackContext context)
         {
 
             IsSlidePressed = context.ReadValueAsButton();
+            slideInputEvent.Invoke(IsSlidePressed);
             /*
             moveInput = context.ReadValue<Vector2>();
             moveInputEvent.Invoke(moveInput);
             */
         }
 
-        [HideInInspector] public bool IsJumpPressed;
+        [HideInInspector] bool IsJumpPressed;
         private void OnJump(InputAction.CallbackContext context)
         {
             IsJumpPressed = context.ReadValueAsButton();
+            jumpInputEvent.Invoke(IsJumpPressed);
         }
 
-        [HideInInspector] public bool IsForwardPressed;
+        [HideInInspector] bool IsForwardPressed;
         private void OnForward(InputAction.CallbackContext context)
         {
             IsForwardPressed = context.ReadValueAsButton();
+            forwardInputEvent.Invoke(IsForwardPressed);
         }
 
-        [HideInInspector] public bool IsBackPressed;
+        [HideInInspector] bool IsBackPressed;
         private void OnBack(InputAction.CallbackContext context)
         {
             IsBackPressed = context.ReadValueAsButton();
+            backInputEvent.Invoke(IsBackPressed);
         }
 
 
         private void OnEnable()
         {
             controls.Gameplay.Enable();
+            controls.InGameMenu.Disable();
         }
 
         private void OnDisable()
         {
             controls.Gameplay.Disable();
+            controls.InGameMenu.Disable();
         }
     }
 }

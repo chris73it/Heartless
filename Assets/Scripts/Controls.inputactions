@@ -176,6 +176,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "InGameMenu",
+            "id": "66c20a9a-d63a-40ac-8659-2c1f81bc3312",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "5202803f-f68c-4eae-9f6e-f46ec2a5bc80",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f3922979-dcd2-4c20-947c-d29bf73a7311",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

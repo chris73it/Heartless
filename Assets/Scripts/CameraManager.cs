@@ -2,61 +2,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+namespace HeroicArcade.CC.Core
 {
-    [SerializeField] float verticalSmooth;
-    [SerializeField] float minVerticalCameraPos;
-    [SerializeField] float maxVerticalCameraPos;
-    //[SerializeField] float minVerticalCameraRot;
-    //[SerializeField] float maxVerticalCameraRot;
-
-    GameObject avatar;
-    Player player;
-    float jumpVelocity;
-    float cameraJumpVelocity;
-    float cameraRotVelocity;
-    Vector3 cameraPosition;
-    //Quaternion cameraRotation;
-    void Awake()
+    public class CameraManager : MonoBehaviour
     {
-        avatar = GameObject.Find("Dronion");
-        
-    }
+        [SerializeField] float verticalSmooth;
+        [SerializeField] float minVerticalCameraPos;
+        [SerializeField] float maxVerticalCameraPos;
+        //[SerializeField] float minVerticalCameraRot;
+        //[SerializeField] float maxVerticalCameraRot;
 
-    void Start()
-    {
-        player = avatar.GetComponent<Player>();
-        jumpVelocity = player.jumpVelocity;
-        cameraJumpVelocity = jumpVelocity * verticalSmooth;
-        Debug.Log(jumpVelocity);
-
-    }
-
-
-    void Update()
-    {
-        cameraPosition = transform.position;
-        if (avatar.transform.position.y > transform.position.y)
+        GameObject avatar;
+        Player player;
+        float jumpVelocity;
+        float cameraJumpVelocity;
+        float cameraRotVelocity;
+        Vector3 cameraPosition;
+        //Quaternion cameraRotation;
+        void Awake()
         {
-            cameraPosition.y += cameraJumpVelocity * Time.deltaTime;
-            //cameraRotation.y += cameraJumpVelocity * Time.deltaTime;
+            avatar = GameObject.Find("Dronion");
 
         }
-        else if(avatar.transform.position.y < transform.position.y)
+
+        void Start()
         {
-            cameraPosition.y -= cameraJumpVelocity * Time.deltaTime;
-        }
-        
-        //if(Mathf.Approximately( cameraPosition.y, 2.9f))
-        if (cameraPosition.y < minVerticalCameraPos)
-        {
-            cameraPosition.y = minVerticalCameraPos;
-        }
-        else if (cameraPosition.y > maxVerticalCameraPos)
-        {
-            cameraPosition.y = maxVerticalCameraPos;
+            player = avatar.GetComponent<Player>();
+            jumpVelocity = player.jumpVelocity;
+            cameraJumpVelocity = jumpVelocity * verticalSmooth;
+            Debug.Log(jumpVelocity);
+
         }
 
-        transform.position = cameraPosition;
+
+        void Update()
+        {
+            cameraPosition = transform.position;
+            if (avatar.transform.position.y > transform.position.y)
+            {
+                cameraPosition.y += cameraJumpVelocity * Time.deltaTime;
+                //cameraRotation.y += cameraJumpVelocity * Time.deltaTime;
+
+            }
+            else if (avatar.transform.position.y < transform.position.y)
+            {
+                cameraPosition.y -= cameraJumpVelocity * Time.deltaTime;
+            }
+
+            //if(Mathf.Approximately( cameraPosition.y, 2.9f))
+            if (cameraPosition.y < minVerticalCameraPos)
+            {
+                cameraPosition.y = minVerticalCameraPos;
+            }
+            else if (cameraPosition.y > maxVerticalCameraPos)
+            {
+                cameraPosition.y = maxVerticalCameraPos;
+            }
+
+            transform.position = cameraPosition;
+        }
     }
 }

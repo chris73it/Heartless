@@ -198,6 +198,34 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""InGameMenu"",
+            ""id"": ""66c20a9a-d63a-40ac-8659-2c1f81bc3312"",
+            ""actions"": [
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""5202803f-f68c-4eae-9f6e-f46ec2a5bc80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f3922979-dcd2-4c20-947c-d29bf73a7311"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -208,6 +236,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Gameplay_Slide = m_Gameplay.FindAction("Slide", throwIfNotFound: true);
         m_Gameplay_Forward = m_Gameplay.FindAction("Forward", throwIfNotFound: true);
         m_Gameplay_Back = m_Gameplay.FindAction("Back", throwIfNotFound: true);
+        // InGameMenu
+        m_InGameMenu = asset.FindActionMap("InGameMenu", throwIfNotFound: true);
+        m_InGameMenu_Click = m_InGameMenu.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -320,11 +351,48 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // InGameMenu
+    private readonly InputActionMap m_InGameMenu;
+    private IInGameMenuActions m_InGameMenuActionsCallbackInterface;
+    private readonly InputAction m_InGameMenu_Click;
+    public struct InGameMenuActions
+    {
+        private @Controls m_Wrapper;
+        public InGameMenuActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Click => m_Wrapper.m_InGameMenu_Click;
+        public InputActionMap Get() { return m_Wrapper.m_InGameMenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(InGameMenuActions set) { return set.Get(); }
+        public void SetCallbacks(IInGameMenuActions instance)
+        {
+            if (m_Wrapper.m_InGameMenuActionsCallbackInterface != null)
+            {
+                @Click.started -= m_Wrapper.m_InGameMenuActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_InGameMenuActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_InGameMenuActionsCallbackInterface.OnClick;
+            }
+            m_Wrapper.m_InGameMenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+            }
+        }
+    }
+    public InGameMenuActions @InGameMenu => new InGameMenuActions(this);
     public interface IGameplayActions
     {
         void OnJump(InputAction.CallbackContext context);
         void OnSlide(InputAction.CallbackContext context);
         void OnForward(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+    }
+    public interface IInGameMenuActions
+    {
+        void OnClick(InputAction.CallbackContext context);
     }
 }
