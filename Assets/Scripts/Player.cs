@@ -20,12 +20,7 @@ namespace HeroicArcade.CC.Core
         public float hp = 2; // default is 2
         public GameObject button;
         public float frank = 0; //hp manager
-
-
-        /* control inputs
-        public Controls playerControls;
-        private InputAction Jump;
-        */
+       
 
 
         //things from level manager
@@ -35,23 +30,11 @@ namespace HeroicArcade.CC.Core
         public GameObject[] backgroundPrefabs;
         GameObject level;
         Quaternion rotation;
+
+        //New input thing
         InputController inputController;
 
-        /*
-        private void OnEnable()
-        {
-            playerControls.Enable();
-        }
-
-        private void OnDisable()
-        {
-            playerControls.Enable();
-        }
-        private void Awake()
-        {
-            playerControls = new Controls();
-        }
-        */
+       
         void Start()
         {
 
@@ -86,7 +69,7 @@ namespace HeroicArcade.CC.Core
 
             if (isGrounded)
             {
-                if (jumpPressed)
+                if (jumpPressed && !slidePressed)
                 {
                     isGrounded = false;
                     avatarUp.enabled = true;
@@ -97,24 +80,41 @@ namespace HeroicArcade.CC.Core
                 }
                 else if (slidePressed)
                 {
+                    //slidePressed = false;
+                    //Debug.Log("slideeeee");
                     avatarUp.enabled = false;
                     avatarDown.enabled = true;
                     animator.SetBool("Slide", true);
+                }
+                else if (!slidePressed)
+                {
+                    SlidingOver();
                 }
             }
             else
             {
                 animator.SetBool("Jump", true); ///hopefully
             }
+
         }
 
         public void SlidingOver()
         {
-            Debug.Log("SlidingOver");
+
+            animator.SetBool("Slide", false);
+            Invoke("DelayColiderChange", 0.3f);
+            //Debug.Log("SlidingOver");
+            //slidePressed = false;
+
+
+        }
+        public void DelayColiderChange()
+        {
             avatarUp.enabled = true;
             avatarDown.enabled = false;
-            animator.SetBool("Slide", false);
+            //Debug.Log("Not SLiding");
         }
+
 
         private void FixedUpdate()
         {
@@ -187,11 +187,35 @@ namespace HeroicArcade.CC.Core
 
 
 
-
+            
 
 
             Vector3 pos = transform.position;
 
+            // Testing air controls
+            /*
+            if (forwardPressed) //&& !isGrounded)
+            {
+                pos.z = pos.z + (5 * Time.deltaTime);
+                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
+
+            }
+            else
+            {
+                //pos.z = 4;
+            }
+
+            if (backPressed) //&& !isGrounded)
+            {
+                pos.z = pos.z - (5 * Time.deltaTime);
+                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
+
+            }
+            else
+            {
+                //pos.z = 4;
+            }
+            */
             //testing 5testing 124
             if (pos.y != groundHeight)
             {
@@ -211,6 +235,7 @@ namespace HeroicArcade.CC.Core
             {
                 if (slidePressed)
                 {
+                    //slidePressed = false;
                     defaultGravity = heavyGravity;
                 }
             }
@@ -279,6 +304,17 @@ namespace HeroicArcade.CC.Core
                 //Debug.Log("Ouch Spikes!!!");
             }
         }
+        // air control
+
+      
+           
+       
+
+
+
+
+
+
         //input manager
 
         private bool slidePressed;
@@ -287,26 +323,27 @@ namespace HeroicArcade.CC.Core
         private bool backPressed;
 
 
-        public void OnSlide()
+        public void OnSlide(bool isSlidePressed)
         {
-            slidePressed = true;
+            slidePressed = isSlidePressed;
+            //Debug.Log("isSlidePressed " + isSlidePressed);
         }
 
         public void OnJump(bool isJumpPressed)
         {
             jumpPressed = isJumpPressed;
-            Debug.Log("wejumpin");
+            //Debug.Log("wejumpin");
         }
 
 
-        public void OnForward()
+        public void OnForward(bool isForwardPressed)
         {
-            forwardPressed = true;
+            forwardPressed = isForwardPressed;
         }
 
-        public void OnBack()
+        public void OnBack(bool isBackPressed)
         {
-            backPressed = true;
+            backPressed = isBackPressed;
         }
     }
 }

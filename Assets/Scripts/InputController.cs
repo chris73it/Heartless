@@ -56,6 +56,7 @@ namespace HeroicArcade.CC.Core
         {
 
             IsSlidePressed = context.ReadValueAsButton();
+            //Debug.Log("IsSlidePressed " + IsSlidePressed);
             slideInputEvent.Invoke(IsSlidePressed);
             /*
             moveInput = context.ReadValue<Vector2>();
