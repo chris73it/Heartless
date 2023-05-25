@@ -1000,7 +1000,7 @@ GameObject:
   - component: {fileID: 674376279}
   - component: {fileID: 674376278}
   m_Layer: 0
-  m_Name: Battle Theme 1_demo
+  m_Name: Background Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1016,15 +1016,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 21beb2bf42684ba4cb09c6cbcd88c064, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a1c55699bd68a7d4e91d993ce837f797, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 133
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
