@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 37272542c6937e94b8b4d924cbff77e9
+guid: 41c95d3a10db5084bb444a07d978d6f7
 ModelImporter:
   serializedVersion: 22103
   internalIDToNameTable:
@@ -44,20 +44,20 @@ ModelImporter:
       name: Running Slide
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 11
-      lastFrame: 16
+      firstFrame: 20
+      lastFrame: 46
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 9
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
+      loopTime: 0
+      loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
@@ -69,7 +69,7 @@ ModelImporter:
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1

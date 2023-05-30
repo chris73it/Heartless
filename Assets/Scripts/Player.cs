@@ -76,6 +76,7 @@ namespace HeroicArcade.CC.Core
                     avatarDown.enabled = false;
                     animator.SetBool("Jump", true);
                     animator.SetBool("Slide", false);
+                    //animator.SetBool("Running Slide", false); //28
                     velocityY = jumpVelocity;
                 }
                 else if (slidePressed)
@@ -85,6 +86,7 @@ namespace HeroicArcade.CC.Core
                     avatarUp.enabled = false;
                     avatarDown.enabled = true;
                     animator.SetBool("Slide", true);
+                    //animator.SetBool("Running Slide", true);
                 }
                 else if (!slidePressed)
                 {
@@ -100,7 +102,7 @@ namespace HeroicArcade.CC.Core
 
         public void SlidingOver()
         {
-
+            //animator.SetBool("Running Slide", false);
             animator.SetBool("Slide", false);
             Invoke("DelayColiderChange", 0.3f);
             //Debug.Log("SlidingOver");
