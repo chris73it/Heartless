@@ -3376,7 +3376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbb2b12fc47ee54a9874a26cef66e23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftMovement: {x: 0, y: 0, z: -0.25}
+  leftMovement: {x: 0, y: 0, z: -0.2}
   leftThreshold: {x: 0, y: 0, z: -7}
   rightThreshold: {x: 0, y: 6.16, z: 33}
   backgroundPrefabs:

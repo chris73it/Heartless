@@ -22,14 +22,15 @@ public class TreadmillNew : MonoBehaviour {
     }
 
     void FixedUpdate() {//????????? update/ fixedupdate
-        transform.position += leftMovement;// * Time.deltaTime;?????????
+        transform.position += leftMovement;// * Time.deltaTime;//?????????
 
         if (transform.position.z <= leftThreshold.z) {
             //int index = Random.Range(0, backgroundPrefabs.Length);
 
 
 
-            transform.position = rightThreshold;
+            transform.position = transform.position + new Vector3(0,0,40);//rightThreshold;
+            // the vector 3 with the value of 40 moves the platforms instead of teleporting them in order to plug gaps
         }
     }
 }
