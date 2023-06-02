@@ -4,37 +4,39 @@ using UnityEngine;
 
 
 public class activate_wfc_test : MonoBehaviour {
-    
-    public GameObject startEdge;
-    public GameObject endEdge;
-    public GameObject floor;
-    public GameObject empty;
 
     public List<Transform> list;
+    public string segmentName;
 
-    public bool startEdgeVisibility;
-    public bool endEdgeVisibility;
-    public bool floorVisibility;
-    public bool emptyVisibility;
+    private int randValue;
 
-    void Start()
-    {
+    void Start() {
         list = new List<Transform>();
-        print("list.Count is " + list.Count);
         int children = transform.childCount;
-        Debug.Log("childCount is " + children);
-        for (int i = 0; i < children; ++i)
-        {
+
+        //Makes sure all children are hidden at start
+        for (int i = 0; i < children; ++i) {
             Transform child = transform.GetChild(i);
             //print("child.name is " + child.name);
             child.gameObject.SetActive(false);
             list.Add(child);
-            print("list[" + i +"].gameObject.name is " + list[i].name);
+            Debug.Log("Object at index "+i+" in list is "+child.name);
         }
-        print("list.Count is " + list.Count);
+
+        Debug.Log("The list length = " + list.Count);
+        randValue = Random.Range(0,list.Count);
+        Debug.Log("Random Value = " + randValue);
+        list[randValue].gameObject.SetActive(true);
     }
 
-    void Update() {
-        
+    public void wfc() {
+        for (int i = 0; i < list.Count; ++i) {
+            list[i].gameObject.SetActive(false);
+        }
+        randValue = Random.Range(0,list.Count);
+
+        var outcome = list[randValue];
+        outcome.gameObject.SetActive(true);     
+        segmentName = outcome.name;
     }
 }
