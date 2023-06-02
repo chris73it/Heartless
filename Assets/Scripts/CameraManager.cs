@@ -30,7 +30,7 @@ namespace HeroicArcade.CC.Core
             player = avatar.GetComponent<Player>();
             jumpVelocity = player.jumpVelocity;
             cameraJumpVelocity = jumpVelocity * verticalSmooth;
-            Debug.Log(jumpVelocity);
+            //Debug.Log(jumpVelocity);
 
         }
 

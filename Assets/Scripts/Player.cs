@@ -29,24 +29,15 @@ namespace HeroicArcade.CC.Core
 
 
         //particle systems
-        public ParticleSystem pstomp;
-        public ParticleSystem WallBuster;
-        public ParticleSystem phead;
-        public ParticleSystem pslide;
-        public ParticleSystem pwind;
-        public ParticleSystem pMaxWind;
+         ParticleSystem pstomp;
+         ParticleSystem WallBuster;
+         ParticleSystem phead;
+         ParticleSystem pslide;
+         ParticleSystem pwind;
+         ParticleSystem pMaxWind;
 
 
-        private ParticleSystem.EmissionModule pmwEM;
-
-        //things from level manager
-        Vector3 leftMovement;
-        Vector3 leftThreshold;
-        Vector3 rightThreshold;
-        public GameObject[] backgroundPrefabs;
-        GameObject level;
-        Quaternion rotation;
-
+        
         //New input thing
         InputController inputController;
 
@@ -73,16 +64,7 @@ namespace HeroicArcade.CC.Core
             pMaxWind.Play();
 
 
-            rotation = Quaternion.Euler(0, 90, 0);
-
-            /*
-            level = GameObject.Find("Level");
-            var backgroundManager = level.GetComponent<BackgroundManager>();
-            leftMovement = backgroundManager.leftMovement;
-            leftThreshold = backgroundManager.leftThreshold;
-            rightThreshold = backgroundManager.rightThreshold;
-            backgroundPrefabs = backgroundManager.backgroundPrefabs;
-            */
+               
 
             heavyGravity = defaultGravity * 3;
             normalGravity = defaultGravity;
@@ -160,7 +142,7 @@ namespace HeroicArcade.CC.Core
                         }
                     }
 
-                    //animator.SetBool("Running Slide", true);
+                    
                 }
                 else if (!slidePressed)
                 {
@@ -173,7 +155,6 @@ namespace HeroicArcade.CC.Core
             }
 
             // wind effects
-            //pwind.Play();
             if (NewleftMovement.z <= -0.235f)// && !slidePressed)
             {
                 pwind.Play();
@@ -205,7 +186,7 @@ namespace HeroicArcade.CC.Core
         public void SlidingOver()
         {
             pslide.Stop();
-            //animator.SetBool("Running Slide", false);
+           
             animator.SetBool("Slide", false);
             Invoke("DelayColiderChange", 0.3f);
             //Debug.Log("SlidingOver");
@@ -287,14 +268,6 @@ namespace HeroicArcade.CC.Core
             }
 
 
-
-
-
-
-
-            
-
-
             Vector3 pos = transform.position;
 
             // Testing air controls
@@ -303,15 +276,7 @@ namespace HeroicArcade.CC.Core
 
             if (forwardPressed && (animator.GetBool("Slide") == false)) //&& !isGrounded)
             {
-                //if (NewleftMovement.z > maxSpeed && maxSpeed < -0.2f)
-                // {
-                //     maxSpeed = -0.2f;
-                // }
-                // pos.z = pos.z + (5 * Time.deltaTime);
-                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
-
-                //animator.SetFloat("RunningSpeed", animator.GetFloat("RunningSpeed") + Mathf.Clamp(animator.GetFloat("RunningSpeed") + 0.05f * Time.deltaTime, 0.6f, 1.5f));
-               
+                
                 if (NewleftMovement.z <= maxSpeed)
                 {
                     maxSpeed = maxSpeed - 0.05f * Time.deltaTime;
@@ -324,20 +289,11 @@ namespace HeroicArcade.CC.Core
               
 
             }
-            /*
-            else
-            {
-                //pos.z = 4;
-            }
-            */
-
-          
-          
+            
 
             if (backPressed) //&& !isGrounded)
             {
-                // pos.z = pos.z - (5 * Time.deltaTime);
-                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
+               
                 maxSpeed = maxSpeed + 0.05f * Time.deltaTime;
                 if (maxSpeed >= -0.2f)
                 {
@@ -349,8 +305,7 @@ namespace HeroicArcade.CC.Core
                     if (NewleftMovement.z <= maxSpeed && !slidePressed)
                     {
                         NewleftMovement.z = NewleftMovement.z + 0.05f * Time.deltaTime;
-                        //animator.SetFloat("RunningSpeed", Mathf.Clamp(animator.GetFloat("RunningSpeed") -0.5f * Time.deltaTime, 0.6f, 1.5f));
-                        //animator.speed = Mathf.Clamp(animator.speed -1f * Time.deltaTime, 0.8f, 2);
+                      
                         if (NewleftMovement.z > maxSpeed)
                         {
                             NewleftMovement.z = maxSpeed;
@@ -361,12 +316,7 @@ namespace HeroicArcade.CC.Core
                     }
                 }
             }
-            /*
-            else
-            {
-                //pos.z = 4;
-            }
-            */
+          
 
             if (NewleftMovement.z > minSpeed)
             {
@@ -384,8 +334,6 @@ namespace HeroicArcade.CC.Core
 
                 pos.y = ceilingHeight;
             }
-
-
 
 
 
@@ -422,6 +370,8 @@ namespace HeroicArcade.CC.Core
                 }
             }
 
+
+
             // death checks
             if (pos.y < -4)
             {
@@ -456,12 +406,10 @@ namespace HeroicArcade.CC.Core
                 maxSpeed = -0.2f; //resets max speed
 
                 frank = 0;
-                //leftMovement *= 0.5f;
-                // backgroundManager.leftMovement =
-                //level.GetComponent<BackgroundManager>();
+               
 
                 other.gameObject.SetActive(false);
-                //Destroy(other.gameObject);
+               
 
 
             }
@@ -472,15 +420,6 @@ namespace HeroicArcade.CC.Core
                 //Debug.Log("Ouch Spikes!!!");
             }
         }
-        // air control
-
-      
-           
-       
-
-
-
-
 
 
         //input manager
