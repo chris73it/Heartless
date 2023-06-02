@@ -19,9 +19,25 @@ namespace HeroicArcade.CC.Core
         public bool death;
         public float hp = 2; // default is 2
         public GameObject button;
-        public float frank = 0; //hp manager
-       
+        //public BackgroundManager backgroundM;
+        public Vector3 NewleftMovement;
 
+        public float minSpeed = -0.1f;
+        public float maxSpeed = -0.2f;
+
+        public float frank = 0; //hp manager
+
+
+        //particle systems
+        public ParticleSystem pstomp;
+        public ParticleSystem WallBuster;
+        public ParticleSystem phead;
+        public ParticleSystem pslide;
+        public ParticleSystem pwind;
+        public ParticleSystem pMaxWind;
+
+
+        private ParticleSystem.EmissionModule pmwEM;
 
         //things from level manager
         Vector3 leftMovement;
@@ -37,15 +53,36 @@ namespace HeroicArcade.CC.Core
        
         void Start()
         {
+            NewleftMovement = new Vector3(0, 0, maxSpeed);
+
+
+            //particle systems
+            pstomp = GameObject.Find("ground_stomp").GetComponent<ParticleSystem>();
+            WallBuster = GameObject.Find("wall_breaker").GetComponent<ParticleSystem>();
+            phead = GameObject.Find("HeadBanger").GetComponent<ParticleSystem>();
+            pslide = GameObject.Find("slideEffect").GetComponent<ParticleSystem>();
+            pwind = GameObject.Find("speed trail").GetComponent<ParticleSystem>();
+            pMaxWind = GameObject.Find("speed trail MAX").GetComponent<ParticleSystem>();
+
+            
+
+           
+            pstomp.Stop();
+            WallBuster.Stop();
+            phead.Stop();
+            pMaxWind.Play();
+
 
             rotation = Quaternion.Euler(0, 90, 0);
 
+            /*
             level = GameObject.Find("Level");
             var backgroundManager = level.GetComponent<BackgroundManager>();
             leftMovement = backgroundManager.leftMovement;
             leftThreshold = backgroundManager.leftThreshold;
             rightThreshold = backgroundManager.rightThreshold;
             backgroundPrefabs = backgroundManager.backgroundPrefabs;
+            */
 
             heavyGravity = defaultGravity * 3;
             normalGravity = defaultGravity;
@@ -58,6 +95,9 @@ namespace HeroicArcade.CC.Core
 
         void Update()
         {
+
+           
+
             frank = frank + (1 * Time.deltaTime);
             if (frank >= 3)
             {
@@ -67,8 +107,21 @@ namespace HeroicArcade.CC.Core
                 hp = 2;
             }
 
+            // regaining speed
+            if (NewleftMovement.z >= maxSpeed)
+            {
+                NewleftMovement.z = NewleftMovement.z - 0.02f * Time.deltaTime;
+                if (NewleftMovement.z <= maxSpeed)
+                {
+                    NewleftMovement = new Vector3(0, 0, maxSpeed);
+                    
+                }
+            }
+
             if (isGrounded)
             {
+                
+
                 if (jumpPressed && !slidePressed)
                 {
                     isGrounded = false;
@@ -86,6 +139,27 @@ namespace HeroicArcade.CC.Core
                     avatarUp.enabled = false;
                     avatarDown.enabled = true;
                     animator.SetBool("Slide", true);
+                    pslide.Play();
+                    
+
+
+                    //Slide slows you down over time
+
+                    NewleftMovement.z = NewleftMovement.z + 0.03f * Time.deltaTime;
+                    if (NewleftMovement.z >= minSpeed - 0.01f)
+                    {
+                        NewleftMovement = new Vector3(0, 0, minSpeed - 0.01f);
+
+                      
+                    }
+                    if (maxSpeed <= -0.2f)
+                    {
+                        if (NewleftMovement.z >= maxSpeed)
+                        {
+                            maxSpeed = -0.2f;
+                        }
+                    }
+
                     //animator.SetBool("Running Slide", true);
                 }
                 else if (!slidePressed)
@@ -98,10 +172,39 @@ namespace HeroicArcade.CC.Core
                 animator.SetBool("Jump", true); ///hopefully
             }
 
+            // wind effects
+            //pwind.Play();
+            if (NewleftMovement.z <= -0.235f)// && !slidePressed)
+            {
+                pwind.Play();
+                //Debug.Log("pwind");
+            }
+            else
+            {
+                pwind.Stop();
+            }
+
+            var PMaxEmission = pMaxWind.emission;
+            if (NewleftMovement.z <= -0.275f && !slidePressed)
+            {
+
+                //pMaxWind.Play();
+                //Debug.Log("pmaxwind");
+                
+                PMaxEmission.enabled = true;
+            }
+            else
+            {
+
+                //pMaxWind.Stop();
+                PMaxEmission.enabled = false;
+            }
+
         }
 
         public void SlidingOver()
         {
+            pslide.Stop();
             //animator.SetBool("Running Slide", false);
             animator.SetBool("Slide", false);
             Invoke("DelayColiderChange", 0.3f);
@@ -121,7 +224,7 @@ namespace HeroicArcade.CC.Core
         private void FixedUpdate()
         {
 
-
+            
 
             // testing for pitfalls
             // Bit shift the index of the layer (11) to get a bit mask
@@ -195,29 +298,80 @@ namespace HeroicArcade.CC.Core
             Vector3 pos = transform.position;
 
             // Testing air controls
+            //changing air controls to speed controls
+            animator.SetFloat("RunningSpeed", NewleftMovement.z * -5f);// testing animation speed
+
+            if (forwardPressed && (animator.GetBool("Slide") == false)) //&& !isGrounded)
+            {
+                //if (NewleftMovement.z > maxSpeed && maxSpeed < -0.2f)
+                // {
+                //     maxSpeed = -0.2f;
+                // }
+                // pos.z = pos.z + (5 * Time.deltaTime);
+                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
+
+                //animator.SetFloat("RunningSpeed", animator.GetFloat("RunningSpeed") + Mathf.Clamp(animator.GetFloat("RunningSpeed") + 0.05f * Time.deltaTime, 0.6f, 1.5f));
+               
+                if (NewleftMovement.z <= maxSpeed)
+                {
+                    maxSpeed = maxSpeed - 0.05f * Time.deltaTime;
+                }
+               
+               if (maxSpeed <=  -0.30f)
+                {
+                    maxSpeed = -0.30f;
+                }
+              
+
+            }
             /*
-            if (forwardPressed) //&& !isGrounded)
-            {
-                pos.z = pos.z + (5 * Time.deltaTime);
-                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
-
-            }
-            else
-            {
-                //pos.z = 4;
-            }
-
-            if (backPressed) //&& !isGrounded)
-            {
-                pos.z = pos.z - (5 * Time.deltaTime);
-                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
-
-            }
             else
             {
                 //pos.z = 4;
             }
             */
+
+          
+          
+
+            if (backPressed) //&& !isGrounded)
+            {
+                // pos.z = pos.z - (5 * Time.deltaTime);
+                //pos.z = Mathf.Clamp(pos.z, 3f, 6);
+                maxSpeed = maxSpeed + 0.05f * Time.deltaTime;
+                if (maxSpeed >= -0.2f)
+                {
+                    maxSpeed = -0.2f;
+                }
+                if (maxSpeed <= -0.2f)
+                {
+                    
+                    if (NewleftMovement.z <= maxSpeed && !slidePressed)
+                    {
+                        NewleftMovement.z = NewleftMovement.z + 0.05f * Time.deltaTime;
+                        //animator.SetFloat("RunningSpeed", Mathf.Clamp(animator.GetFloat("RunningSpeed") -0.5f * Time.deltaTime, 0.6f, 1.5f));
+                        //animator.speed = Mathf.Clamp(animator.speed -1f * Time.deltaTime, 0.8f, 2);
+                        if (NewleftMovement.z > maxSpeed)
+                        {
+                            NewleftMovement.z = maxSpeed;
+                        }
+                       
+                      
+                        
+                    }
+                }
+            }
+            /*
+            else
+            {
+                //pos.z = 4;
+            }
+            */
+
+            if (NewleftMovement.z > minSpeed)
+            {
+                NewleftMovement.z = minSpeed;
+            }
             //testing 5testing 124
             if (pos.y != groundHeight)
             {
@@ -226,6 +380,8 @@ namespace HeroicArcade.CC.Core
 
             if (pos.y >= ceilingHeight)
             {
+                phead.Play();
+
                 pos.y = ceilingHeight;
             }
 
@@ -255,6 +411,9 @@ namespace HeroicArcade.CC.Core
 
                 if (pos.y <= groundHeight)
                 {
+                    pstomp.Play();
+
+
                     pos.y = groundHeight;
                     animator.SetBool("Jump", false);
                     isGrounded = true;
@@ -288,12 +447,19 @@ namespace HeroicArcade.CC.Core
         {
             if (other.gameObject.tag == "Barrier")
             {
+                WallBuster.Play();
                 hp = hp - 1;
-                frank = 0;
+                //frank = 0;
                 //Debug.Log("Ouch Wall!!!");
+                NewleftMovement = new Vector3 (0,0,minSpeed);
+                animator.SetFloat("RunningSpeed", 0.6f);
+                maxSpeed = -0.2f; //resets max speed
 
                 frank = 0;
-                leftMovement *= 0.5f;
+                //leftMovement *= 0.5f;
+                // backgroundManager.leftMovement =
+                //level.GetComponent<BackgroundManager>();
+
                 other.gameObject.SetActive(false);
                 //Destroy(other.gameObject);
 
