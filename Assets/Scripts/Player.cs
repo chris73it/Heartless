@@ -388,7 +388,9 @@ namespace HeroicArcade.CC.Core
                 inputController.controls.Gameplay.Disable();
                 inputController.controls.InGameMenu.Enable();
                 //Debug.Log("you dead LOL");
-                Time.timeScale = 0;
+                NewleftMovement.z = 0.0f;
+                minSpeed = 0.0f;
+                maxSpeed = 0.0f;
             }
 
             transform.position = pos;

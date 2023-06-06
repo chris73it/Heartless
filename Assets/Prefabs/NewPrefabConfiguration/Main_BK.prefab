@@ -881,7 +881,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7435987639739758478}
-  - component: {fileID: 3316666365647868947}
   m_Layer: 0
   m_Name: PitfallType2
   m_TagString: Untagged
@@ -906,19 +905,6 @@ Transform:
   m_Father: {fileID: 4446649656875443245}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &3316666365647868947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3844097088004234658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 036f5ef052499f1438f49ec4cae703c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundPrefabs: []
 --- !u!1 &3972704003587289214
 GameObject:
   m_ObjectHideFlags: 0
@@ -2972,7 +2958,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7786906812289862923}
-  - component: {fileID: 2037571587631389444}
   m_Layer: 0
   m_Name: pitfallType1
   m_TagString: Untagged
@@ -2997,19 +2982,6 @@ Transform:
   m_Father: {fileID: 4446649656875443245}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &2037571587631389444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7929692034627599785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 036f5ef052499f1438f49ec4cae703c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  backgroundPrefabs: []
 --- !u!1 &8126464107888353844
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,9 +3257,10 @@ GameObject:
   - component: {fileID: 1408259641111084634}
   - component: {fileID: 9006430808359553119}
   - component: {fileID: 7494894582654830237}
+  - component: {fileID: 2945801538010901191}
   m_Layer: 11
   m_Name: SM_FloorPitfall2
-  m_TagString: Untagged
+  m_TagString: FarmerCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3384,6 +3357,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6, y: 6.5058227, z: 14.692018}
   m_Center: {x: -3.68, y: -3.2529113, z: 7.346009}
+--- !u!65 &2945801538010901191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8355523964397055173}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0000005, y: 6.5058227, z: 8.16}
+  m_Center: {x: -2.0000012, y: -3.2529113, z: 9.02}
 --- !u!1 &8372121803806529388
 GameObject:
   m_ObjectHideFlags: 0
@@ -4086,9 +4072,10 @@ GameObject:
   - component: {fileID: 5031368568410884635}
   - component: {fileID: 3518971996875014675}
   - component: {fileID: 6187659362032419157}
+  - component: {fileID: 5601738037105494762}
   m_Layer: 11
   m_Name: SM_FloorPitfall2
-  m_TagString: Untagged
+  m_TagString: FarmerCheck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4185,6 +4172,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 6.5058227, z: 14.692018}
   m_Center: {x: -0.33, y: -3.2529113, z: 7.346009}
+--- !u!65 &5601738037105494762
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9028269553569866284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0000005, y: 6.5058227, z: 8.16}
+  m_Center: {x: -2.0000012, y: -3.2529113, z: 9.02}
 --- !u!1001 &834754075458252301
 PrefabInstance:
   m_ObjectHideFlags: 0
