@@ -5,38 +5,26 @@ using UnityEngine;
 
 public class activate_wfc_test : MonoBehaviour {
 
-    public List<Transform> list;
-    public string segmentName;
+    //public List<Transform> list;
+    [HideInInspector] public string segmentName;
 
     private int randValue;
 
-    void Start() {
-        list = new List<Transform>();
-        int children = transform.childCount;
-
-        //Makes sure all children are hidden at start
-        for (int i = 0; i < children; ++i) {
-            Transform child = transform.GetChild(i);
-            //print("child.name is " + child.name);
-            child.gameObject.SetActive(false);
-            list.Add(child);
-            Debug.Log("Object at index "+i+" in list is "+child.name);
-        }
-
-        Debug.Log("The list length = " + list.Count);
-        randValue = Random.Range(0,list.Count);
-        Debug.Log("Random Value = " + randValue);
-        list[randValue].gameObject.SetActive(true);
+    activate_floor_test activateFloor;
+    //activate_obstacle_test activateObstacle;
+    activate_spike_test activateSpike;
+    //activate_disruptor_test activateDisruptor;
+    
+    void Start() {        
+        activateFloor = gameObject.GetComponentInChildren<activate_floor_test>();
+        activateSpike = gameObject.GetComponentInChildren<activate_spike_test>();
     }
 
     public void wfc() {
-        for (int i = 0; i < list.Count; ++i) {
-            list[i].gameObject.SetActive(false);
+        int floor_index = activateFloor.initiate_floor();
+        activateSpike.reset_spike();
+        if (floor_index == 2) {
+            activateSpike.initiate_spike();
         }
-        randValue = Random.Range(0,list.Count);
-
-        var outcome = list[randValue];
-        outcome.gameObject.SetActive(true);     
-        segmentName = outcome.name;
     }
 }
