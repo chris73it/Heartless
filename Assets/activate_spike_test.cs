@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class activate_spike_test : MonoBehaviour {
 
+    [Range(0.0f, 1.0f)] public float probability = 0.5f;
     public List<Transform> spikeList;
 
     private int randValue;
@@ -33,6 +34,6 @@ public class activate_spike_test : MonoBehaviour {
         var outcome = spikeList[Random.Range(0,spikeList.Count)];
         outcome.gameObject.SetActive(true);
         Debug.Log("Spike Activated");
-        Debug.Log(outcome.name + " Activated");
+        //Debug.Log(outcome.name + " Activated");
     }
 }

@@ -13,6 +13,7 @@ namespace HeroicArcade.CC.Core {
         Quaternion rotation;
 
         public List<Transform> segmentList;
+        public List<Transform> readSegmentList;
 
         activate_wfc_test[] activateWFC;
 
@@ -20,6 +21,7 @@ namespace HeroicArcade.CC.Core {
             activateWFC = gameObject.GetComponentsInChildren<activate_wfc_test>();
             
             segmentList = new List<Transform>();
+
             int children = transform.childCount;
 
             for (int i = 0; i < children; ++i) {
@@ -29,6 +31,8 @@ namespace HeroicArcade.CC.Core {
                 segmentList.Add(child);
                 //Debug.Log("Object at index "+i+" in list is "+child.name);
             }
+            //creates new list that references the elements of the referenced list
+            readSegmentList = new List<Transform>(segmentList);
         }
 
         void FixedUpdate() {
@@ -37,10 +41,16 @@ namespace HeroicArcade.CC.Core {
             for (int i = 0; i < segmentList.Count; ++i) {
                 //list[i].position += leftMovement;
                 if (segmentList[i].position.z <= leftThreshold.z) {
+                    //resets segment
                     segmentList[i].position += new Vector3(0, 0, thresholdRange);
+
+                    //remembers element in first position
+                    var changingSegment = readSegmentList[0];
+                    //removes element in first position
+                    readSegmentList.RemoveAt(0);
                     activateWFC[i].wfc();
-                    //Debug.Log(transform.name + " is now " + activateWFC.segmentName);
-                    // the vector 3 with the value of 40 moves the platforms instead of teleporting them in order to plug gaps
+                    //adds the orignal elements to last position
+                    readSegmentList.Add(changingSegment);
                 }
             }
             
