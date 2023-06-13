@@ -970,7 +970,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1860500558}
-  - component: {fileID: 1860500557}
   - component: {fileID: 1860500559}
   m_Layer: 0
   m_Name: Level
@@ -979,18 +978,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1860500557
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860500556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 905e4610304b8424999df7ff34da162f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1860500558
 Transform:
   m_ObjectHideFlags: 0
@@ -1072,6 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd945333be0f80d40937d4921da415ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  readSegmentsBack: 1
   leftMovement: {x: 0, y: 0, z: -0.1}
   leftThreshold: {x: 0, y: 0, z: -2.5}
   rightThreshold: {x: 0, y: 0, z: 2.5}
@@ -1082,7 +1070,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  lastSeg: 0
 --- !u!4 &2015543064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5340852855111295530, guid: 4f679c7e12922a546b80a135c3d0cd03,

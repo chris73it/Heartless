@@ -10,6 +10,7 @@ public class wfc_property_test : MonoBehaviour {
 
     void Start() {
         myTag = gameObject.tag;
+        myProperty = transform.GetSiblingIndex();
     }
 
     void Update() {

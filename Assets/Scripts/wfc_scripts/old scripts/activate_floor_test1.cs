@@ -15,14 +15,6 @@ public class activate_floor_test1 : MonoBehaviour {
     int acceptedProperty;
     int readProperty;
 
-    //placeholder bools for later loop - jordan
-    public bool eSpace = false;
-    public bool enEdge = false;
-    public bool floor = false;
-    public bool stEdge = false;
-     
-    //-jordan
-
     GameObject mainLevel;
 
     void Start() {
@@ -39,14 +31,6 @@ public class activate_floor_test1 : MonoBehaviour {
         
         floorList[2].gameObject.SetActive(true); //sets all segment' initial state to 'floor'
 
-        //placeholder bools for later loop - jordan
-        eSpace = false;
-        enEdge = false;
-        floor = true;
-        stEdge = false;
-
-        // -jordan
-
         mainLevel = GameObject.Find("Main Level");
     }
 
@@ -62,7 +46,7 @@ public class activate_floor_test1 : MonoBehaviour {
         randValue = Random.Range(0,floorList.Count);
 
         // testing something else - jordan maybe put this in a loop that chnages the if statement to cycle between diff bools
-        var readMainLevel = mainLevel.GetComponent<TestMill>().readSegmentList[transform.childCount-1].GetChild(0).GetComponent<activate_floor_test>();
+        var readMainLevel = mainLevel.GetComponent<test_mill>().readSegmentList[transform.childCount-1].GetChild(0).GetComponent<activate_floor_test>();
         //var readMainLevel = mainLevel.transform.GetChild(transform.childCount-1).GetChild(0).GetComponent<activate_floor_test>(); //1st step
 
         readProperty = readMainLevel.currentProperty; // 2nd step
@@ -138,12 +122,6 @@ public class activate_floor_test1 : MonoBehaviour {
 
 
         var outcome = floorList[acceptedProperty];
-        /// set thingy to make the other bools active or not - jordan
-        
-        eSpace = false;
-        enEdge = false;
-        floor = false;
-        stEdge = false;
         
         Debug.Log("Accepted Property: " + acceptedProperty);
 

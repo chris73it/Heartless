@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class activate_spike_test : MonoBehaviour {
 
-    [Range(0.0f, 1.0f)] public float probability = 0.5f;
+    [Range(0.0f, 1.0f)]
+    public float probability = 0.5f;
     public List<Transform> spikeList;
+
+    public int randoDando;
 
     private int randValue;
     [HideInInspector] public string segmentName;
