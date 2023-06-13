@@ -31,7 +31,7 @@ namespace HeroicArcade.CC.Core
         float maxForward;
         float maxBack;
 
-        float checkpos; // checks position so if farmer doesnt jump they still celebrate
+        //float checkpos; // checks position so if farmer doesnt jump they still celebrate
 
         Animator animator2;
         // Start is called before the first frame update
@@ -109,7 +109,7 @@ namespace HeroicArcade.CC.Core
           }
             */
 
-
+            //checkpos = pos.z;
             SpeedCheck();
             transform.position = pos;
 
@@ -123,7 +123,6 @@ namespace HeroicArcade.CC.Core
         }
         void SpeedCheck()
         {
-            checkpos = pos.z;
             if (leftMovement.z >= -0.19f)
             {
                 pos.z = pos.z +( 2.2f * Time.deltaTime);
@@ -139,24 +138,20 @@ namespace HeroicArcade.CC.Core
                             animator2.SetBool("Running", false);
                         }
 
-                            animator2.SetBool("Caught Dronion", true);
+                            //animator2.SetBool("Caught Dronion", true);
                     }
                 }
                 if (pos.z >= maxForward)
                 {
                     pos.z = maxForward;
+                    animator2.SetBool("Running", false);
                 }
-                
-                if (pos.z != maxBack && pos.z != maxBack)
+                else
                 {
-                    if(checkpos == pos.z)
-                    {
-                        animator2.SetBool("Running", false);
-                        animator2.SetBool("Caught Dronion", true);
-                    }
+                    animator2.SetBool("Running", true);
                 }
-                    
 
+                CatchCheck();
             }
             else
             {
@@ -166,6 +161,16 @@ namespace HeroicArcade.CC.Core
                     pos.z = maxBack;
                 }
 
+            }
+        }
+        void CatchCheck()
+        {
+            if (animator2.GetBool("Jump") == false && animator2.GetBool("Running") == false)//(checkpos == pos.z)
+            {
+                if (leftMovement.z >= 0)
+                    //animator2.SetBool("Running", false);
+                    animator2.SetBool("Caught Dronion", true);
+                //Debug.Log("fixMer" + checkpos+ "     uikfahnawshf;   " + pos.z);
             }
         }
     }
