@@ -51,6 +51,7 @@ namespace HeroicArcade.CC.Core
 
             //pos.z = maxBack;
             animator2.SetBool("HoldingSomething", armed);
+            animator2.SetBool("Running", true);
         }
 
         // Update is called once per frame
@@ -93,7 +94,7 @@ namespace HeroicArcade.CC.Core
                 else
                 {
                     animator2.SetBool("Jump", false);
-                    animator2.SetBool("Running", true);
+                    //animator2.SetBool("Running", true);
                 }
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit3.distance, Color.green);
                 // Debug.Log("Did Hit");
@@ -118,7 +119,7 @@ namespace HeroicArcade.CC.Core
         {
             newfloat = Random.Range(0.7f, 1.3f);
             animator2.SetBool("Jump", true);
-            animator2.SetBool("Running", false);
+            //animator2.SetBool("Running", false);
         }
         void SpeedCheck()
         {
@@ -133,7 +134,12 @@ namespace HeroicArcade.CC.Core
                     {
                         maxForward = maxForward + (6.5f* Time.deltaTime);
 
-                        animator2.SetBool("Caught Dronion", true);
+                        if (pos.z == maxForward)
+                        {
+                            animator2.SetBool("Running", false);
+                        }
+
+                            animator2.SetBool("Caught Dronion", true);
                     }
                 }
                 if (pos.z >= maxForward)
@@ -145,6 +151,7 @@ namespace HeroicArcade.CC.Core
                 {
                     if(checkpos == pos.z)
                     {
+                        animator2.SetBool("Running", false);
                         animator2.SetBool("Caught Dronion", true);
                     }
                 }

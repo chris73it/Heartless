@@ -58,15 +58,18 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Caught Dronion
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Running
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3063490861563533698}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.60526323
+  m_TransitionDuration: 0.26569957
+  m_TransitionOffset: 0.0022216407
+  m_ExitTime: 0.52676535
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -320,13 +323,16 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: HoldingSomething
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: Running
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 817454228113213485}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.23530525
   m_TransitionOffset: 0
   m_ExitTime: 0.5833334
   m_HasExitTime: 1
