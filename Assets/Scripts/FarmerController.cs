@@ -13,7 +13,7 @@ namespace HeroicArcade.CC.Core
         public float defaultGravity;
   
         public float jumpVelocity;
-        float velocityY = 0;
+       // float velocityY = 0;
         public float groundHeight;
    
         public bool isGrounded = true;
@@ -21,11 +21,17 @@ namespace HeroicArcade.CC.Core
         float newfloat;
         float normalGravity;
 
+        public bool armed;
+        bool randBool;
+        float randFloat;
+
         public GameObject level;
         Vector3 leftMovement;
         Vector3 pos;
         float maxForward;
         float maxBack;
+
+        float checkpos; // checks position so if farmer doesnt jump they still celebrate
 
         Animator animator2;
         // Start is called before the first frame update
@@ -44,6 +50,7 @@ namespace HeroicArcade.CC.Core
             maxForward = pos.z = pos.z  +5f;
 
             //pos.z = maxBack;
+            animator2.SetBool("HoldingSomething", armed);
         }
 
         // Update is called once per frame
@@ -58,6 +65,18 @@ namespace HeroicArcade.CC.Core
             
             animator2.SetFloat("RunningVariation", newfloat);
 
+            randFloat = Random.Range(1, 7);
+            if (randFloat > 4)
+            {
+                randBool = true;
+            }
+            else
+            {
+                randBool = false;
+            }
+            animator2.SetBool("randVariation", randBool);
+
+            
 
             // This would cast rays only against colliders in layer 11.
             // But instead we want to collide against everything except layer 10. The ~ operator does this, it inverts a bitmask.
@@ -103,6 +122,7 @@ namespace HeroicArcade.CC.Core
         }
         void SpeedCheck()
         {
+            checkpos = pos.z;
             if (leftMovement.z >= -0.19f)
             {
                 pos.z = pos.z +( 2.2f * Time.deltaTime);
@@ -121,6 +141,14 @@ namespace HeroicArcade.CC.Core
                     pos.z = maxForward;
                 }
                 
+                if (pos.z != maxBack && pos.z != maxBack)
+                {
+                    if(checkpos == pos.z)
+                    {
+                        animator2.SetBool("Caught Dronion", true);
+                    }
+                }
+                    
 
             }
             else

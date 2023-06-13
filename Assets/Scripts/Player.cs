@@ -273,6 +273,10 @@ namespace HeroicArcade.CC.Core
             // Testing air controls
             //changing air controls to speed controls
             animator.SetFloat("RunningSpeed", NewleftMovement.z * -5f);// testing animation speed
+            if (animator.GetFloat("RunningSpeed") == 0)
+            {
+                animator.SetFloat("RunningSpeed", 1);
+            }
 
             if (forwardPressed && (animator.GetBool("Slide") == false)) //&& !isGrounded)
             {
@@ -373,8 +377,9 @@ namespace HeroicArcade.CC.Core
 
 
             // death checks
-            if (pos.y < -4)
+            if (pos.y <= -0.5f)
             {
+                animator.SetBool("FallDeath", true);
                 death = true;
             }
             if (hp <= 0)
@@ -385,6 +390,7 @@ namespace HeroicArcade.CC.Core
             {
                 ///place dead things here
                 button.SetActive(true);
+                animator.SetBool("DeadCheck", true);
                 inputController.controls.Gameplay.Disable();
                 inputController.controls.InGameMenu.Enable();
                 //Debug.Log("you dead LOL");
@@ -409,6 +415,10 @@ namespace HeroicArcade.CC.Core
 
                 frank = 0;
                
+                if (hp <= 0)
+                {
+                    animator.SetBool("BarrierDeath", true);
+                }
 
                 other.gameObject.SetActive(false);
                
@@ -420,6 +430,10 @@ namespace HeroicArcade.CC.Core
             {
                 hp = hp - 2;
                 //Debug.Log("Ouch Spikes!!!");
+                if (hp <= 0)
+                {
+                    animator.SetBool("SpikeDeath", true);
+                }
             }
         }
 
