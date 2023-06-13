@@ -24,10 +24,9 @@ public class activate_wfc_test : MonoBehaviour {
     public void wfc() {
         activateSpike.reset_spike();
         int floor_index = activateFloor.initiate_floor();
-        if (floor_index == 2) {Debug.Log("Floor Activated");}
-        activateObstacle.initiate_obstacle();
-        if ((floor_index == 2) && (Random.value < activateSpike.probability)) {
+        if (floor_index == 2 && (Random.value < activateSpike.probability)) {
             activateSpike.initiate_spike();
         }
+        activateObstacle.initiate_obstacle();
     }
 }

@@ -1076,6 +1076,13 @@ MonoBehaviour:
   leftThreshold: {x: 0, y: 0, z: -2.5}
   rightThreshold: {x: 0, y: 0, z: 2.5}
   segmentList: []
+  readSegmentList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  lastSeg: 0
 --- !u!4 &2015543064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5340852855111295530, guid: 4f679c7e12922a546b80a135c3d0cd03,

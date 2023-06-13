@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class activate_obstacle_test : MonoBehaviour {
 
-    public float spikeProbability;
+    [Range(0.0f, 1.0f)] public float probability = 0.5f;
 
     void Start() {
         
