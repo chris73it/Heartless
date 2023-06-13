@@ -18,6 +18,7 @@ namespace HeroicArcade.CC.Core
         float normalGravity;
         public bool death;
         public float hp = 2; // default is 2
+        float maxHP = 2;
         public GameObject button;
         //public BackgroundManager backgroundM;
         public Vector3 NewleftMovement;
@@ -27,9 +28,10 @@ namespace HeroicArcade.CC.Core
 
         public float frank = 0; //hp manager
 
+        int barrierDamage;
 
         //particle systems
-         ParticleSystem pstomp;
+        ParticleSystem pstomp;
          ParticleSystem WallBuster;
          ParticleSystem phead;
          ParticleSystem pslide;
@@ -45,7 +47,7 @@ namespace HeroicArcade.CC.Core
         void Start()
         {
             NewleftMovement = new Vector3(0, 0, maxSpeed);
-
+            barrierDamage = 1;
 
             //particle systems
             pstomp = GameObject.Find("ground_stomp").GetComponent<ParticleSystem>();
@@ -86,8 +88,23 @@ namespace HeroicArcade.CC.Core
                 //Debug.Log("Hi Frank"); // good job frank!!!
 
                 frank = 0;
-                hp = 2;
+                hp = hp + 1;
+                if(hp >= maxHP)
+                {
+                    hp = maxHP;
+                }
             }
+
+            //changing barrier damage based on speed if too slow
+            if (NewleftMovement.z >= minSpeed - 0.02f)
+            {
+                barrierDamage = 2;
+            }
+            else
+            {
+                barrierDamage = 1;
+            }
+
 
             // regaining speed
             if (NewleftMovement.z >= maxSpeed)
@@ -131,9 +148,8 @@ namespace HeroicArcade.CC.Core
                     if (NewleftMovement.z >= minSpeed - 0.01f)
                     {
                         NewleftMovement = new Vector3(0, 0, minSpeed - 0.01f);
-
-                      
-                    }
+                       
+                    }                
                     if (maxSpeed <= -0.2f)
                     {
                         if (NewleftMovement.z >= maxSpeed)
@@ -157,11 +173,13 @@ namespace HeroicArcade.CC.Core
             // wind effects
             if (NewleftMovement.z <= -0.235f)// && !slidePressed)
             {
+                maxHP = 3;
                 pwind.Play();
                 //Debug.Log("pwind");
             }
             else
             {
+                maxHP = 2;
                 pwind.Stop();
             }
 
@@ -205,8 +223,8 @@ namespace HeroicArcade.CC.Core
         private void FixedUpdate()
         {
 
-            
 
+           
             // testing for pitfalls
             // Bit shift the index of the layer (11) to get a bit mask
             int layerMask2 = 1 << 11; //1 << 11;
@@ -406,7 +424,7 @@ namespace HeroicArcade.CC.Core
             if (other.gameObject.tag == "Barrier")
             {
                 WallBuster.Play();
-                hp = hp - 1;
+                hp = hp - barrierDamage;
                 //frank = 0;
                 //Debug.Log("Ouch Wall!!!");
                 NewleftMovement = new Vector3 (0,0,minSpeed);
@@ -415,7 +433,7 @@ namespace HeroicArcade.CC.Core
 
                 frank = 0;
                
-                if (hp <= 0)
+                if (hp <= 0 )
                 {
                     animator.SetBool("BarrierDeath", true);
                 }
@@ -434,10 +452,19 @@ namespace HeroicArcade.CC.Core
                 {
                     animator.SetBool("SpikeDeath", true);
                 }
+                else
+                {
+                    animator.SetBool("StubbedToe", true);
+                    
+                }
+                //animator.SetBool("StubbedToe", false);
             }
         }
 
-
+        public void StumbleEnd()
+        {
+            animator.SetBool("StubbedToe", false);
+        }
         //input manager
 
         private bool slidePressed;
