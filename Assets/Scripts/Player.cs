@@ -186,10 +186,10 @@ namespace HeroicArcade.CC.Core
             var PMaxEmission = pMaxWind.emission;
             if (NewleftMovement.z <= -0.275f && !slidePressed)
             {
-
+                maxHP = 4;
                 //pMaxWind.Play();
                 //Debug.Log("pmaxwind");
-                
+
                 PMaxEmission.enabled = true;
             }
             else
