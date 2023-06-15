@@ -100,7 +100,7 @@ namespace HeroicArcade.CC.Core
             }
 
             //changing barrier damage based on speed if too slow
-            if (NewleftMovement.z >= minSpeed - 0.02f)
+            if (NewleftMovement.z >= minSpeed - 0.015f)
             {
                 barrierDamage = 2;
             }
@@ -210,7 +210,7 @@ namespace HeroicArcade.CC.Core
             pslide.Stop();
            
             animator.SetBool("Slide", false);
-            Invoke("DelayColiderChange", 0.3f);
+            Invoke("DelayColiderChange", 0.35f);
             //Debug.Log("SlidingOver");
             //slidePressed = false;
 
