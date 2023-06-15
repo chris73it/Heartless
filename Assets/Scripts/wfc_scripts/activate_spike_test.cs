@@ -8,8 +8,6 @@ public class activate_spike_test : MonoBehaviour {
     public float probability = 0.5f;
     public List<Transform> spikeList;
 
-    public int randoDando;
-
     private int randValue;
     [HideInInspector] public string segmentName;
 
@@ -34,9 +32,11 @@ public class activate_spike_test : MonoBehaviour {
     }
 
     public void initiate_spike() {
-        var outcome = spikeList[Random.Range(0,spikeList.Count)];
-        outcome.gameObject.SetActive(true);
-        Debug.Log("Spike Activated");
-        //Debug.Log(outcome.name + " Activated");
+        reset_spike();
+        if (Random.value <= probability) {
+            var outcome = spikeList[Random.Range(0,spikeList.Count)];
+            outcome.gameObject.SetActive(true);
+            //Debug.Log(outcome.name + " Activated");
+        }
     }
 }

@@ -25,11 +25,10 @@ public class test_mill : MonoBehaviour {
     void Start() {
         activateWFC = gameObject.GetComponentsInChildren<activate_wfc_test>();
         segmentList = new List<Transform>();
-        readSegmentListProperties = new List<int>();
 
         int children = transform.childCount;
 
-        //Adds each child into segment list to be read
+        //Adds each child into segmentList to be read
         for (int i = 0; i < children; ++i) {
             Transform child = transform.GetChild(i);
             //print("child.name is " + child.name);
@@ -39,6 +38,7 @@ public class test_mill : MonoBehaviour {
         }
         
         readSegmentList = new List<Transform>(segmentList); //Creates new copied list of segmentList that tracks world order
+        readSegmentListProperties = new List<int>();
 
         //set readSegmentListProperties elements
         for (int i = 0; i < readSegmentsRetro; i++) {
@@ -60,13 +60,13 @@ public class test_mill : MonoBehaviour {
 
                 var changingSegment = readSegmentList[0]; //remembers element in first position
                 readSegmentList.RemoveAt(0); //removes element in first position
+                readSegmentList.Add(changingSegment);//adds the orignal element to last position
                 activateWFC[i].wfc(); //initiate change
-                readSegmentList.Add(changingSegment);//adds the orignal elements to last position
             }
         }
 
         //write readSegmentList to readSegmentListProperties
-        for (int i = 0; i < readSegmentsRetro; i++) {
+        for (int i = 0; i < readSegmentsRetro; ++i) {
             readSegmentListProperties[i] = readSegmentList[readSegmentList.Count-1-i].transform.GetChild(0).GetComponent<activate_floor_test>().currentProperty;
         }
     }
