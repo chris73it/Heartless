@@ -100,7 +100,7 @@ namespace HeroicArcade.CC.Core
             }
 
             //changing barrier damage based on speed if too slow
-            if (NewleftMovement.z >= minSpeed - 0.015f)
+            if (NewleftMovement.z >= minSpeed - 0.035f)
             {
                 barrierDamage = 2;
             }
@@ -411,6 +411,7 @@ namespace HeroicArcade.CC.Core
             if (death == true)
             {
                 ///place dead things here
+                frank = 0;
                 button.SetActive(true);
                 animator.SetBool("DeadCheck", true);
                 inputController.controls.Gameplay.Disable();
