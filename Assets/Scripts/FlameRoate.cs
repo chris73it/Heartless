@@ -5,8 +5,8 @@ using UnityEngine;
 public class FlameRoate : MonoBehaviour
 {
 
-    public float rotationSpeed = 500f;
-        public float spinSpeed = 1000f;
+     float rotationSpeed = 500f;
+         float spinSpeed = 1250f;
     
 
    

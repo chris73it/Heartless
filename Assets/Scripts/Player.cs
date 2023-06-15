@@ -28,7 +28,11 @@ namespace HeroicArcade.CC.Core
 
         public float frank = 0; //hp manager
 
+        public int woodrand; // randomizes wood break audio on collision 
+
         int barrierDamage;
+
+        public AudioSource ImpactofSound;
 
         //particle systems
         ParticleSystem pstomp;
@@ -421,8 +425,13 @@ namespace HeroicArcade.CC.Core
         }
         private void OnTriggerEnter(Collider other)
         {
+           
+
             if (other.gameObject.tag == "Barrier")
             {
+                ImpactofSound.Stop();
+                woodrand = Random.Range(0, ImpactofSound.GetComponent<WoodAudRandomizer>().woodsounds.Length);
+
                 WallBuster.Play();
                 hp = hp - barrierDamage;
                 //frank = 0;
@@ -439,7 +448,11 @@ namespace HeroicArcade.CC.Core
                 }
 
                 other.gameObject.SetActive(false);
-               
+
+
+
+                ImpactofSound.Play(); // auido isnt always working, reminder to troubleshoot also randomize pitch and volume slightly
+
 
 
             }
