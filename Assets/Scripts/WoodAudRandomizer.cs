@@ -7,15 +7,18 @@ namespace HeroicArcade.CC.Core
     {
         public AudioClip[] woodsounds;
         private AudioSource suace;
-        public GameObject player;
+        public GameObject playerGO;
+        
+        Player player;
 
 
         // Start is called before the first frame update
         void Start()
         {
-            player = GameObject.Find("Dronion");
+            playerGO = GameObject.Find("Dronion");
             suace = GetComponent<AudioSource>();
             suace.clip = woodsounds[Random.Range(0, woodsounds.Length -1)];
+            player = playerGO.GetComponent<Player>();
         }
 
 
@@ -23,9 +26,14 @@ namespace HeroicArcade.CC.Core
         // Update is called once per frame
         void Update()
         {
-            int woodrand = player.GetComponent<Player>().woodrand;
+            int woodrand = player.woodrand;
 
             suace.clip = woodsounds[woodrand];
+        }
+
+       public void PitchRand()
+        {
+            suace.pitch = Random.Range(0.5f, 1.1f);
         }
 
     }

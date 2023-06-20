@@ -28,15 +28,15 @@ namespace HeroicArcade.CC.Core
 
         public float frank = 0; //hp manager
 
-        public int woodrand; // randomizes wood break audio on collision 
+        public int woodrand = 1; // randomizes wood break audio on collision 
 
         int barrierDamage;
 
-        public AudioSource ImpactofSound;
+        public AudioSource impactOfSound;
 
         //particle systems
         ParticleSystem pstomp;
-         ParticleSystem WallBuster;
+         ParticleSystem wallBuster;
          ParticleSystem phead;
          ParticleSystem pslide;
          ParticleSystem pwind;
@@ -55,7 +55,7 @@ namespace HeroicArcade.CC.Core
 
             //particle systems
             pstomp = GameObject.Find("ground_stomp").GetComponent<ParticleSystem>();
-            WallBuster = GameObject.Find("wall_breaker").GetComponent<ParticleSystem>();
+            wallBuster = GameObject.Find("wall_breaker").GetComponent<ParticleSystem>();
             phead = GameObject.Find("HeadBanger").GetComponent<ParticleSystem>();
             pslide = GameObject.Find("slideEffect").GetComponent<ParticleSystem>();
             pwind = GameObject.Find("speed trail").GetComponent<ParticleSystem>();
@@ -65,7 +65,7 @@ namespace HeroicArcade.CC.Core
 
            
             pstomp.Stop();
-            WallBuster.Stop();
+            wallBuster.Stop();
             phead.Stop();
             pMaxWind.Play();
 
@@ -430,10 +430,10 @@ namespace HeroicArcade.CC.Core
 
             if (other.gameObject.tag == "Barrier")
             {
-                ImpactofSound.Stop();
-                woodrand = Random.Range(0, ImpactofSound.GetComponent<WoodAudRandomizer>().woodsounds.Length);
+               
+               
 
-                WallBuster.Play();
+                wallBuster.Play();
                 hp = hp - barrierDamage;
                 //frank = 0;
                 //Debug.Log("Ouch Wall!!!");
@@ -449,11 +449,10 @@ namespace HeroicArcade.CC.Core
                 }
 
                 other.gameObject.SetActive(false);
+                impactOfSound.GetComponent<WoodAudRandomizer>().PitchRand();
 
-
-
-                ImpactofSound.Play(); // auido isnt always working, reminder to troubleshoot also randomize pitch and volume slightly
-
+                impactOfSound.PlayOneShot(impactOfSound.clip);
+                woodrand = Random.Range(0, impactOfSound.GetComponent<WoodAudRandomizer>().woodsounds.Length);
 
 
             }
