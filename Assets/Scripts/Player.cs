@@ -29,13 +29,22 @@ namespace HeroicArcade.CC.Core
         public float frank = 0; //hp manager
 
         public int woodrand = 1; // randomizes wood break audio on collision 
+        public int steprand = 1; // randomizes step audio 
 
         int barrierDamage;
 
+        //audio
         public AudioSource impactOfSound;
+        public AudioSource damage;
+        public AudioSource spikeDeath;
+        public AudioSource wallDeath;
+        public AudioSource step;
+        public AudioSource slideAudio;
 
-        //particle systems
-        ParticleSystem pstomp;
+
+
+       //particle systems
+       ParticleSystem pstomp;
          ParticleSystem wallBuster;
          ParticleSystem phead;
          ParticleSystem pslide;
@@ -144,6 +153,7 @@ namespace HeroicArcade.CC.Core
                     animator.SetBool("Slide", true);
                     pslide.Play();
                     
+                    
 
 
                     //Slide slows you down over time
@@ -211,6 +221,7 @@ namespace HeroicArcade.CC.Core
            
             animator.SetBool("Slide", false);
             Invoke("DelayColiderChange", 0.35f);
+            slideAudio.mute = true;
             //Debug.Log("SlidingOver");
             //slidePressed = false;
 
@@ -373,8 +384,13 @@ namespace HeroicArcade.CC.Core
             }
 
 
-            if (animator.GetBool("Jump"))
+            if (animator.GetBool("Slide") == true)
             {
+                slideAudio.mute = false;
+            }
+
+                if (animator.GetBool("Jump"))
+                {
                 if (slidePressed)
                 {
                     defaultGravity = heavyGravity;
@@ -411,6 +427,7 @@ namespace HeroicArcade.CC.Core
             if (death == true)
             {
                 ///place dead things here
+                step.mute = true;
                 frank = 0;
                 button.SetActive(true);
                 animator.SetBool("DeadCheck", true);
@@ -446,6 +463,11 @@ namespace HeroicArcade.CC.Core
                 if (hp <= 0 )
                 {
                     animator.SetBool("BarrierDeath", true);
+                    wallDeath.Play();
+                }
+                else
+                {
+                    damage.PlayOneShot(damage.clip);
                 }
 
                 other.gameObject.SetActive(false);
@@ -464,11 +486,14 @@ namespace HeroicArcade.CC.Core
                 if (hp <= 0)
                 {
                     animator.SetBool("SpikeDeath", true);
-                }
+                    spikeDeath.Play();
+    }
                 else
                 {
+                    woodrand = Random.Range(0, impactOfSound.GetComponent<WoodAudRandomizer>().woodsounds.Length);
                     animator.SetBool("StubbedToe", true);
-                    
+                    damage.PlayOneShot(damage.clip);
+
                 }
                 //animator.SetBool("StubbedToe", false);
             }
@@ -477,6 +502,12 @@ namespace HeroicArcade.CC.Core
         public void StumbleEnd()
         {
             animator.SetBool("StubbedToe", false);
+        }
+        public void FootStep()
+        {
+            step.PlayOneShot(step.clip);
+
+            steprand = Random.Range(0, step.GetComponent<Footstepper>().stepsounds.Length);
         }
         //input manager
 
