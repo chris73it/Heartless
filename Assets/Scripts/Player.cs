@@ -387,6 +387,7 @@ namespace HeroicArcade.CC.Core
             if (animator.GetBool("Slide") == true)
             {
                 slideAudio.mute = false;
+                slideAudio.pitch = Random.Range(0.17f, 0.25f);
             }
 
                 if (animator.GetBool("Jump"))
