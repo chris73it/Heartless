@@ -17,8 +17,8 @@ namespace HeroicArcade.CC.Core
         public CapsuleCollider avatarDown;
         float normalGravity;
         public bool death;
-        public float hp = 2; // default is 2
-        float maxHP = 2;
+        public int hp = 2; // default is 2
+        int  maxHP = 2;
         public GameObject button;
         //public BackgroundManager backgroundM;
         public Vector3 NewleftMovement;
@@ -440,13 +440,20 @@ namespace HeroicArcade.CC.Core
                 NewleftMovement.z = 0.0f;
                 minSpeed = 0.0f;
                 maxSpeed = 0.0f;
+                hp = 0; //here to update hp after falling
             }
-            if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false)
+            if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y > -0.1 )
             {
                 cameraManager.GetComponent<CameraShake>().DeathShakeStart();
+               // Debug.Log("shakeyshake");
+            }
+            else if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -5.8f)
+            {
+                cameraManager.GetComponent<CameraShake>().DeathShakeStart();
+                //Debug.Log("AAAAAAAAAAHHHHHHHHHHH! IM FALLING!!!!");
             }
 
-            transform.position = pos;
+                transform.position = pos;
         }
         private void OnTriggerEnter(Collider other)
         {
