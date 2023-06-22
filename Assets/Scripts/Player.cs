@@ -51,6 +51,8 @@ namespace HeroicArcade.CC.Core
          ParticleSystem pwind;
          ParticleSystem pMaxWind;
 
+        // cam shake
+        public GameObject cameraManager;
 
         
         //New input thing
@@ -439,6 +441,10 @@ namespace HeroicArcade.CC.Core
                 minSpeed = 0.0f;
                 maxSpeed = 0.0f;
             }
+            if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false)
+            {
+                cameraManager.GetComponent<CameraShake>().DeathShakeStart();
+            }
 
             transform.position = pos;
         }
@@ -453,6 +459,7 @@ namespace HeroicArcade.CC.Core
 
                 wallBuster.Play();
                 hp = hp - barrierDamage;
+                cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //frank = 0;
                 //Debug.Log("Ouch Wall!!!");
                 NewleftMovement = new Vector3 (0,0,minSpeed);
@@ -483,6 +490,7 @@ namespace HeroicArcade.CC.Core
             if (other.gameObject.tag == "Spikes")
             {
                 hp = hp - 2;
+                cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //Debug.Log("Ouch Spikes!!!");
                 if (hp <= 0)
                 {
