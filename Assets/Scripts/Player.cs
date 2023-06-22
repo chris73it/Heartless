@@ -498,6 +498,7 @@ namespace HeroicArcade.CC.Core
             if (other.gameObject.tag == "Spikes")
             {
                 hp = hp - 2;
+                frank = 0;
                 cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //Debug.Log("Ouch Spikes!!!");
                 if (hp <= 0)
