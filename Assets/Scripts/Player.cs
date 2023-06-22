@@ -440,7 +440,7 @@ namespace HeroicArcade.CC.Core
                 NewleftMovement.z = 0.0f;
                 minSpeed = 0.0f;
                 maxSpeed = 0.0f;
-                hp = 0; //here to update hp after falling
+               
             }
             if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y > -0.1 )
             {
@@ -450,6 +450,7 @@ namespace HeroicArcade.CC.Core
             else if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -5.8f)
             {
                 cameraManager.GetComponent<CameraShake>().DeathShakeStart();
+                hp = 0; //here to update hp after falling
                 //Debug.Log("AAAAAAAAAAHHHHHHHHHHH! IM FALLING!!!!");
             }
 
