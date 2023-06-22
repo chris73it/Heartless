@@ -426,6 +426,7 @@ namespace HeroicArcade.CC.Core
             if (hp <= 0)
             {
                 death = true;
+                hp = 0;
             }
             if (death == true)
             {
@@ -480,6 +481,7 @@ namespace HeroicArcade.CC.Core
                 {
                     animator.SetBool("BarrierDeath", true);
                     wallDeath.Play();
+                    
                 }
                 else
                 {
