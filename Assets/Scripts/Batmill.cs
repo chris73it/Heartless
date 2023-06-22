@@ -14,7 +14,7 @@ namespace HeroicArcade.CC.Core
         Quaternion rotation;
         Animator animatorWho;
         public GameObject bat;
-
+        private BackgroundManager backgroundManager;
         float poyo; // stores random val for speed modulation
         int spoopy; // visivilty variablle
 
@@ -25,7 +25,7 @@ namespace HeroicArcade.CC.Core
             // rotation = Quaternion.Euler(0, 90, 0);
             //bat = GameObject.Find("Level");
             level = GameObject.Find("Level");
-            var backgroundManager = level.GetComponent<BackgroundManager>();
+            backgroundManager = level.GetComponent<BackgroundManager>();
             leftMovement = backgroundManager.leftMovement;
             leftThreshold = backgroundManager.leftThreshold;
             rightThreshold = backgroundManager.rightThreshold;
@@ -45,7 +45,7 @@ namespace HeroicArcade.CC.Core
 
         void FixedUpdate()
         {//????????? update/ fixedupdate
-            var backgroundManager = level.GetComponent<BackgroundManager>();
+            //var backgroundManager = level.GetComponent<BackgroundManager>();
             leftMovement = backgroundManager.leftMovement;
             leftMovement.z = leftMovement.z - poyo;
             if (spoopy >1)
