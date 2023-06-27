@@ -30,7 +30,7 @@ namespace HeroicArcade.CC.Core
 
         public int woodrand = 1; // randomizes wood break audio on collision 
         public int steprand = 1; // randomizes step audio 
-
+        public int landrand = 1; // randomizes landing sounds (could amybe be used for jumping too)
         int barrierDamage;
 
         //audio
@@ -38,13 +38,18 @@ namespace HeroicArcade.CC.Core
         public AudioSource damage;
         public AudioSource spikeDeath;
         public AudioSource wallDeath;
+        public AudioSource fallDeath;
         public AudioSource step;
         public AudioSource slideAudio;
+        public AudioSource landAudio;
+        public AudioSource JumpAudio;
+        public AudioSource JumpWhooshAudio;
+        public AudioSource fallDeathYell;
 
 
 
-       //particle systems
-       ParticleSystem pstomp;
+        //particle systems
+        ParticleSystem pstomp;
          ParticleSystem wallBuster;
          ParticleSystem phead;
          ParticleSystem pslide;
@@ -82,8 +87,10 @@ namespace HeroicArcade.CC.Core
             phead.Stop();
             pMaxWind.Play();
 
+           
 
-               
+
+
 
             heavyGravity = defaultGravity * 3;
             normalGravity = defaultGravity;
@@ -145,6 +152,8 @@ namespace HeroicArcade.CC.Core
                     avatarDown.enabled = false;
                     animator.SetBool("Jump", true);
                     animator.SetBool("Slide", false);
+                    JumpAudio.PlayOneShot(JumpAudio.clip);
+                    JumpWhooshAudio.PlayOneShot(JumpWhooshAudio.clip);
                     //animator.SetBool("Running Slide", false); //28
                     velocityY = jumpVelocity;
                 }
@@ -407,8 +416,10 @@ namespace HeroicArcade.CC.Core
                 if (pos.y <= groundHeight)
                 {
                     pstomp.Play();
-
-
+                    // play landign audio
+                    landrand = Random.Range(0, landAudio.GetComponent<landingRandAud>().soundStore.Length);
+                    landAudio.GetComponent<landingRandAud>().LandingPitchRand();
+                    landAudio.PlayOneShot(landAudio.clip);
                     pos.y = groundHeight;
                     animator.SetBool("Jump", false);
                     isGrounded = true;
@@ -422,8 +433,9 @@ namespace HeroicArcade.CC.Core
             // death checks
             if (pos.y <= -0.5f)
             {
-               
+                landAudio.mute = true;
                 animator.SetBool("FallDeath", true);
+               
                 death = true;
             }
             if (hp <= 0)
@@ -446,6 +458,14 @@ namespace HeroicArcade.CC.Core
                 maxSpeed = 0.0f;
                
             }
+            if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -0.5)
+            {
+                fallDeathYell.mute = false;
+                //fallDeathYell.Play();
+
+
+            }
+
             if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y > -0.1 )
             {
                 cameraManager.GetComponent<CameraShake>().ShakeSchtop();
@@ -454,9 +474,12 @@ namespace HeroicArcade.CC.Core
             }
             else if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -5.8f)
             {
+                
+                fallDeath.Play();
                 deathDust.Play();
                 cameraManager.GetComponent<CameraShake>().DeathShakeStart();
                 hp = 0; //here to update hp after falling
+                fallDeathYell.mute = true;
                 //Debug.Log("AAAAAAAAAAHHHHHHHHHHH! IM FALLING!!!!");
             }
 
