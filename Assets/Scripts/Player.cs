@@ -50,6 +50,7 @@ namespace HeroicArcade.CC.Core
          ParticleSystem pslide;
          ParticleSystem pwind;
          ParticleSystem pMaxWind;
+        ParticleSystem deathDust;
 
         // cam shake
         public GameObject cameraManager;
@@ -71,10 +72,11 @@ namespace HeroicArcade.CC.Core
             pslide = GameObject.Find("slideEffect").GetComponent<ParticleSystem>();
             pwind = GameObject.Find("speed trail").GetComponent<ParticleSystem>();
             pMaxWind = GameObject.Find("speed trail MAX").GetComponent<ParticleSystem>();
+            deathDust = GameObject.Find("DeathDust").GetComponent<ParticleSystem>();
 
-            
 
-           
+
+            deathDust.Stop();
             pstomp.Stop();
             wallBuster.Stop();
             phead.Stop();
@@ -420,6 +422,7 @@ namespace HeroicArcade.CC.Core
             // death checks
             if (pos.y <= -0.5f)
             {
+               
                 animator.SetBool("FallDeath", true);
                 death = true;
             }
@@ -445,11 +448,13 @@ namespace HeroicArcade.CC.Core
             }
             if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y > -0.1 )
             {
+                cameraManager.GetComponent<CameraShake>().ShakeSchtop();
                 cameraManager.GetComponent<CameraShake>().DeathShakeStart();
                // Debug.Log("shakeyshake");
             }
             else if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -5.8f)
             {
+                deathDust.Play();
                 cameraManager.GetComponent<CameraShake>().DeathShakeStart();
                 hp = 0; //here to update hp after falling
                 //Debug.Log("AAAAAAAAAAHHHHHHHHHHH! IM FALLING!!!!");

@@ -32,7 +32,7 @@ namespace HeroicArcade.CC.Core
 
                 yield return null;
             }
-
+            
             transform.localPosition = originalPosition;
         }
 
@@ -43,8 +43,12 @@ namespace HeroicArcade.CC.Core
         }
         public void DeathShakeStart()
         {
-            StartCoroutine(Shake(shakeTime, shakeMag *2));
+            StartCoroutine(Shake(shakeTime+ 0.3f, shakeMag *6));
             isShaking = true;
+        }
+        public void ShakeSchtop()
+        {
+            StopCoroutine(Shake(shakeTime, shakeMag));
         }
     }
    
