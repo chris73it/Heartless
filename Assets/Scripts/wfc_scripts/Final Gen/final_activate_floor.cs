@@ -6,6 +6,9 @@ namespace HeroicArcade.CC.Core {
 
     public class final_activate_floor : MonoBehaviour {
 
+
+        public int difficulty; // utilize later
+
         public int currentProperty;
         public List<Transform> floorList;
         //[SerializeField] GameObject spikeGroup;
@@ -21,6 +24,7 @@ namespace HeroicArcade.CC.Core {
 
         //Hides all children, populates list with children, sets all tiles to floor
         void Start() {
+
             floorList = new List<Transform>();
             int children = transform.childCount;
 
@@ -42,6 +46,7 @@ namespace HeroicArcade.CC.Core {
 
 
         public void initiate_floor() {
+            difficulty = mainLevel.difficulty;
             //Hides all children
             for (int i = 0; i < floorList.Count; ++i) {
                 floorList[i].gameObject.SetActive(false);
@@ -56,25 +61,46 @@ namespace HeroicArcade.CC.Core {
             int startRange = 0;
             
             var readPropertyList = floorList[readProperty].GetComponent<final_wfc_property>(); //3rd step
+            Debug.Log(readPropertyList);
+
             int acceptablePropertyCount = readPropertyList.acceptableProperties.Count;
             int acceptedPropertyIndex = Random.Range(startRange,acceptablePropertyCount); //double pitfalls despite no access
-            if (startRange == acceptablePropertyCount) {
+
+            if (startRange == acceptablePropertyCount) { acceptedPropertyIndex = 0; } //Prevents issues for Random.Range
+
+            //difficulty makes changes to this segment (rules)
+
+            //pitfall rules
+            if (difficulty == 0) {
                 acceptedPropertyIndex = 0;
             }
 
-            //if readsegmentretro >1, then use this if statement
-            if (mainLevel.readSegmentsRetro > 1) {
-                if (mainLevel.readSegmentListProperties[0] == 1 && mainLevel.readSegmentListProperties[1] == 1) { //if 2 floor tiles both equal empty
+            if (mainLevel.readSegmentsRetro == 1) {
+                if (mainLevel.readSegmentListProperties[0] == 1) {
                     acceptedPropertyIndex = 0;
-                    Debug.Log("Double Pitfall Detected");
                 }
             }
+
+            if (mainLevel.readSegmentListProperties[0] == 1 && difficulty == 1) { //reads most recent index to prevent double pitfalls
+                acceptedPropertyIndex = 0; //set to floorBase
+                Debug.Log("Prevented Double Pitfall");
+            }
+
+            //if readsegmentretro >1, then use this if statement
+            if (mainLevel.readSegmentsRetro > 1 && difficulty > 1) { //if retro > 1, then prevent triple pitfalls
+                if (mainLevel.readSegmentListProperties[0] == 1 && mainLevel.readSegmentListProperties[1] == 1) {
+                    acceptedPropertyIndex = 0;
+                    Debug.Log("Prevented Triple Pitfall");
+                }
+            }
+            //end pitfall rules
+
+
 
             //Grabs current property
             acceptedProperty = readPropertyList.acceptableProperties[acceptedPropertyIndex];
             //read 1 segment gernation - end
             
-
 
             var outcome = floorList[acceptedProperty];
             //Debug.Log("Accepted Property: " + acceptedProperty);
@@ -83,9 +109,7 @@ namespace HeroicArcade.CC.Core {
             currentProperty = acceptedProperty;
             segmentName = outcome.name;
 
-            if (acceptedProperty == 2) {
-                //activateSpike.initiate_spike();
-            }
+            //return acceptedProperty;
         }
     }
 }

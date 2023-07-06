@@ -15,7 +15,6 @@ namespace HeroicArcade.CC.Core {
 
         void Start() {
             spikeList = new List<Transform>();
-
             //Makes sure all children are hidden at start
             for (int i = 0; i < transform.childCount; ++i) {
                 Transform child = transform.GetChild(i);

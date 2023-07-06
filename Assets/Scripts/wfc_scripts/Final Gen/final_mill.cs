@@ -6,6 +6,9 @@ namespace HeroicArcade.CC.Core {
 
     public class final_mill : MonoBehaviour {
         
+        [Header("Difficulty")]
+        public int difficulty;
+        
         [Range(1,5)] //end range = toal segments
         public int readSegmentsRetro;
 
@@ -27,6 +30,7 @@ namespace HeroicArcade.CC.Core {
 
         //Creates initial lists
         void Start() {
+            Debug.Log("Current Diffuculty is: " + difficulty);
 
             level = GameObject.Find("Level");
             var backgroundManager = level.GetComponent<BackgroundManager>();
