@@ -131,7 +131,7 @@ namespace HeroicArcade.CC.Core
                     pos.z = pos.z + (2.8f * Time.deltaTime);
                     if (animator2.GetBool("Jump") == true)
                     {
-                        maxForward = maxForward + (6.5f* Time.deltaTime);
+                        maxForward = maxForward + (3.5f* Time.deltaTime);
 
                         if (pos.z == maxForward)
                         {
