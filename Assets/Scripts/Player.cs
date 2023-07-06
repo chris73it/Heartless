@@ -4,6 +4,8 @@ namespace HeroicArcade.CC.Core
 {
     public class Player : MonoBehaviour
     {
+        public int score;
+        float scoresaver;
         public float defaultGravity;
         float heavyGravity;
         public float jumpVelocity;
@@ -87,9 +89,10 @@ namespace HeroicArcade.CC.Core
             phead.Stop();
             pMaxWind.Play();
 
-           
 
 
+            score = 0;
+            scoresaver = score;
 
 
             heavyGravity = defaultGravity * 3;
@@ -103,8 +106,8 @@ namespace HeroicArcade.CC.Core
 
         void Update()
         {
-
-           
+            scoresaver = (scoresaver + (1 * Time.deltaTime) * (-1 * NewleftMovement.z) * 35); // score in meters?
+            score = (int)scoresaver;
 
             frank = frank + (1 * Time.deltaTime);
             if (frank >= 3)
