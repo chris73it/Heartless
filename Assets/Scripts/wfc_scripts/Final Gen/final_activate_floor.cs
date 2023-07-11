@@ -6,9 +6,6 @@ namespace HeroicArcade.CC.Core {
 
     public class final_activate_floor : MonoBehaviour {
 
-
-        public int difficulty; // utilize later
-
         public int currentProperty;
         public List<Transform> floorList;
         //[SerializeField] GameObject spikeGroup;
@@ -45,8 +42,8 @@ namespace HeroicArcade.CC.Core {
 
 
 
-        public void initiate_floor() {
-            difficulty = mainLevel.difficulty;
+        public void initiate_floor(int difficulty) {
+
             //Hides all children
             for (int i = 0; i < floorList.Count; ++i) {
                 floorList[i].gameObject.SetActive(false);

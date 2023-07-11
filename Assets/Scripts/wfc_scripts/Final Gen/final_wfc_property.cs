@@ -15,8 +15,5 @@ namespace HeroicArcade.CC.Core {
             myProperty = transform.GetSiblingIndex();
         }
 
-        void Update() {
-            
-        }
     }
 }

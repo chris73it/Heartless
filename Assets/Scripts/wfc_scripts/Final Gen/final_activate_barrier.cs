@@ -10,9 +10,11 @@ namespace HeroicArcade.CC.Core {
         public float probability = 0.5f;
         public List<Transform> barrierList;
 
-        private int randValue;
+        private int randValue; // used for a 1 in 5 
         [HideInInspector] public string segmentName;
         
+        final_mill mainLevel;
+
         int floorProperty;
         
         void Start() {
@@ -26,6 +28,8 @@ namespace HeroicArcade.CC.Core {
                 barrierList.Add(child);
                 //Debug.Log("Object at index "+i+" in barrierList is "+child.name);
             }
+
+            mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>();
         }
 
         public void reset_barrier() {
@@ -35,19 +39,36 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        public void initiate_barrier() {
+        public void initiate_barrier(int difficulty) {
             reset_barrier();
-
+            
             floorProperty = transform.parent.GetComponentInChildren<final_activate_floor>().currentProperty;
 
-            //if tile = floor, proceed
-            if (floorProperty == 0) { //if floor property = 0 (floor)
-                if (Random.value <= probability) {
-                    var outcome = barrierList[2];
-                    outcome.gameObject.SetActive(true);
-                    //Debug.Log(outcome.name + " Activated");
+            int outcome = 0;
+
+            if (Random.value <= probability) {//if pass probability, continue 
+                if (floorProperty == 0) { //if floor property = 0 (floor)
+                    outcome = 3;
+                }
+                
+                else if (difficulty >= 2 && floorProperty != 0) {
+                    if (Random.Range(1,5) == 1) {
+                    outcome = 3; // Front Low Barrier
+                    }
+                }
+                
+                else if (mainLevel.readSegmentListProperties[0] == 1 || mainLevel.readSegmentListProperties[1] == 1) { // if previous segment has pitfall, no front low barrier
+                    outcome = 0;
+                }
+
+                else {
+                    outcome = 0;
                 }
             }
+
+            barrierList[outcome].gameObject.SetActive(true);
+            //Debug.Log(barrierList[outcome].name + " Activated");
+
         }
 
         //barrier rules

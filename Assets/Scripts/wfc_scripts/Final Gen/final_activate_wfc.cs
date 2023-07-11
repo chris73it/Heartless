@@ -25,8 +25,8 @@ namespace HeroicArcade.CC.Core {
         }
 
         public void wfc() {
-            activateFloor.initiate_floor();
-            activateBarrier.initiate_barrier();
+            activateFloor.initiate_floor(mainLevel.difficulty);
+            activateBarrier.initiate_barrier(mainLevel.difficulty);
         }
     }
 }
