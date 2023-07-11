@@ -29,7 +29,7 @@ namespace HeroicArcade.CC.Core {
         // hall tweaks
         private float newtime;
         int timecheck;
-        int diffcheck;
+        
 
         GameObject level;
 
@@ -37,7 +37,6 @@ namespace HeroicArcade.CC.Core {
         void Start() {
             newtime = 0;
             timecheck = 30;
-            diffcheck = 1;
 
             Debug.Log("Current Diffuculty is: " + difficulty);
 
@@ -103,9 +102,7 @@ namespace HeroicArcade.CC.Core {
             newtime = newtime + (1 * Time.deltaTime);
             //Debug.Log(newtime); 
             // dificulty update checks
-            if (newtime > timecheck && difficulty < diffcheck)
-            {
-                diffcheck = diffcheck + 1;
+            if (newtime > timecheck) {
                 difficulty = difficulty + 1;
                 timecheck = timecheck + 30;
             }
