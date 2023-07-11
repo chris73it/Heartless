@@ -61,8 +61,8 @@ namespace HeroicArcade.CC.Core
 
         // cam shake
         public GameObject cameraManager;
+       
 
-        
         //New input thing
         InputController inputController;
 
@@ -71,7 +71,7 @@ namespace HeroicArcade.CC.Core
         {
             NewleftMovement = new Vector3(0, 0, maxSpeed);
             barrierDamage = 1;
-
+           
             //particle systems
             pstomp = GameObject.Find("ground_stomp").GetComponent<ParticleSystem>();
             wallBuster = GameObject.Find("wall_breaker").GetComponent<ParticleSystem>();
@@ -122,13 +122,22 @@ namespace HeroicArcade.CC.Core
                 }
             }
 
+          
             //changing barrier damage based on speed if too slow
-            if (NewleftMovement.z >= minSpeed - 0.035f)
+            if (NewleftMovement.z >= minSpeed - 0.035f && death == false)
             {
+               
+                cameraManager.GetComponent<CameraShake>().ClosingInOnYou(0.2f);
                 barrierDamage = 2;
             }
             else
             {
+                if (cameraManager.GetComponent<CameraShake>().isClosing == true)
+                {
+                    cameraManager.GetComponent<CameraShake>().ShakeSchtop();
+                    cameraManager.GetComponent<CameraShake>().isClosing = false;
+                    
+                }
                 barrierDamage = 1;
             }
 
@@ -499,6 +508,7 @@ namespace HeroicArcade.CC.Core
 
                 wallBuster.Play();
                 hp = hp - barrierDamage;
+                cameraManager.GetComponent<CameraShake>().ShakeSchtop();
                 cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //frank = 0;
                 //Debug.Log("Ouch Wall!!!");
@@ -532,6 +542,7 @@ namespace HeroicArcade.CC.Core
             {
                 hp = hp - 2;
                 frank = 0;
+                cameraManager.GetComponent<CameraShake>().ShakeSchtop();
                 cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //Debug.Log("Ouch Spikes!!!");
                 if (hp <= 0)

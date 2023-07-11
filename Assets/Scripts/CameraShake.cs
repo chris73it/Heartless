@@ -9,6 +9,7 @@ namespace HeroicArcade.CC.Core
         public float shakeTime = 0.4f;
         public float shakeMag = 0.05f;
         public bool isShaking = false;
+        public bool isClosing;
         void Start()
         {
 
@@ -36,7 +37,6 @@ namespace HeroicArcade.CC.Core
             transform.localPosition = originalPosition;
         }
 
-      
         public void ShakeStart()
         {
             StartCoroutine(Shake(shakeTime, shakeMag));
@@ -46,9 +46,15 @@ namespace HeroicArcade.CC.Core
             StartCoroutine(Shake(shakeTime+ 0.3f, shakeMag *6));
             isShaking = true;
         }
+        public void ClosingInOnYou( float time)
+        {
+            isClosing = true;
+            StartCoroutine(Shake(time, shakeMag -0.01f));
+        }
         public void ShakeSchtop()
         {
             StopCoroutine(Shake(shakeTime, shakeMag));
+            //transform.localPosition = originalPosition;
         }
     }
    
