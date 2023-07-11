@@ -25,11 +25,19 @@ namespace HeroicArcade.CC.Core {
         public List<int> readSegmentListProperties;
 
         final_activate_wfc[] activateWFC;
+
+        // hall tweaks
+        private float newtime;
+        int timecheck;
         
+
         GameObject level;
 
         //Creates initial lists
         void Start() {
+            newtime = 0;
+            timecheck = 30;
+
             Debug.Log("Current Diffuculty is: " + difficulty);
 
             level = GameObject.Find("Level");
@@ -65,6 +73,8 @@ namespace HeroicArcade.CC.Core {
 
         //Translates all elements, checks each elements if threshold met
         void FixedUpdate() {
+            TimeManagement();
+
             var backgroundManager = level.GetComponent<BackgroundManager>();
             leftMovement = backgroundManager.leftMovement;
 
@@ -87,6 +97,19 @@ namespace HeroicArcade.CC.Core {
             for (int i = 0; i < readSegmentsRetro; ++i) {
                 readSegmentListProperties[i] = readSegmentList[readSegmentList.Count-1-i].transform.GetChild(4).GetComponent<final_activate_floor>().currentProperty; //4th index for PitfallSet
             }
+        }
+        void TimeManagement() {
+            newtime = newtime + (1 * Time.deltaTime);
+            //Debug.Log(newtime); 
+            // dificulty update checks
+            if (newtime > timecheck) {
+                difficulty = difficulty + 1;
+                timecheck = timecheck + 30;
+            }
+           
+            
+
+
         }
     }
 }
