@@ -36,7 +36,7 @@ namespace HeroicArcade.CC.Core {
         //Creates initial lists
         void Start() {
             newtime = 0;
-            timecheck = 30;
+            timecheck = 15;
 
             Debug.Log("Current Diffuculty is: " + difficulty);
 
@@ -105,11 +105,8 @@ namespace HeroicArcade.CC.Core {
             if (newtime > timecheck) {
                 difficulty = difficulty + 1;
                 timecheck = timecheck + 30;
+                Debug.Log(difficulty +" current difficulty increased"); 
             }
-           
-            
-
-
         }
     }
 }
