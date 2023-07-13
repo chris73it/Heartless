@@ -8,14 +8,12 @@ namespace HeroicArcade.CC.Core {
 
         [Range(0.0f, 1.0f)]
         public float probability = 0.5f;
-        public List<Transform> barrierList;
+        public int currentProperty; //0 = empty, 1 = low front, 2 = high front, 3 = high back
+        List<Transform> barrierList;
 
-        private int randValue; // used for a 1 in 5 
         [HideInInspector] public string segmentName;
         
         final_mill mainLevel;
-
-        int floorProperty;
         
         void Start() {
             barrierList = new List<Transform>();
@@ -39,35 +37,51 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        public void initiate_barrier(int difficulty) {
+        public int initiate_barrier(int difficulty) {
             reset_barrier();
             
-            floorProperty = transform.parent.GetComponentInChildren<final_activate_floor>().currentProperty;
+            int myFloorProperty = transform.parent.GetComponentInChildren<final_activate_floor>().currentProperty;
 
             int outcome = 0;
+            
+            var retroSegment = mainLevel.readSegmentList;
+            var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
+            var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
 
-            if (Random.value <= probability) {//if pass probability, continue 
-                if (floorProperty == 0) { //if floor property = 0 (floor)
-                    outcome = 3;
+            //if pass probability, continue
+            if (Random.value <= probability) {
+
+                // if floor = 0 (standard), then otucome is front low
+                if (myFloorProperty == 0) {
+                    outcome = 1;
                 }
                 
-                else if (difficulty >= 2 && floorProperty != 0) {
+                //chance for front low barrier if pitfall
+                else if (difficulty >= 2 && myFloorProperty != 0) {
                     if (Random.Range(1,5) == 1) {
-                    outcome = 3; // Front Low Barrier
+                    outcome = 1;
                     }
                 }
                 
-                else if (mainLevel.readSegmentListProperties[0] == 1 || mainLevel.readSegmentListProperties[1] == 1) { // if previous segment has pitfall, no front low barrier
+                // if previous segment has pitfall, no front low barrier //mainLevel.readSegmentListProperties[] -> mainLevelRetroSegments[].floorProperty
+                else if (retro1.floorProperty == 1 || retro2.floorProperty == 1) {
                     outcome = 0;
                 }
 
+                // if no rule, no barrier
                 else {
                     outcome = 0;
                 }
             }
 
+            else {
+                outcome = 0;
+            }
+
             barrierList[outcome].gameObject.SetActive(true);
             //Debug.Log(barrierList[outcome].name + " Activated");
+
+            return outcome;
 
         }
 

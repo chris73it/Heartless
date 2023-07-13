@@ -10,7 +10,8 @@ namespace HeroicArcade.CC.Core {
         public int difficulty;
         
         [Range(1,5)] //end range = toal segments
-        public int readSegmentsRetro;
+        [Tooltip("Selects how many end segments to take into account")]
+        public int readRetroSegments;
 
         [Header("Thresholds")]
         public Vector3 leftMovement;
@@ -22,7 +23,7 @@ namespace HeroicArcade.CC.Core {
         [Header("Lists")]
         public List<Transform> segmentList;
         public List<Transform> readSegmentList;
-        public List<int> readSegmentListProperties;
+        public List<int> readSegmentListProperties; //Make int -> transform, rename to mainLevelRetroSegments?
 
         final_activate_wfc[] activateWFC;
 
@@ -59,13 +60,14 @@ namespace HeroicArcade.CC.Core {
                 segmentList.Add(child);
                 //Debug.Log("Object at index "+i+" in list is "+child.name);
             }
+
             
             readSegmentList = new List<Transform>(segmentList); //Creates new copied list of segmentList that tracks world order
-            readSegmentListProperties = new List<int>();
+            readSegmentListProperties = new List<int>(); // Make int -> transform
 
             //set readSegmentListProperties elements
-            for (int i = 0; i < readSegmentsRetro; i++) {
-                readSegmentListProperties.Add(0);
+            for (int i = 0; i < readRetroSegments; i++) {
+                readSegmentListProperties.Add(0); //Make add(0) -> add(appropriate segment)
             }
         }
 
@@ -93,11 +95,14 @@ namespace HeroicArcade.CC.Core {
                 }
             }
 
-            //write readSegmentList to readSegmentListProperties
-            for (int i = 0; i < readSegmentsRetro; ++i) {
-                readSegmentListProperties[i] = readSegmentList[readSegmentList.Count-1-i].transform.GetChild(4).GetComponent<final_activate_floor>().currentProperty; //4th index for PitfallSet
+            //rearranges readSegmentList to flipped readSegmentListRetro
+            for (int i = 0; i < readRetroSegments; ++i) {
+                //readSegmentListProperties[i] = readSegmentList[^(1+i)].transform.GetChild(4).GetComponent<final_activate_floor>().currentProperty; //4th index for PitfallSet
+                readSegmentListProperties[i] = readSegmentList[^(1+i)].transform.Find("PitfallSet").GetComponent<final_activate_floor>().currentProperty; // Make currentProperty -> gameObject
+                //readSegmentListProperties[i] = readSegmentList[^(1+i)];//.transform.Find("PitfallSet").GetComponent<final_activate_floor>().currentProperty;
             }
         }
+        
         void TimeManagement() {
             newtime = newtime + (1 * Time.deltaTime);
             //Debug.Log(newtime); 
@@ -105,7 +110,7 @@ namespace HeroicArcade.CC.Core {
             if (newtime > timecheck) {
                 difficulty = difficulty + 1;
                 timecheck = timecheck + 30;
-                Debug.Log(difficulty +" current difficulty increased"); 
+                Debug.Log(difficulty + " current difficulty increased"); 
             }
         }
     }

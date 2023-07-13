@@ -9,24 +9,27 @@ namespace HeroicArcade.CC.Core {
         //public List<Transform> list;
         [HideInInspector] public string segmentName;
 
-        private int randValue;
-
         final_mill mainLevel;
         final_activate_floor activateFloor;
-        //final_activate_obstacles activateObstacle;
-        //activate_disruptor_test activateDisruptor;
         final_activate_barrier activateBarrier;
+        final_activate_platform activatePlatform;
+
+        public int floorProperty;
+        public int barrierProperty;
+        public int platformProperty;
         
         void Start() {
             mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>();
+
             activateFloor = gameObject.GetComponentInChildren<final_activate_floor>();
             activateBarrier = gameObject.GetComponentInChildren<final_activate_barrier>();
-            //activateObstacle = gameObject.GetComponentInChildren<final_activate_obstacles>();
+            activatePlatform = gameObject.GetComponentInChildren<final_activate_platform>();
         }
 
         public void wfc() {
-            activateFloor.initiate_floor(mainLevel.difficulty);
-            activateBarrier.initiate_barrier(mainLevel.difficulty);
+            floorProperty = activateFloor.initiate_floor(mainLevel.difficulty);
+            barrierProperty = activateBarrier.initiate_barrier(mainLevel.difficulty);
+            platformProperty = activatePlatform.initiate_platform(mainLevel.difficulty);
         }
     }
 }
