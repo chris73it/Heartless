@@ -4,6 +4,10 @@ namespace HeroicArcade.CC.Core
 {
     public class Player : MonoBehaviour
     {
+
+        //debug mode
+        public bool deBugModeInvuln;
+
         public int score;
         float scoresaver;
         public float defaultGravity;
@@ -24,6 +28,8 @@ namespace HeroicArcade.CC.Core
         public GameObject button;
         //public BackgroundManager backgroundM;
         public Vector3 NewleftMovement;
+
+      
 
         public float minSpeed = -0.1f;
         public float maxSpeed = -0.2f;
@@ -281,7 +287,7 @@ namespace HeroicArcade.CC.Core
                 // Debug.Log("Did Hit");
                 minGroundHeight = 0;
             }
-            else
+            else if(deBugModeInvuln == false)
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 6, Color.cyan);
                 //Debug.Log("Did not Hit");
@@ -450,12 +456,12 @@ namespace HeroicArcade.CC.Core
                
                 death = true;
             }
-            if (hp <= 0)
+            if (hp <= 0 && deBugModeInvuln == false)
             {
                 death = true;
                 hp = 0;
             }
-            if (death == true)
+            if (death == true && deBugModeInvuln == false)
             {
                 ///place dead things here
                 step.mute = true;
@@ -507,24 +513,29 @@ namespace HeroicArcade.CC.Core
                
 
                 wallBuster.Play();
-                hp = hp - barrierDamage;
+                
                 cameraManager.GetComponent<CameraShake>().ShakeSchtop();
                 cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //frank = 0;
                 //Debug.Log("Ouch Wall!!!");
-                NewleftMovement = new Vector3 (0,0,minSpeed);
-                animator.SetFloat("RunningSpeed", 0.6f);
-                maxSpeed = -0.2f; //resets max speed
+                if ( deBugModeInvuln == false)
+                {
+                    hp = hp - barrierDamage;
+                    NewleftMovement = new Vector3(0, 0, minSpeed);
+                    animator.SetFloat("RunningSpeed", 0.6f);
+                    maxSpeed = -0.2f; //resets max speed
+                }
+                
 
                 frank = 0;
                
-                if (hp <= 0 )
+                if (hp <= 0 && deBugModeInvuln == false)
                 {
                     animator.SetBool("BarrierDeath", true);
                     wallDeath.Play();
                     
                 }
-                else
+                else if(deBugModeInvuln == false)
                 {
                     damage.PlayOneShot(damage.clip);
                 }
@@ -538,14 +549,14 @@ namespace HeroicArcade.CC.Core
 
             }
 
-            if (other.gameObject.tag == "Spikes")
+            if (other.gameObject.tag == "Spikes" && deBugModeInvuln == false)
             {
                 hp = hp - 2;
                 frank = 0;
                 cameraManager.GetComponent<CameraShake>().ShakeSchtop();
                 cameraManager.GetComponent<CameraShake>().ShakeStart();
                 //Debug.Log("Ouch Spikes!!!");
-                if (hp <= 0)
+                if (hp <= 0 )
                 {
                     animator.SetBool("SpikeDeath", true);
                     spikeDeath.Play();
