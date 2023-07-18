@@ -6,27 +6,27 @@ namespace HeroicArcade.CC.Core {
 
     public class final_activate_floor : MonoBehaviour {
 
-        public int currentProperty; // 0 = base, 1 = pitfall (randomize pitfalls TBD)
+        [Range(0.0f, 1.0f)]
+        public float probability = 0.5f;
         public List<Transform> floorList;
-        //[SerializeField] GameObject spikeGroup;
         
         [HideInInspector] public string segmentName;
-       // final_activate_spike activateSpike;
 
         final_mill mainLevel;
 
         //Hides all children, populates list with children, sets all tiles to floor
         void Start() {
-
             floorList = new List<Transform>();
-            int children = transform.childCount;
-
-            for (int i = 0; i < children; ++i) {
+            
+            //0 = base, 1 = pitfall
+            for (int i = 0; i < transform.childCount; ++i) {
                 Transform child = transform.GetChild(i);
+                //print("child.name is " + child.name);
                 child.gameObject.SetActive(false);
                 floorList.Add(child);
                 //Debug.Log(string.Format("{0} is in index: {1}", child.gameObject.name, i));
             }
+            
             
             floorList[0].gameObject.SetActive(true); //sets all segment' initial state to 'floor'
             /* activateSpike = spikeGroup.GetComponent<final_activate_spike>(); //gameObject.GetComponentInChildren<final_activate_spike>();
@@ -50,67 +50,58 @@ namespace HeroicArcade.CC.Core {
             }
 
             //read 1 segment gernation - start
-            int readPropertyValue = mainLevel.readSegmentList[^1].Find("PitfallSet").GetComponent<final_activate_floor>().currentProperty; //1st step - read property of last segment
-            int startRange = 0;
+            int readPropertyValue = mainLevel.readSegmentList[^1].GetComponent<final_activate_wfc>().floorProperty; //1st step - read property of last segment
             
             var readPropertyList = floorList[readPropertyValue].GetComponent<final_wfc_property>(); //2nd step
             //Debug.Log("Previous Floor: " + readPropertyList);
 
-            int acceptablePropertyCount = readPropertyList.acceptableProperties.Count;
-            int acceptedPropertyIndex = Random.Range(startRange,acceptablePropertyCount);
-            //int acceptedPropertyIndex = 0;
+            int acceptedPropertyIndex;// = Random.Range(0,floorList.Count);
 
-            //Prevents issues for Random.Range
-            if (startRange == acceptablePropertyCount) {
+            if (probability <= Random.value) {
+                acceptedPropertyIndex = 1;
+            }
+
+            else {
                 acceptedPropertyIndex = 0;
             }
 
             //pitfall rules
-
-                //if difficulty = 0, always base
+            if (acceptedPropertyIndex == 1) {
+                //prevents all pitfalls at difficulty 0
                 if (difficulty == 0) {
                     acceptedPropertyIndex = 0;
+                    Debug.Log("Prevented SINGLE Pitfall");
                 }
 
-                //if retro = 1, limit to 1 conseq pitfall
-
-                //mainLevel.readSegementsRetro -> mainLevelRetroSegments[]?, 
-                if (mainLevel.readRetroSegments == 1) {
-                    if (retroSegment[^1].GetComponent<final_activate_wfc>().floorProperty == 1) {
+                //prevents double pitfalls at difficulty 1
+                if (difficulty <= 1) {
+                    if (retro1.floorProperty == 1) {
                         acceptedPropertyIndex = 0;
+                        Debug.Log("Prevented DOUBLE Pitfall");
                     }
                 }
 
-                //if diffuclty = 1 and 
-                if (retro1.floorProperty == 1 && difficulty == 1) { //reads most recent index to prevent double pitfalls
-                    acceptedPropertyIndex = 0; //set to floorBase
-                    Debug.Log("Prevented Double Pitfall");
-                }
-
-                //if readsegmentretro >1, then use this if statement
-                if (mainLevel.readRetroSegments > 1 && difficulty > 1) { //if retro > 1, then prevent triple pitfalls
+                //prevents triple pitfall at difficulty >1
+                if (difficulty > 1) {
                     if (retro1.floorProperty == 1 && retro2.floorProperty == 1) {
-                        acceptedPropertyIndex = 0;
-                        Debug.Log("Prevented Triple Pitfall");
+                        acceptedPropertyIndex = 0; //set to floorBase
+                        Debug.Log("Prevented TRIPLE Pitfall");
                     }
                 }
-            //end pitfall rules
+                
+                //if double or (single + platform)
+                //acceptedProperty = 0
+            }
 
-            //Grabs current property
-            int acceptedProperty = readPropertyList.acceptableProperties[acceptedPropertyIndex];
-            //read 1 segment gernation - end
-            
+            else {
+                acceptedPropertyIndex = 0;
+            }
 
-            var outcome = floorList[acceptedProperty];
-            //Debug.Log("Accepted Property: " + acceptedProperty);
-
+            var outcome = floorList[acceptedPropertyIndex];
+            //Debug.Log("Outcome = " + outcome.name);
             outcome.gameObject.SetActive(true);
-            currentProperty = acceptedProperty;
-            segmentName = outcome.name;
 
-            return acceptedProperty;
-
-            //return acceptedProperty;
+            return acceptedPropertyIndex;
         }
     }
 }

@@ -8,23 +8,23 @@ namespace HeroicArcade.CC.Core {
         
         [Range(0.0f, 1.0f)]
         public float probability = 0.5f;
-
-        public int currentProperty; //0 is empty, 1 is base
         public List<Transform> platformList;
 
         [HideInInspector] public int platformCount;
 
         final_mill mainLevel;
 
+        //Hides all children, populates list with children
         void Start() {
             platformList = new List<Transform>();
-            int children = transform.childCount;
 
-            for (int i = 0; i < children; ++i) {
+            //0 is empty, 1 is base
+            for (int i = 0; i < transform.childCount; ++i) {
                 Transform child = transform.GetChild(i);
+                //print("child.name is " + child.name);
                 child.gameObject.SetActive(false);
                 platformList.Add(child);
-                //Debug.Log(child);
+                //Debug.Log(string.Format("{0}[{1}] = {2}", platformList, i, child.gameObject.name));
             }
 
             mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>();
@@ -65,8 +65,6 @@ namespace HeroicArcade.CC.Core {
             }
 
             platformList[outcome].gameObject.SetActive(true);
-            currentProperty = outcome;
-
             return outcome;
 
         }

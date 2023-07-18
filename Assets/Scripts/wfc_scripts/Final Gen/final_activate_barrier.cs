@@ -8,23 +8,23 @@ namespace HeroicArcade.CC.Core {
 
         [Range(0.0f, 1.0f)]
         public float probability = 0.5f;
-        public int currentProperty; //0 = empty, 1 = low front, 2 = high front, 3 = high back
-        List<Transform> barrierList;
+        public List<Transform> barrierList;
 
         [HideInInspector] public string segmentName;
         
         final_mill mainLevel;
-        
+
+        //Hides all children, populates list with children
         void Start() {
             barrierList = new List<Transform>();
-            //Makes sure all children are hidden at start
-            //Debug.Log(transform.childCount);
+
+            //0 = empty, 1 = low front, 2 = high front, 3 = high back
             for (int i = 0; i < transform.childCount; ++i) {
                 Transform child = transform.GetChild(i);
                 //print("child.name is " + child.name);
                 child.gameObject.SetActive(false);
                 barrierList.Add(child);
-                //Debug.Log("Object at index "+i+" in barrierList is "+child.name);
+                //Debug.Log(string.Format("{0} is in index: {1}", child.gameObject.name, i));
             }
 
             mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>();
@@ -40,12 +40,13 @@ namespace HeroicArcade.CC.Core {
         public int initiate_barrier(int difficulty) {
             reset_barrier();
             
-            int myFloorProperty = transform.parent.GetComponentInChildren<final_activate_floor>().currentProperty;
+            int myFloorProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().floorProperty;
 
             int outcome = 0;
             
             var retroSegment = mainLevel.readSegmentList;
             var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
+            //var retro1 = retroSegment[^1].floorProperty;
             var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
 
             //if pass probability, continue
@@ -58,6 +59,7 @@ namespace HeroicArcade.CC.Core {
                 
                 //chance for front low barrier if pitfall
                 else if (difficulty >= 2 && myFloorProperty != 0) {
+                    // 20%
                     if (Random.Range(1,5) == 1) {
                     outcome = 1;
                     }

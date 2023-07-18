@@ -6,9 +6,6 @@ namespace HeroicArcade.CC.Core {
 
     public class final_activate_wfc : MonoBehaviour {
 
-        //public List<Transform> list;
-        [HideInInspector] public string segmentName;
-
         final_mill mainLevel;
         final_activate_floor activateFloor;
         final_activate_barrier activateBarrier;
@@ -30,6 +27,10 @@ namespace HeroicArcade.CC.Core {
             floorProperty = activateFloor.initiate_floor(mainLevel.difficulty);
             barrierProperty = activateBarrier.initiate_barrier(mainLevel.difficulty);
             platformProperty = activatePlatform.initiate_platform(mainLevel.difficulty);
+
+            /* Debug.Log(transform.name + "'s FP is "+ floorProperty);
+            Debug.Log(transform.name + "'s BP is "+ barrierProperty);
+            Debug.Log(transform.name + "'s PP is "+ platformProperty); */
         }
     }
 }

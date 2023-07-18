@@ -503,6 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49a03b0b8b2c414294c4bd9299301f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  probability: 0.7
   currentProperty: 0
   floorList: []
   segmentName: 
@@ -1467,6 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   probability: 0.2
+  currentProperty: 0
   barrierList: []
   segmentName: 
 --- !u!1 &3424652542827127079
@@ -1699,7 +1701,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8340af8ac54f844cb27f96f0c3ad43a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentName: 
+  floorProperty: 0
+  barrierProperty: 0
+  platformProperty: 0
 --- !u!1 &3974944938722040535
 GameObject:
   m_ObjectHideFlags: 0
@@ -5008,6 +5012,7 @@ MonoBehaviour:
   probability: 0.2
   currentProperty: 0
   platformList: []
+  platformCount: 0
 --- !u!1 &7915425670136823557
 GameObject:
   m_ObjectHideFlags: 0

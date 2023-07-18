@@ -23,7 +23,6 @@ namespace HeroicArcade.CC.Core {
         [Header("Lists")]
         public List<Transform> segmentList;
         public List<Transform> readSegmentList;
-        public List<int> readSegmentListProperties; //Make int -> transform, rename to mainLevelRetroSegments?
 
         final_activate_wfc[] activateWFC;
 
@@ -31,8 +30,7 @@ namespace HeroicArcade.CC.Core {
         private float newtime;
         int timecheck;
         
-
-        GameObject level;
+        BackgroundManager bkManager;
 
         //Creates initial lists
         void Start() {
@@ -41,11 +39,10 @@ namespace HeroicArcade.CC.Core {
 
             Debug.Log("Current Diffuculty is: " + difficulty);
 
-            level = GameObject.Find("Level");
-            var backgroundManager = level.GetComponent<BackgroundManager>();
-            leftMovement = backgroundManager.leftMovement;
-            leftThreshold = backgroundManager.leftThreshold;
-            rightThreshold = backgroundManager.rightThreshold;
+            bkManager = GameObject.Find("Level").GetComponent<BackgroundManager>();
+            leftMovement = bkManager.leftMovement;
+            leftThreshold = bkManager.leftThreshold;
+            rightThreshold = bkManager.rightThreshold;
 
             activateWFC = gameObject.GetComponentsInChildren<final_activate_wfc>();
             segmentList = new List<Transform>();
@@ -63,12 +60,6 @@ namespace HeroicArcade.CC.Core {
 
             
             readSegmentList = new List<Transform>(segmentList); //Creates new copied list of segmentList that tracks world order
-            readSegmentListProperties = new List<int>(); // Make int -> transform
-
-            //set readSegmentListProperties elements
-            for (int i = 0; i < readRetroSegments; i++) {
-                readSegmentListProperties.Add(0); //Make add(0) -> add(appropriate segment)
-            }
         }
 
 
@@ -77,29 +68,21 @@ namespace HeroicArcade.CC.Core {
         void FixedUpdate() {
             TimeManagement();
 
-            var backgroundManager = level.GetComponent<BackgroundManager>();
-            leftMovement = backgroundManager.leftMovement;
+            leftMovement = bkManager.leftMovement;
 
-            float thresholdRange = rightThreshold.z - leftThreshold.z;
             transform.position += leftMovement;
 
             //Cycles elements - world order
             for (int i = 0; i < segmentList.Count; i++) {
                 if (segmentList[i].position.z <= leftThreshold.z) {
-                    segmentList[i].position += new Vector3(0, 0, thresholdRange); //resets segment position
+                    segmentList[i].position += new Vector3(0, 0, rightThreshold.z - leftThreshold.z); //resets segment position
 
                     var changingSegment = readSegmentList[0]; //remembers element in first position
                     readSegmentList.RemoveAt(0); //removes element in first position
-                    readSegmentList.Add(changingSegment);//adds the orignal element to last position
                     activateWFC[i].wfc(); //initiate change
+                    readSegmentList.Add(changingSegment);//adds the orignal element to last position
+                    //activateWFC[i].wfc(); //initiate change
                 }
-            }
-
-            //rearranges readSegmentList to flipped readSegmentListRetro
-            for (int i = 0; i < readRetroSegments; ++i) {
-                //readSegmentListProperties[i] = readSegmentList[^(1+i)].transform.GetChild(4).GetComponent<final_activate_floor>().currentProperty; //4th index for PitfallSet
-                readSegmentListProperties[i] = readSegmentList[^(1+i)].transform.Find("PitfallSet").GetComponent<final_activate_floor>().currentProperty; // Make currentProperty -> gameObject
-                //readSegmentListProperties[i] = readSegmentList[^(1+i)];//.transform.Find("PitfallSet").GetComponent<final_activate_floor>().currentProperty;
             }
         }
         
