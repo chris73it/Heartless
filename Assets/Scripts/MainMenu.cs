@@ -5,9 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-   public void PlayGame ()
+    //audio
+    public AudioSource HoverUI;
+    public AudioSource SelectUI;
+
+    public void PlayGame ()
     {
+        SelectUI.PlayOneShot(SelectUI.clip);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
-        print("The button is working");
+       
+       
+    }
+    public void Hover()
+    {
+
+        HoverUI.PlayOneShot(HoverUI.clip);
     }
 }
