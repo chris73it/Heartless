@@ -24,7 +24,7 @@ namespace HeroicArcade.CC.Core
         float normalGravity;
         public bool death;
         public int hp = 2; // default is 2
-        int  maxHP = 2;
+        public int  maxHP = 2;
         public GameObject button;
         //public BackgroundManager backgroundM;
         public Vector3 NewleftMovement;
