@@ -62,6 +62,7 @@ namespace HeroicArcade.CC.Core
               elapsedTime += Time.deltaTime;
 
                 yield return null;
+               
             }
 
             heart.transform.localPosition = originalPosition;
@@ -112,6 +113,7 @@ namespace HeroicArcade.CC.Core
             //test rumble
             // HPRumble(Heart2);
             //HPRumble(Heart1);
+           
             if (speedIndicator >= ( -0.15 - 0.03f) && player.death == false)
                 {
                 HPRumble(Heart4);
@@ -141,18 +143,28 @@ namespace HeroicArcade.CC.Core
                 PosReset(1);
             }
 
-            if (MaxHP >= 1)
+            
+
+            if (MaxHP >= 4 && player.death == false)
             {
-                Heart1.SetActive(true);
-               
+                Heart4.SetActive(true);
             }
             else
             {
-                
-                PosReset(1);
-                Heart1.SetActive(false);
+                PosReset(3);
+                PosReset(4);
+                Heart4.SetActive(false);
             }
-
+            if (MaxHP >= 3 && player.death == false)
+            {
+                Heart3.SetActive(true);
+            }
+            else
+            {
+                PosReset(3);
+                PosReset(4);
+                Heart3.SetActive(false);
+            }
             if (MaxHP >= 2)
             {
                 Heart2.SetActive(true);
@@ -163,28 +175,21 @@ namespace HeroicArcade.CC.Core
                 PosReset(2);
                 Heart2.SetActive(false);
             }
-
-            if (MaxHP >= 3)
+            if (MaxHP >= 1)
             {
-                Heart3.SetActive(true);
+                Heart1.SetActive(true);
+
             }
             else
             {
-                PosReset(3);
-                PosReset(4);
-                Heart3.SetActive(false);
+
+                PosReset(1);
+                Heart1.SetActive(false);
             }
 
-            if (MaxHP >= 4)
-            {
-                Heart4.SetActive(true);
-            }
-            else
-            {
-                PosReset(3);
-                PosReset(4);
-                Heart4.SetActive(false);
-            }
+
+
+
 
 
             if (HP < MaxHP)
@@ -231,7 +236,7 @@ namespace HeroicArcade.CC.Core
 
             if (HP> MaxHP)
             {
-                if (HP == 3)
+                if (HP == 3 && player.death == false)
                 {
                     Heart3.SetActive(true);
                     HPRumble(Heart3);
@@ -242,7 +247,7 @@ namespace HeroicArcade.CC.Core
                     PosReset(3);
                     // RumbleEnd(Heart3);
                 }
-                if (HP == 4)
+                if (HP == 4 && player.death == false) //" && player.death == false" to fix bug of hp dely on death
                 {
                     Heart4.SetActive(true);
                     HPRumble(Heart4);

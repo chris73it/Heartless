@@ -35,6 +35,7 @@ namespace HeroicArcade.CC.Core
         public float maxSpeed = -0.2f;
 
         public float frank = 0; //hp manager
+        bool frankEnable;
 
         public int woodrand = 1; // randomizes wood break audio on collision 
         public int steprand = 1; // randomizes step audio 
@@ -114,9 +115,16 @@ namespace HeroicArcade.CC.Core
         {
             scoresaver = (scoresaver + (1 * Time.deltaTime) * (-1 * NewleftMovement.z) * 35); // score in meters?
             score = (int)scoresaver;
-
+            if( hp != maxHP)
+            {
+                frankEnable = true;
+            }
+            else
+            {
+                frankEnable = false;
+            }
             frank = frank + (1 * Time.deltaTime);
-            if (frank >= 3)
+            if (frank >= 3 && frankEnable == true)
             {
                 //Debug.Log("Hi Frank"); // good job frank!!!
 
@@ -126,6 +134,10 @@ namespace HeroicArcade.CC.Core
                 {
                     hp = maxHP;
                 }
+            }
+            else if (frankEnable == false)
+            {
+                frank = 0;
             }
 
           
