@@ -28,9 +28,7 @@ namespace HeroicArcade.CC.Core {
             barrierProperty = activateBarrier.initiate_barrier(mainLevel.difficulty);
             platformProperty = activatePlatform.initiate_platform(mainLevel.difficulty);
 
-            /* Debug.Log(transform.name + "'s FP is "+ floorProperty);
-            Debug.Log(transform.name + "'s BP is "+ barrierProperty);
-            Debug.Log(transform.name + "'s PP is "+ platformProperty); */
+            //Debug.Log(string.Format("{0} has Floor: {1}, Barrier: {2}, Platform: {3}", transform.name, floorProperty, barrierProperty, platformProperty));
         }
     }
 }

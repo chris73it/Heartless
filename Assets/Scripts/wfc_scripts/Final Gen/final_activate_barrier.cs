@@ -9,8 +9,8 @@ namespace HeroicArcade.CC.Core {
         [Range(0.0f, 1.0f)]
         public float probability = 0.5f;
         public List<Transform> barrierList;
-
-        [HideInInspector] public string segmentName;
+        
+        public bool enableDebugLogs;
         
         final_mill mainLevel;
 
@@ -37,6 +37,12 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
+        void myDebugLog(bool check, string stringName) {
+            if (check == true) {
+                Debug.Log(string.Format(stringName));
+            }
+        }
+
         public int initiate_barrier(int difficulty) {
             reset_barrier();
             
@@ -46,39 +52,43 @@ namespace HeroicArcade.CC.Core {
             
             var retroSegment = mainLevel.readSegmentList;
             var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
-            //var retro1 = retroSegment[^1].floorProperty;
             var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
 
-            //if pass probability, continue
-            if (Random.value <= probability) {
+        
+            //barrier rules
+            //if floor,
+            //if retro1 = pitfall {diable barrier}
 
-                // if floor = 0 (standard), then otucome is front low
-                if (myFloorProperty == 0) {
-                    outcome = 1;
+
+            bool barrierPass = Random.value <= probability;
+
+            if (barrierPass == true) {
+                outcome = 1;
+
+                //only spawns barriers on standard floors
+                if (myFloorProperty != 0) {
+                    outcome = 0;
+                }
+
+                //prevents double barriers on low difficulty
+                if (difficulty <= 1 && retro1.barrierProperty != 0) {
+                    outcome = 0;
+                   myDebugLog(enableDebugLogs, "Prevented DOUBLE barrier");
                 }
                 
-                //chance for front low barrier if pitfall
-                else if (difficulty >= 2 && myFloorProperty != 0) {
-                    // 20%
-                    if (Random.Range(1,5) == 1) {
-                    outcome = 1;
-                    }
-                }
-                
-                // if previous segment has pitfall, no front low barrier //mainLevel.readSegmentListProperties[] -> mainLevelRetroSegments[].floorProperty
-                else if (retro1.floorProperty == 1 || retro2.floorProperty == 1) {
+                // if previous 2 segments has pitfall, no front low barrier
+                if (retro1.floorProperty == 1 || retro2.floorProperty == 1) {
                     outcome = 0;
                 }
 
                 // if no rule, no barrier
-                else {
-                    outcome = 0;
-                }
             }
 
             else {
                 outcome = 0;
             }
+
+
 
             barrierList[outcome].gameObject.SetActive(true);
             //Debug.Log(barrierList[outcome].name + " Activated");
@@ -86,10 +96,5 @@ namespace HeroicArcade.CC.Core {
             return outcome;
 
         }
-
-        //barrier rules
-        //if floor, 
-        //if pitfall, end barrier = false
-        //end barrier rules
     }
 }
