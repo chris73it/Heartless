@@ -37,7 +37,7 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        void myDebugLog(bool check, string stringName) {
+        void checkDebugLog(bool check, string stringName) {
             if (check == true) {
                 Debug.Log(string.Format(stringName));
             }
@@ -54,11 +54,9 @@ namespace HeroicArcade.CC.Core {
             var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
             var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
 
-        
             //barrier rules
             //if floor,
             //if retro1 = pitfall {diable barrier}
-
 
             bool barrierPass = Random.value <= probability;
 
@@ -73,28 +71,23 @@ namespace HeroicArcade.CC.Core {
                 //prevents double barriers on low difficulty
                 if (difficulty <= 1 && retro1.barrierProperty != 0) {
                     outcome = 0;
-                   myDebugLog(enableDebugLogs, "Prevented DOUBLE barrier");
+                    checkDebugLog(enableDebugLogs, "Prevented DOUBLE barrier");
                 }
                 
                 // if previous 2 segments has pitfall, no front low barrier
                 if (retro1.floorProperty == 1 || retro2.floorProperty == 1) {
                     outcome = 0;
                 }
-
-                // if no rule, no barrier
             }
 
             else {
                 outcome = 0;
             }
 
-
-
             barrierList[outcome].gameObject.SetActive(true);
-            //Debug.Log(barrierList[outcome].name + " Activated");
+            checkDebugLog(enableDebugLogs, (barrierList[outcome].name + " Activated"));
 
             return outcome;
-
         }
     }
 }

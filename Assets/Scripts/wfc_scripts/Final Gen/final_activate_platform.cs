@@ -43,7 +43,7 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        void myDebugLog(bool check, string stringName) {
+        void checkDebugLog(bool check, string stringName) {
             if (check == true) {
                 Debug.Log(string.Format(stringName));
             }

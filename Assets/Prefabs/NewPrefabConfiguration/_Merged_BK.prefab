@@ -1468,7 +1468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probability: 0.4
   barrierList: []
-  enableDebugLogs: 0
+  enableDebugLogs: 1
 --- !u!1 &3424652542827127079
 GameObject:
   m_ObjectHideFlags: 0

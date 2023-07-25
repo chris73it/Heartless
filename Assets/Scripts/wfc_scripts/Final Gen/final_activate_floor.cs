@@ -13,6 +13,7 @@ namespace HeroicArcade.CC.Core {
         public bool enableDebugLogs;
 
         final_mill mainLevel;
+        List<final_activate_wfc> retro;
 
         //Hides all children, populates list with children, sets all tiles to floor
         void Start() {
@@ -27,26 +28,27 @@ namespace HeroicArcade.CC.Core {
                 //Debug.Log(string.Format("{0} is in index: {1}", child.gameObject.name, i));
             }
             
-            //sets all segment' initial state to 'floor'
+            //sets all segments' initial state to 'floor'
             floorList[0].gameObject.SetActive(true);
             
             mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>(); //Change to mainLevelRetroSegments?, and move to initiate_floor
+            retro = mainLevel.retroList;
         }
 
-        void myDebugLog(bool check, string stringName) {
+        void checkDebugLog(bool check, string stringName) {
             if (check == true) {
                 Debug.Log(string.Format(stringName));
             }
         }
 
         public int initiate_floor(int difficulty) {
-            //Hides all children
 
             var retroSegment = mainLevel.readSegmentList;
             var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
             var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
 
-            for (int i = 0; i < floorList.Count; ++i) {
+            //Hides all children
+            for (int i = 0; i < floorList.Count; i++) {
                 floorList[i].gameObject.SetActive(false);
             }
 
@@ -60,14 +62,14 @@ namespace HeroicArcade.CC.Core {
                 //prevents all pitfalls at difficulty 0
                 if (difficulty == 0) {
                     acceptedPropertyIndex = 0;
-                    myDebugLog(enableDebugLogs, "Prevented SINGLE Pitfall");
+                    checkDebugLog(enableDebugLogs, "Prevented SINGLE Pitfall");
                 }
 
                 //prevents double pitfalls at difficulty 1
                 if (difficulty <= 1) {
                     if (retro1.floorProperty == 1) {
                         acceptedPropertyIndex = 0;
-                        myDebugLog(enableDebugLogs, "Prevented DOUBLE Pitfall");
+                        checkDebugLog(enableDebugLogs, "Prevented DOUBLE Pitfall");
                     }
                 }
 
@@ -75,7 +77,7 @@ namespace HeroicArcade.CC.Core {
                 if (difficulty > 1) {
                     if (retro1.floorProperty == 1 && retro2.floorProperty == 1) {
                         acceptedPropertyIndex = 0;
-                        myDebugLog(enableDebugLogs, "Prevented TRIPLE Pitfall");
+                        checkDebugLog(enableDebugLogs, "Prevented TRIPLE Pitfall");
                     }
                 }
                 
@@ -92,7 +94,6 @@ namespace HeroicArcade.CC.Core {
             outcome.gameObject.SetActive(true);
 
             return acceptedPropertyIndex;
-            
         }
     }
 }
