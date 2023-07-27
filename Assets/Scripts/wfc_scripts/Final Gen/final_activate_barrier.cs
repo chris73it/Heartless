@@ -21,10 +21,9 @@ namespace HeroicArcade.CC.Core {
             //0 = empty, 1 = low front, 2 = high front, 3 = high back
             for (int i = 0; i < transform.childCount; ++i) {
                 Transform child = transform.GetChild(i);
-                //print("child.name is " + child.name);
                 child.gameObject.SetActive(false);
                 barrierList.Add(child);
-                //Debug.Log(string.Format("{0} is in index: {1}", child.gameObject.name, i));
+                checkDebugLog(enableDebugLogs, (child.gameObject.name + " is in index: " + i));
             }
 
             mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>();
@@ -45,18 +44,12 @@ namespace HeroicArcade.CC.Core {
 
         public int initiate_barrier(int difficulty) {
             reset_barrier();
+
+            var retro = mainLevel.retroList;
             
-            int myFloorProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().floorProperty;
+            int selfFloorProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().floorProperty;
 
             int outcome = 0;
-            
-            var retroSegment = mainLevel.readSegmentList;
-            var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
-            var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
-
-            //barrier rules
-            //if floor,
-            //if retro1 = pitfall {diable barrier}
 
             bool barrierPass = Random.value <= probability;
 
@@ -64,18 +57,18 @@ namespace HeroicArcade.CC.Core {
                 outcome = 1;
 
                 //only spawns barriers on standard floors
-                if (myFloorProperty != 0) {
+                if (selfFloorProperty != 0) {
                     outcome = 0;
                 }
 
-                //prevents double barriers on low difficulty
-                if (difficulty <= 1 && retro1.barrierProperty != 0) {
+                //prevents double barriers + creates space on low difficulty
+                if (difficulty <= 1 && (retro[0].barrierProperty != 0 || retro[1].barrierProperty != 0)) {
                     outcome = 0;
-                    checkDebugLog(enableDebugLogs, "Prevented DOUBLE barrier");
+                    checkDebugLog(enableDebugLogs, "Prevented DOUBLE barrier and/or created space");
                 }
                 
                 // if previous 2 segments has pitfall, no front low barrier
-                if (retro1.floorProperty == 1 || retro2.floorProperty == 1) {
+                if (retro[0].floorProperty == 1 || retro[1].floorProperty == 1) {
                     outcome = 0;
                 }
             }
@@ -86,7 +79,6 @@ namespace HeroicArcade.CC.Core {
 
             barrierList[outcome].gameObject.SetActive(true);
             checkDebugLog(enableDebugLogs, (barrierList[outcome].name + " Activated"));
-
             return outcome;
         }
     }

@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49a03b0b8b2c414294c4bd9299301f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  probability: 0.4
+  probability: 0.2
   floorList: []
   enableDebugLogs: 0
 --- !u!1 &1567706575999296207
@@ -1466,9 +1466,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d37258b3226b4704b895f66988692d02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  probability: 0.4
+  probability: 0.45
   barrierList: []
-  enableDebugLogs: 1
+  enableDebugLogs: 0
 --- !u!1 &3424652542827127079
 GameObject:
   m_ObjectHideFlags: 0
@@ -5007,7 +5007,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4199b130e09d0b74c95bc021b2b911fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  probability: 0.3
+  probability: 0.2
+  consecutivePlatforms: 4
   platformList: []
   enableDebugLogs: 0
 --- !u!1 &7915425670136823557

@@ -7,12 +7,14 @@ namespace HeroicArcade.CC.Core {
     public class final_activate_platform : MonoBehaviour {
         
         [Range(0.0f, 1.0f)]
-        public float probability = 0.5f;
+        public float probability;
+        [Range(1, 10)]
+        public int consecutivePlatforms;
         public List<Transform> platformList;
         
         public bool enableDebugLogs;
 
-        int platformConsec;
+        int platformCounter;
         float startProbability;
 
         final_mill mainLevel;
@@ -24,15 +26,14 @@ namespace HeroicArcade.CC.Core {
             //0 is empty, 1 is base
             for (int i = 0; i < transform.childCount; ++i) {
                 Transform child = transform.GetChild(i);
-                //print("child.name is " + child.name);
                 child.gameObject.SetActive(false);
                 platformList.Add(child);
-                //Debug.Log(string.Format("{0}[{1}] = {2}", platformList, i, child.gameObject.name));
+                checkDebugLog(enableDebugLogs, (child.gameObject.name + " is in index: " + i));
             }
 
             mainLevel = GameObject.Find("Final BK Manager").GetComponent<final_mill>();
 
-            platformConsec = 1;
+            platformCounter = mainLevel.platformCounter;
             startProbability = probability;
         }
 
@@ -49,38 +50,27 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        //cap to 4 conseq platforms.
-        //platformCount = 0
-        //if retro1.platformProperty == 1 platformCount += 1
-        //if platformCount == 4 || retro1.platformProperty != 1, output = empty
-
-        public int initiate_platform(int difficulty) {
-            //Debug.Log("Platform intantiated.");
-            reset_platform();
-
-            int outcome = 0;
-            
-            var retroSegment = mainLevel.readSegmentList;
-            var retro1 = retroSegment[^1].GetComponent<final_activate_wfc>();
-            var retro2 = retroSegment[^2].GetComponent<final_activate_wfc>();
-
-            //make as new function???
-            ///consecutive property, increase probability every time platform spawns, and reset probability on break
-            if (retro1.platformProperty == 1 && platformConsec < 5) {
-                platformConsec += 1;
+        void consecutiveFactor(ref int counter, ref int outcomeCheck) {
+            if (counter <= consecutivePlatforms && outcomeCheck == 1) {
+                counter += 1;
                 probability += .1f;
-                if (enableDebugLogs == true) {
-                    Debug.Log(string.Format("Consequetive Platform: {0}, Probability: {1}", platformConsec, probability));
-                }
+                checkDebugLog(enableDebugLogs, ("Platform Counter: " + counter + ", Probability: " + probability));
             }
 
             else {
-                platformConsec = 1;
+                counter = 0;
+                outcomeCheck = 0;
                 probability = startProbability;
-                if (enableDebugLogs == true) {
-                    Debug.Log(string.Format("RESET Consequetive Platform: {0}, Probability: {1}", platformConsec, probability));
-                }
+                checkDebugLog(enableDebugLogs, ("RESET Platform Counter"));
             }
+        }
+
+        public int initiate_platform(int difficulty) {
+            reset_platform();
+            
+            var retro = mainLevel.retroList;
+
+            int outcome = 0;
 
             bool platformPass = Random.value <= probability;
 
@@ -92,25 +82,26 @@ namespace HeroicArcade.CC.Core {
                 if (difficulty < 2) {
                     outcome = 0;
                 }
+                
+                consecutiveFactor(ref platformCounter, ref outcome);
 
-                //platform conseq check
-                if (platformConsec >= 4) {
+                //always leaves 2 spaces on break
+                if (retro[1].platformProperty == 1 && retro[0].platformProperty == 0) {
                     outcome = 0;
                 }
-
             }
 
-            //platformCount = mainLevel.readSegmentListProperties[0].GetComponentInChildren<final_activate_platform>().platformCount;
+            else {
+                outcome = 0;
+            }
 
             //if pitfall and platform dont give a shit about upper barriwers 
             //if pitfall and no plat turn of those uppwer fuckers
             //if difficulty == 0 {disable platform}
 
-            //if the platform is instanciating for the first time no start upper barrier
-
             platformList[outcome].gameObject.SetActive(true);
+            checkDebugLog(enableDebugLogs, (platformList[outcome].name + " Activated"));
             return outcome;
-
         }
     }
 }

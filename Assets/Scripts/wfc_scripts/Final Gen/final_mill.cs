@@ -38,6 +38,9 @@ namespace HeroicArcade.CC.Core {
         // hall tweaks
         private float newtime;
         int timecheck;
+
+        //rule checks
+        public int platformCounter;
         
         BackgroundManager bkManager;
 
@@ -51,20 +54,18 @@ namespace HeroicArcade.CC.Core {
             retroList = new List<final_activate_wfc>();
             for (int i = 0; i < 10; ++i) {
                 retroList.Add(readSegmentList[^(1+i)].GetComponent<final_activate_wfc>());
-                //Debug.Log(retroList[i].name);
             }
-            Debug.Log("Recentest Floor Property: " + retroList[0].floorProperty);
         }
 
-        //Creates initial lists
         void Start() {
             newtime = 0;
             timecheck = 15;
 
+            platformCounter = 0;
+
             checkDebugLog(difficultyDebugLog, ("Current Difficulty: " + difficulty));
 
             bkManager = GameObject.Find("Level").GetComponent<BackgroundManager>();
-            //leftMovement = bkManager.leftMovement;
             leftThreshold = bkManager.leftThreshold;
             rightThreshold = bkManager.rightThreshold;
 
@@ -80,15 +81,14 @@ namespace HeroicArcade.CC.Core {
             }
             
             readSegmentList = new List<Transform>(segmentList); //Creates new copied list of segmentList that tracks world order
-            //retroListCreation();
+            retroListCreation();
         }
 
         //Translates all elements, checks each elements if threshold met
         void FixedUpdate() {
             TimeManagement();
 
-            leftMovement = bkManager.leftMovement;
-            transform.position += leftMovement;
+            transform.position += bkManager.leftMovement;
 
             //Cycles elements - world order
             //Checks each element
@@ -104,7 +104,7 @@ namespace HeroicArcade.CC.Core {
 
                     checkDebugLog(listsDebugLog, (changingSegment.name + " Reset"));
                     
-                    //retroListCreation();
+                    retroListCreation();
                 }
             }
         }
