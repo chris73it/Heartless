@@ -19,7 +19,13 @@ namespace HeroicArcade.CC.Core
         public bool isGrounded = true;
 
         float newfloat;
-        float normalGravity;
+        //float normalGravity;
+
+
+        //audio
+
+        public AudioSource rumblinging;
+        public AudioSource Chase;
 
         public bool armed;
         bool randBool;
@@ -31,6 +37,8 @@ namespace HeroicArcade.CC.Core
         float maxForward;
         float maxBack;
 
+        float maxChaseVol = 0.381f;
+        float maxRumbleVol= 0.5f;
         //float checkpos; // checks position so if farmer doesnt jump they still celebrate
 
         Animator animator2;
@@ -125,14 +133,28 @@ namespace HeroicArcade.CC.Core
         {
             if (leftMovement.z >= -0.19f)
             {
+                rumblinging.volume = rumblinging.volume + 0.03f * Time.deltaTime;
+                Chase.volume = Chase.volume + 0.03f * Time.deltaTime;
+                if (Chase.volume >= maxChaseVol)
+                {
+                    Chase.volume = maxChaseVol;
+                }
+                if (rumblinging.volume >= maxRumbleVol)
+                {
+                    rumblinging.volume = maxRumbleVol;
+                }
+
                 pos.z = pos.z +( 2.2f * Time.deltaTime);
                 if (leftMovement.z >= 0)
                 {
+                    
+                  
                     pos.z = pos.z + (2.8f * Time.deltaTime);
                     if (animator2.GetBool("Jump") == true)
                     {
-                        maxForward = maxForward + (3.5f* Time.deltaTime);
 
+                        maxForward = maxForward + (3.5f* Time.deltaTime);
+                      
                         if (pos.z == maxForward)
                         {
                             animator2.SetBool("Running", false);
@@ -145,6 +167,9 @@ namespace HeroicArcade.CC.Core
                 {
                     pos.z = maxForward;
                     animator2.SetBool("Running", false);
+
+                    rumblinging.volume = maxRumbleVol;
+                    Chase.volume = maxChaseVol;
                 }
                 else
                 {
@@ -155,6 +180,17 @@ namespace HeroicArcade.CC.Core
             }
             else
             {
+                rumblinging.volume = rumblinging.volume - 0.01f * Time.deltaTime;
+                Chase.volume = Chase.volume - 0.01f * Time.deltaTime;
+                if (Chase.volume <= 0)
+                {
+                    Chase.volume = 0;
+                }
+                if (rumblinging.volume <= 0)
+                {
+                    rumblinging.volume = 0;
+                }
+
                 pos.z = pos.z - (3.0f * Time.deltaTime);
                 if (pos.z <= maxBack)
                 {
@@ -168,10 +204,21 @@ namespace HeroicArcade.CC.Core
             if (animator2.GetBool("Jump") == false && animator2.GetBool("Running") == false)//(checkpos == pos.z)
             {
                 if (leftMovement.z >= 0)
+                {
                     //animator2.SetBool("Running", false);
                     animator2.SetBool("Caught Dronion", true);
+                   
+                }
+
                 //Debug.Log("fixMer" + checkpos+ "     uikfahnawshf;   " + pos.z);
             }
+            if (animator2.GetBool("Caught Dronion") == true && animator2.GetBool("Running") == false)
+            {
+                rumblinging.mute = true;
+                Chase.mute = true;
+            }
+          
         }
+
     }
 }
