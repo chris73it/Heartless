@@ -247,6 +247,7 @@ namespace HeroicArcade.CC.Core
                 maxHP = 2;
                 pwind.Stop();
                 windWhoosh1.SetActive(false);
+                windWhooshmax.SetActive(false);
             }
 
             var PMaxEmission = pMaxWind.emission;
