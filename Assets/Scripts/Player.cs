@@ -26,6 +26,7 @@ namespace HeroicArcade.CC.Core
         public int hp = 2; // default is 2
         public int  maxHP = 2;
         public GameObject button;
+        public GameObject retunbutton;
         //public BackgroundManager backgroundM;
         public Vector3 NewleftMovement;
 
@@ -500,6 +501,7 @@ namespace HeroicArcade.CC.Core
                 farmerCheer.SetActive(true);// is playing but keepts restarting
                 frank = 0;
                 button.SetActive(true);
+                retunbutton.SetActive(true);
                 animator.SetBool("DeadCheck", true);
                 inputController.controls.Gameplay.Disable();
                 inputController.controls.InGameMenu.Enable();
