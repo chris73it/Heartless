@@ -30,7 +30,7 @@ namespace HeroicArcade.CC.Core
         public Vector3 NewleftMovement;
 
         bool fallstart;
-      
+        bool trackswap;
 
         public float minSpeed = -0.1f;
         public float maxSpeed = -0.2f;
@@ -55,6 +55,11 @@ namespace HeroicArcade.CC.Core
         public AudioSource JumpAudio;
         public AudioSource JumpWhooshAudio;
         public AudioSource fallDeathYell;
+        public GameObject windWhoosh1;
+        public GameObject windWhooshmax;
+        public GameObject farmerCheer;
+        public GameObject dieMusic;
+        public GameObject track1;
 
 
 
@@ -234,30 +239,35 @@ namespace HeroicArcade.CC.Core
             {
                 maxHP = 3;
                 pwind.Play();
+                windWhoosh1.SetActive(true);
                 //Debug.Log("pwind");
             }
             else
             {
                 maxHP = 2;
                 pwind.Stop();
+                windWhoosh1.SetActive(false);
             }
 
             var PMaxEmission = pMaxWind.emission;
             if (NewleftMovement.z <= -0.275f && !slidePressed)
             {
-                maxHP = 4;
+                maxHP = 4;              
                 //pMaxWind.Play();
                 //Debug.Log("pmaxwind");
-
+                windWhooshmax.SetActive(true);
                 PMaxEmission.enabled = true;
             }
             else
             {
-
+                //windWhooshmax.SetActive(false);
                 //pMaxWind.Stop();
                 PMaxEmission.enabled = false;
             }
-
+            if (NewleftMovement.z >=-0.2f)
+            {
+                windWhooshmax.SetActive(false);
+            }
         }
 
         public void SlidingOver()
@@ -472,13 +482,21 @@ namespace HeroicArcade.CC.Core
             }
             if (hp <= 0 && deBugModeInvuln == false)
             {
+                trackswap = true;
                 death = true;
                 hp = 0;
             }
             if (death == true && deBugModeInvuln == false)
             {
+                if (trackswap ==true)
+                {
+                    dieMusic.SetActive(true);
+                    track1.SetActive(false);
+                }
+                
                 ///place dead things here
                 step.mute = true;
+                farmerCheer.SetActive(true);// is playing but keepts restarting
                 frank = 0;
                 button.SetActive(true);
                 animator.SetBool("DeadCheck", true);
@@ -489,6 +507,8 @@ namespace HeroicArcade.CC.Core
                 minSpeed = 0.0f;
                 maxSpeed = 0.0f;
                
+
+
             }
             if (pos.y <= -0.1 && pos.y >= -0.3)
             {
