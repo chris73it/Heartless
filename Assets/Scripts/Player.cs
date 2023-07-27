@@ -29,6 +29,7 @@ namespace HeroicArcade.CC.Core
         //public BackgroundManager backgroundM;
         public Vector3 NewleftMovement;
 
+        bool fallstart;
       
 
         public float minSpeed = -0.1f;
@@ -97,6 +98,7 @@ namespace HeroicArcade.CC.Core
             pMaxWind.Play();
 
 
+            fallstart = false;
 
             score = 0;
             scoresaver = score;
@@ -488,11 +490,20 @@ namespace HeroicArcade.CC.Core
                 maxSpeed = 0.0f;
                
             }
-            if (death == true && cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -0.5)
+            if (pos.y <= -0.1 && pos.y >= -0.3)
             {
-                fallDeathYell.mute = false;
-                //fallDeathYell.Play();
+                fallstart = true;
+                
 
+            }
+            if (cameraManager.GetComponent<CameraShake>().isShaking == false && pos.y <= -0.2)
+            {
+                if (fallstart == true)
+                {
+                    fallDeathYell.Play();
+                    fallDeathYell.volume = fallDeathYell.volume - 1.4f * Time.deltaTime;
+                }
+              
 
             }
 
@@ -509,7 +520,7 @@ namespace HeroicArcade.CC.Core
                 deathDust.Play();
                 cameraManager.GetComponent<CameraShake>().DeathShakeStart();
                 hp = 0; //here to update hp after falling
-                fallDeathYell.mute = true;
+               
                 //Debug.Log("AAAAAAAAAAHHHHHHHHHHH! IM FALLING!!!!");
             }
 
