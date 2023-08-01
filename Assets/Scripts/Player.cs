@@ -25,6 +25,8 @@ namespace HeroicArcade.CC.Core
         public bool death;
         public int hp = 2; // default is 2
         public int  maxHP = 2;
+        // buttons and death UI
+        public GameObject deathScreen;
         public GameObject button;
         public GameObject retunbutton;
         //public BackgroundManager backgroundM;
@@ -502,6 +504,7 @@ namespace HeroicArcade.CC.Core
                 frank = 0;
                 button.SetActive(true);
                 retunbutton.SetActive(true);
+                deathScreen.SetActive(true);
                 animator.SetBool("DeadCheck", true);
                 inputController.controls.Gameplay.Disable();
                 inputController.controls.InGameMenu.Enable();
