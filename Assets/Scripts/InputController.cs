@@ -22,6 +22,9 @@ namespace HeroicArcade.CC.Core
     [System.Serializable]  public class BackInputEvent : UnityEvent<bool>
     {
     }
+    [System.Serializable] public class FirePowerUpInputEvent : UnityEvent<bool>
+    {
+    }
     public sealed class InputController : MonoBehaviour
     {
 
@@ -29,6 +32,7 @@ namespace HeroicArcade.CC.Core
         [SerializeField] JumpInputEvent jumpInputEvent;
         [SerializeField] ForwardInputEvent forwardInputEvent;
         [SerializeField] BackInputEvent backInputEvent;
+        [SerializeField] FirePowerUpInputEvent firePowerUpInputEvent;
 
 
         public Controls controls;
@@ -48,6 +52,9 @@ namespace HeroicArcade.CC.Core
 
             controls.Gameplay.Back.started += OnBack;
             controls.Gameplay.Back.canceled += OnBack;
+
+            controls.Gameplay.FirePowerUp.started += OnFirePowerUp;
+            controls.Gameplay.FirePowerUp.canceled += OnFirePowerUp;
         }
 
         //private Vector2 moveInput;
@@ -85,7 +92,12 @@ namespace HeroicArcade.CC.Core
             backInputEvent.Invoke(IsBackPressed);
         }
 
-
+        [HideInInspector] bool IsFirePowerUpPressed;
+        private void OnFirePowerUp(InputAction.CallbackContext context)
+        {
+            IsFirePowerUpPressed = context.ReadValueAsButton();
+            firePowerUpInputEvent.Invoke(IsFirePowerUpPressed);
+        }
         private void OnEnable()
         {
             controls.Gameplay.Enable();

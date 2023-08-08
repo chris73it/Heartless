@@ -19,12 +19,13 @@ namespace HeroicArcade.CC.Core
         public float ceilingHeight;
         public bool isGrounded = true;
         Animator animator;
+     
         public CapsuleCollider avatarUp;
         public CapsuleCollider avatarDown;
         float normalGravity;
         public bool death;
         public int hp = 2; // default is 2
-        public int  maxHP = 2;
+        public int maxHP = 2;
         // buttons and death UI
         public GameObject deathScreen;
         public GameObject button;
@@ -45,6 +46,15 @@ namespace HeroicArcade.CC.Core
         public int steprand = 1; // randomizes step audio 
         public int landrand = 1; // randomizes landing sounds (could amybe be used for jumping too)
         int barrierDamage;
+        // powerUps
+        public GameObject batDronion;
+        public bool allowPower = true;
+        public GameObject dronionMesh;
+        bool batremains;
+        bool batmode;
+        
+
+
 
         //audio
         public AudioSource impactOfSound;
@@ -58,6 +68,8 @@ namespace HeroicArcade.CC.Core
         public AudioSource JumpAudio;
         public AudioSource JumpWhooshAudio;
         public AudioSource fallDeathYell;
+        public AudioSource battransform;
+    
         public GameObject windWhoosh1;
         public GameObject windWhooshmax;
         public GameObject farmerCheer;
@@ -68,21 +80,21 @@ namespace HeroicArcade.CC.Core
 
         //particle systems
         ParticleSystem pstomp;
-         ParticleSystem wallBuster;
-         ParticleSystem phead;
-         ParticleSystem pslide;
-         ParticleSystem pwind;
-         ParticleSystem pMaxWind;
+        ParticleSystem wallBuster;
+        ParticleSystem phead;
+        ParticleSystem pslide;
+        ParticleSystem pwind;
+        ParticleSystem pMaxWind;
         ParticleSystem deathDust;
 
         // cam shake
         public GameObject cameraManager;
-       
+
 
         //New input thing
         InputController inputController;
 
-       
+
         void Start()
         {
             NewleftMovement = new Vector3(0, 0, maxSpeed);
@@ -97,6 +109,9 @@ namespace HeroicArcade.CC.Core
             pMaxWind = GameObject.Find("speed trail MAX").GetComponent<ParticleSystem>();
             deathDust = GameObject.Find("DeathDust").GetComponent<ParticleSystem>();
 
+            batremains = true;
+            batmode = false;
+           
 
 
             deathDust.Stop();
@@ -125,11 +140,11 @@ namespace HeroicArcade.CC.Core
         {
             scoresaver = (scoresaver + (1 * Time.deltaTime) * (-1 * NewleftMovement.z) * 35); // score in meters?
             score = (int)scoresaver;
-            if( hp != maxHP)
+            if (hp != maxHP)
             {
                 frankEnable = true;
             }
-            else
+            else if (batmode == false)
             {
                 frankEnable = false;
             }
@@ -140,7 +155,7 @@ namespace HeroicArcade.CC.Core
 
                 frank = 0;
                 hp = hp + 1;
-                if(hp >= maxHP)
+                if (hp >= maxHP)
                 {
                     hp = maxHP;
                 }
@@ -150,11 +165,11 @@ namespace HeroicArcade.CC.Core
                 frank = 0;
             }
 
-          
+
             //changing barrier damage based on speed if too slow
             if (NewleftMovement.z >= minSpeed - 0.035f && death == false)
             {
-               
+
                 cameraManager.GetComponent<CameraShake>().ClosingInOnYou(0.2f);
                 barrierDamage = 2;
             }
@@ -164,7 +179,7 @@ namespace HeroicArcade.CC.Core
                 {
                     cameraManager.GetComponent<CameraShake>().ShakeSchtop();
                     cameraManager.GetComponent<CameraShake>().isClosing = false;
-                    
+
                 }
                 barrierDamage = 1;
             }
@@ -177,15 +192,15 @@ namespace HeroicArcade.CC.Core
                 if (NewleftMovement.z <= maxSpeed)
                 {
                     NewleftMovement = new Vector3(0, 0, maxSpeed);
-                    
+
                 }
             }
 
             if (isGrounded)
             {
-                
 
-                if (jumpPressed && !slidePressed)
+
+                if (jumpPressed && !slidePressed && batmode == false)
                 {
                     isGrounded = false;
                     avatarUp.enabled = true;
@@ -197,7 +212,7 @@ namespace HeroicArcade.CC.Core
                     //animator.SetBool("Running Slide", false); //28
                     velocityY = jumpVelocity;
                 }
-                else if (slidePressed)
+                else if (slidePressed && batmode == false)
                 {
                     //slidePressed = false;
                     //Debug.Log("slideeeee");
@@ -205,8 +220,8 @@ namespace HeroicArcade.CC.Core
                     avatarDown.enabled = true;
                     animator.SetBool("Slide", true);
                     pslide.Play();
-                    
-                    
+
+
 
 
                     //Slide slows you down over time
@@ -215,8 +230,8 @@ namespace HeroicArcade.CC.Core
                     if (NewleftMovement.z >= minSpeed - 0.01f)
                     {
                         NewleftMovement = new Vector3(0, 0, minSpeed - 0.01f);
-                       
-                    }                
+
+                    }
                     if (maxSpeed <= -0.2f)
                     {
                         if (NewleftMovement.z >= maxSpeed)
@@ -225,9 +240,9 @@ namespace HeroicArcade.CC.Core
                         }
                     }
 
-                    
+
                 }
-                else if (!slidePressed)
+                else if (!slidePressed && batmode == false)
                 {
                     SlidingOver();
                 }
@@ -254,26 +269,51 @@ namespace HeroicArcade.CC.Core
             }
 
             var PMaxEmission = pMaxWind.emission;
-            if (NewleftMovement.z <= -0.275f && !slidePressed)
+            if (NewleftMovement.z <= -0.275f && (!slidePressed|| batmode == true ))
             {
-                maxHP = 4;              
+                maxHP = 4;
                 //pMaxWind.Play();
                 //Debug.Log("pmaxwind");
                 windWhooshmax.SetActive(true);
                 PMaxEmission.enabled = true;
-            }
+            }     
             else
             {
                 //windWhooshmax.SetActive(false);
                 //pMaxWind.Stop();
                 PMaxEmission.enabled = false;
             }
-            if (NewleftMovement.z >=-0.2f)
+            if (NewleftMovement.z >= -0.2f)
             {
                 windWhooshmax.SetActive(false);
             }
-        }
 
+            //powerups
+            if ( firePowerUpPressed && batremains == true && death == false && allowPower== true)
+            {
+                battransform.Play();
+                deBugModeInvuln = true;
+                
+                batmode = true;
+                batDronion.SetActive(true);
+                dronionMesh.SetActive(false);
+                NewleftMovement.z = -0.5f;
+                batremains = false;
+            }
+            //temp powerup disengage doesnt work well
+          /* else if (firePowerUpPressed && batremains == false && death == false)
+            {
+                battransform.Play();
+                deBugModeInvuln = false;
+                batremains = true;
+                batmode = false;
+                batDronion.SetActive(false);
+                dronionMesh.SetActive(true);
+                NewleftMovement.z = -0.3f;
+            }
+            */
+        }
+       
         public void SlidingOver()
         {
             pslide.Stop();
@@ -315,11 +355,14 @@ namespace HeroicArcade.CC.Core
                 // Debug.Log("Did Hit");
                 minGroundHeight = 0;
             }
-            else if(deBugModeInvuln == false)
+            else 
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 6, Color.cyan);
                 //Debug.Log("Did not Hit");
-                minGroundHeight = -6;
+                if (deBugModeInvuln == false)
+                {
+                    minGroundHeight = -6;
+                }
             }
 
             // Bit shift the index of the layer (10) to get a bit mask
@@ -387,7 +430,7 @@ namespace HeroicArcade.CC.Core
             }
             
 
-            if (backPressed) //&& !isGrounded)
+            if (backPressed && batmode == false) //&& !isGrounded)
             {
                
                 maxSpeed = maxSpeed + 0.05f * Time.deltaTime;
@@ -435,15 +478,34 @@ namespace HeroicArcade.CC.Core
 
             if (isGrounded == false)
             {
-                if (slidePressed)
+                if (slidePressed && batmode == false)
                 {
                     //slidePressed = false;
                     defaultGravity = heavyGravity;
                 }
             }
 
+            //batpowerup controls
+            if (slidePressed && batmode == true)
+            {
+                //slidePressed = false;
+                pos.y = transform.position.y - 25 * Time.deltaTime;
+                if (pos.y < groundHeight)
+                {
+                    pos.y = groundHeight;
+                }
+            }
+            if (jumpPressed && batmode == true)
+            {
+                //slidePressed = false;
+                pos.y = transform.position.y + 25 * Time.deltaTime;
+                if (pos.y >= ceilingHeight)
+                {
+                    pos.y = ceilingHeight;
+                }
+            }
 
-            if (animator.GetBool("Slide") == true)
+            if (animator.GetBool("Slide") == true && batmode == false)
             {
                 slideAudio.mute = false;
                 slideAudio.pitch = Random.Range(0.17f, 0.25f);
@@ -451,15 +513,18 @@ namespace HeroicArcade.CC.Core
 
                 if (animator.GetBool("Jump"))
                 {
-                if (slidePressed)
+                if (slidePressed && batmode == false)
                 {
                     defaultGravity = heavyGravity;
                 }
+                if (batmode == false)
+                {
+                    velocityY += defaultGravity * Time.fixedDeltaTime;
+                    pos.y += velocityY * Time.fixedDeltaTime;
+                }
+              
 
-                velocityY += defaultGravity * Time.fixedDeltaTime;
-                pos.y += velocityY * Time.fixedDeltaTime;
-
-                if (pos.y <= groundHeight)
+                if (pos.y <= groundHeight && batmode == false)
                 {
                     pstomp.Play();
                     // play landign audio
@@ -575,9 +640,12 @@ namespace HeroicArcade.CC.Core
                     maxSpeed = -0.2f; //resets max speed
                 }
                 
+                if (batmode == false)
+                {
+                    frank = 0;
 
-                frank = 0;
-               
+                }
+
                 if (hp <= 0 && deBugModeInvuln == false)
                 {
                     animator.SetBool("BarrierDeath", true);
@@ -627,16 +695,22 @@ namespace HeroicArcade.CC.Core
         }
         public void FootStep()
         {
-            step.PlayOneShot(step.clip);
+            if (batmode == false)
+            {
+                step.PlayOneShot(step.clip);
 
-            steprand = Random.Range(0, step.GetComponent<Footstepper>().stepsounds.Length);
+                steprand = Random.Range(0, step.GetComponent<Footstepper>().stepsounds.Length);
+            }
+          
         }
+       
         //input manager
 
         private bool slidePressed;
         private bool jumpPressed;
         private bool forwardPressed;
         private bool backPressed;
+        private bool firePowerUpPressed;
 
 
         public void OnSlide(bool isSlidePressed)
@@ -660,6 +734,11 @@ namespace HeroicArcade.CC.Core
         public void OnBack(bool isBackPressed)
         {
             backPressed = isBackPressed;
+        }
+        public void OnPower(bool isFirePowerUpPressed)
+        {
+            firePowerUpPressed = isFirePowerUpPressed;
+           
         }
     }
 }

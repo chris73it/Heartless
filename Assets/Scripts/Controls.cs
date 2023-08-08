@@ -62,6 +62,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FirePowerUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""ecc91afc-fb53-4685-b765-901a203d2795"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -91,17 +100,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""38b71c42-88e2-4f7a-a6a4-849d873807c2"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""95f068e3-5a12-488c-a3c0-9e795eef2d8e"",
-                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -196,6 +194,39 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Back"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c51675a8-99f8-4415-95a9-39802cf9e4f7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirePowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08054fbb-d843-4d5f-a48a-82c8b2abfe4f"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirePowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e032e1fc-fc23-4c08-b85b-b117d446bd22"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FirePowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -236,6 +267,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Gameplay_Slide = m_Gameplay.FindAction("Slide", throwIfNotFound: true);
         m_Gameplay_Forward = m_Gameplay.FindAction("Forward", throwIfNotFound: true);
         m_Gameplay_Back = m_Gameplay.FindAction("Back", throwIfNotFound: true);
+        m_Gameplay_FirePowerUp = m_Gameplay.FindAction("FirePowerUp", throwIfNotFound: true);
         // InGameMenu
         m_InGameMenu = asset.FindActionMap("InGameMenu", throwIfNotFound: true);
         m_InGameMenu_Click = m_InGameMenu.FindAction("Click", throwIfNotFound: true);
@@ -302,6 +334,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Slide;
     private readonly InputAction m_Gameplay_Forward;
     private readonly InputAction m_Gameplay_Back;
+    private readonly InputAction m_Gameplay_FirePowerUp;
     public struct GameplayActions
     {
         private @Controls m_Wrapper;
@@ -310,6 +343,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Slide => m_Wrapper.m_Gameplay_Slide;
         public InputAction @Forward => m_Wrapper.m_Gameplay_Forward;
         public InputAction @Back => m_Wrapper.m_Gameplay_Back;
+        public InputAction @FirePowerUp => m_Wrapper.m_Gameplay_FirePowerUp;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -331,6 +365,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Back.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
                 @Back.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
                 @Back.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnBack;
+                @FirePowerUp.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFirePowerUp;
+                @FirePowerUp.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFirePowerUp;
+                @FirePowerUp.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnFirePowerUp;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -347,6 +384,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Back.started += instance.OnBack;
                 @Back.performed += instance.OnBack;
                 @Back.canceled += instance.OnBack;
+                @FirePowerUp.started += instance.OnFirePowerUp;
+                @FirePowerUp.performed += instance.OnFirePowerUp;
+                @FirePowerUp.canceled += instance.OnFirePowerUp;
             }
         }
     }
@@ -390,6 +430,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnSlide(InputAction.CallbackContext context);
         void OnForward(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+        void OnFirePowerUp(InputAction.CallbackContext context);
     }
     public interface IInGameMenuActions
     {
