@@ -50,10 +50,10 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        void consecutiveFactor(ref int counter, ref int outcomeCheck, float consecProb) {
+        void consecutiveFactor(ref int counter, ref int outcomeCheck) {
             if (counter <= consecutivePlatforms && outcomeCheck == 1) {
                 counter += 1;
-                probability += consecProb;
+                probability += .1f;
                 checkDebugLog(enableDebugLogs, ("Platform Counter: " + counter + ", Probability: " + probability));
             }
 
@@ -71,9 +71,10 @@ namespace HeroicArcade.CC.Core {
             var retro = mainLevel.retroList;
 
             int outcome = 0;
+
             bool platformPass = Random.value <= probability;
 
-            //platform rules
+            //platform probability check
             if (platformPass == true) {
                 outcome = 1;
                 
@@ -82,12 +83,16 @@ namespace HeroicArcade.CC.Core {
                     outcome = 0;
                 }
                 
-                consecutiveFactor(ref platformCounter, ref outcome, .1f);
+                consecutiveFactor(ref platformCounter, ref outcome);
 
                 //always leaves 2 spaces on break
                 if (retro[1].platformProperty == 1 && retro[0].platformProperty == 0) {
                     outcome = 0;
                 }
+            }
+
+            else {
+                outcome = 0;
             }
 
             //if pitfall and platform dont give a shit about upper barriwers 

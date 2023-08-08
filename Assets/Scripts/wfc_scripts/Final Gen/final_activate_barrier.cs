@@ -50,12 +50,11 @@ namespace HeroicArcade.CC.Core {
             int selfFloorProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().floorProperty;
 
             int outcome = 0;
+
             bool barrierPass = Random.value <= probability;
 
-            //barrier rules
             if (barrierPass == true) {
-                outcome = Random.Range(1, barrierList.Count);
-
+                outcome = 1;
 
                 //only spawns barriers on standard floors
                 if (selfFloorProperty != 0) {
@@ -72,17 +71,10 @@ namespace HeroicArcade.CC.Core {
                 if (retro[0].floorProperty == 1 || retro[1].floorProperty == 1) {
                     outcome = 0;
                 }
-                
-                if (outcome != 1) {
-                    if (Random.value < .5f) {
-                        outcome = 1;
-                    }
-                }
+            }
 
-                //prevent upper barriers on pitfalls
-                if ((outcome == 2 || outcome == 3) && selfFloorProperty != 0) {
-                    outcome = 1;
-                }
+            else {
+                outcome = 0;
             }
 
             barrierList[outcome].gameObject.SetActive(true);

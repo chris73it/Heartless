@@ -38,21 +38,18 @@ namespace HeroicArcade.CC.Core {
             }
         }
 
-        public void reset_floor() {
-            //resets all children
-            for (int i = 0; i < floorList.Count; i++) {
-                floorList[i].gameObject.SetActive(false);
-            }
-        }
-
         public int initiate_floor(int difficulty) {
-            reset_floor();
 
             var retro = mainLevel.retroList;
             
             int selfPlatformProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().platformProperty;
 
-            int outcome = 0;
+            //Hides all children
+            for (int i = 0; i < floorList.Count; i++) {
+                floorList[i].gameObject.SetActive(false);
+            }
+
+            int outcome;
             bool pitfallPass = Random.value <= probability;
 
             //pitfall rules
@@ -87,6 +84,10 @@ namespace HeroicArcade.CC.Core {
                     outcome = 0;
                     checkDebugLog(enableDebugLogs, "Prevented Platform Cliff");
                 }
+            }
+
+            else {
+                outcome = 0;
             }
 
             floorList[outcome].gameObject.SetActive(true);
