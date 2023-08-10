@@ -52,6 +52,7 @@ namespace HeroicArcade.CC.Core
         public GameObject dronionMesh;
         bool batremains;
         bool batmode;
+        bool safeTranformEnd;
         
 
 
@@ -299,19 +300,38 @@ namespace HeroicArcade.CC.Core
                 dronionMesh.SetActive(false);
                 NewleftMovement.z = -0.5f;
                 batremains = false;
+                batDronion.GetComponent<BatTimer>().BatStart(5f);
             }
-            //temp powerup disengage doesnt work well
-          /* else if (firePowerUpPressed && batremains == false && death == false)
+            if (batDronion.GetComponent<BatTimer>().endBat == true && safeTranformEnd == true)
             {
                 battransform.Play();
                 deBugModeInvuln = false;
-                batremains = true;
                 batmode = false;
                 batDronion.SetActive(false);
                 dronionMesh.SetActive(true);
                 NewleftMovement.z = -0.3f;
+                batDronion.GetComponent<BatTimer>().endBat = false;
+                dronionMesh.GetComponent<BatTimer>().BatStart(20f);
+                //batremains = false;
             }
-            */
+            if(dronionMesh.GetComponent<BatTimer>().endBat == true)
+            {
+                Debug.Log("batmode ready");
+                dronionMesh.GetComponent<BatTimer>().endBat = false;
+                batremains = true;
+            }
+            //temp powerup disengage doesnt work well
+            /* else if (firePowerUpPressed && batremains == false && death == false)
+              {
+                  battransform.Play();
+                  deBugModeInvuln = false;
+                  batremains = true;
+                  batmode = false;
+                  batDronion.SetActive(false);
+                  dronionMesh.SetActive(true);
+                  NewleftMovement.z = -0.3f;
+              }
+              */
         }
        
         public void SlidingOver()
@@ -354,11 +374,20 @@ namespace HeroicArcade.CC.Core
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * hit2.distance, Color.green);
                 // Debug.Log("Did Hit");
                 minGroundHeight = 0;
+                if (batmode == true)
+                {
+                    safeTranformEnd = true;
+                }
             }
             else 
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 6, Color.cyan);
                 //Debug.Log("Did not Hit");
+                if (batmode == true)
+                {
+                    safeTranformEnd = false;
+                }
+
                 if (deBugModeInvuln == false)
                 {
                     minGroundHeight = -6;
