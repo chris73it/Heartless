@@ -87,6 +87,7 @@ namespace HeroicArcade.CC.Core
         ParticleSystem pwind;
         ParticleSystem pMaxWind;
         ParticleSystem deathDust;
+        ParticleSystem pooof;
 
         // cam shake
         public GameObject cameraManager;
@@ -109,6 +110,7 @@ namespace HeroicArcade.CC.Core
             pwind = GameObject.Find("speed trail").GetComponent<ParticleSystem>();
             pMaxWind = GameObject.Find("speed trail MAX").GetComponent<ParticleSystem>();
             deathDust = GameObject.Find("DeathDust").GetComponent<ParticleSystem>();
+            pooof = GameObject.Find("poof").GetComponent<ParticleSystem>();
 
             batremains = true;
             batmode = false;
@@ -293,6 +295,7 @@ namespace HeroicArcade.CC.Core
             if ( firePowerUpPressed && batremains == true && death == false && allowPower== true)
             {
                 battransform.Play();
+                pooof.Play();
                 deBugModeInvuln = true;
                 
                 batmode = true;
@@ -304,6 +307,7 @@ namespace HeroicArcade.CC.Core
             }
             if (batDronion.GetComponent<BatTimer>().endBat == true && safeTranformEnd == true)
             {
+                pooof.Play();
                 battransform.Play();
                 deBugModeInvuln = false;
                 batmode = false;
