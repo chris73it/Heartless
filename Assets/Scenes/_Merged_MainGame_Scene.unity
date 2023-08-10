@@ -7638,6 +7638,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 202501140}
+  - component: {fileID: 202501141}
   m_Layer: 0
   m_Name: test powerup stuff
   m_TagString: Untagged
@@ -7661,6 +7662,19 @@ Transform:
   m_Father: {fileID: 70782587}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &202501141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202501139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22ba11ac29f1c74ab6766c5a5380cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endBat: 0
 --- !u!1 &223167363
 GameObject:
   m_ObjectHideFlags: 0
@@ -20366,6 +20380,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 561687989}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &561687993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561687990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22ba11ac29f1c74ab6766c5a5380cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endBat: 0
 --- !u!1 &599956299 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 63156137431654320, guid: 2f1c5b6465f44344081c6ed7b29504ef,
