@@ -9,20 +9,28 @@ public class Volume_Settings : MonoBehaviour
     [SerializeField] private Slider SFXSlider;
     [SerializeField] private Slider musicSlider;
 
+    private float muteVolume = 0.0001f;
 
-    private float muteVolume = 0.0001f; // Adjust this value as needed for near-mute behavior.
+    private string volumePrefKey = "VolumeSetting";
+    private string sfxPrefKey = "SFXSetting";
+    private string musicPrefKey = "MusicSetting";
 
     private void Start()
     {
-        // Set the default volume here.
-        float defaultVolume = 0.5f; // You can set any value between 0.0f and 1.0f as the default.
-        volumeSlider.value = defaultVolume; // Set the slider value to the default.
-        SFXSlider.value = defaultVolume; // Set the slider value to the default.
-        musicSlider.value = defaultVolume; // Set the slider value to the default.
+        LoadVolumeSettings();
+    }
 
+    private void LoadVolumeSettings()
+    {
+        float defaultVolume = PlayerPrefs.GetFloat(volumePrefKey, 0.5f);
+        float defaultSFXVolume = PlayerPrefs.GetFloat(sfxPrefKey, 0.5f);
+        float defaultMusicVolume = PlayerPrefs.GetFloat(musicPrefKey, 0.5f);
 
+        volumeSlider.value = defaultVolume;
+        SFXSlider.value = defaultSFXVolume;
+        musicSlider.value = defaultMusicVolume;
 
-        SetVolume(); // Call the SetVolume method to apply the default volume.
+        SetVolume();
         SetSFXVolume();
         SetMusicVolume();
     }
@@ -30,46 +38,33 @@ public class Volume_Settings : MonoBehaviour
     public void SetVolume()
     {
         float volume = volumeSlider.value;
-
-        if (volume <= 0)
-        {
-            // If the volume is at or below 0, set it to muteVolume (almost mute).
-            myMixer.SetFloat("Volume", Mathf.Log10(muteVolume) * 20);
-        }
-        else
-        {
-            // Otherwise, set the volume normally.
-            myMixer.SetFloat("Volume", Mathf.Log10(volume) * 20);
-        }
+        PlayerPrefs.SetFloat(volumePrefKey, volume);
+        ApplyVolume(volume, "Volume");
     }
+
     public void SetSFXVolume()
     {
         float volume = SFXSlider.value;
-
-        if (volume <= 0)
-        {
-            // If the volume is at or below 0, set it to muteVolume (almost mute).
-            myMixer.SetFloat("SFX", Mathf.Log10(muteVolume) * 20);
-        }
-        else
-        {
-            // Otherwise, set the volume normally.
-            myMixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
-        }
+        PlayerPrefs.SetFloat(sfxPrefKey, volume);
+        ApplyVolume(volume, "SFX");
     }
+
     public void SetMusicVolume()
     {
         float volume = musicSlider.value;
+        PlayerPrefs.SetFloat(musicPrefKey, volume);
+        ApplyVolume(volume, "Music");
+    }
 
+    private void ApplyVolume(float volume, string mixerParam)
+    {
         if (volume <= 0)
         {
-            // If the volume is at or below 0, set it to muteVolume (almost mute).
-            myMixer.SetFloat("Music", Mathf.Log10(muteVolume) * 20);
+            myMixer.SetFloat(mixerParam, Mathf.Log10(muteVolume) * 20);
         }
         else
         {
-            // Otherwise, set the volume normally.
-            myMixer.SetFloat("Music", Mathf.Log10(volume) * 20);
+            myMixer.SetFloat(mixerParam, Mathf.Log10(volume) * 20);
         }
     }
 }
