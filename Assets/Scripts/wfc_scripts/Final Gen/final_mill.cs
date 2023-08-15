@@ -90,8 +90,7 @@ namespace HeroicArcade.CC.Core {
 
             transform.position += bkManager.leftMovement;
 
-            //Cycles elements - world order
-            //Checks each element
+            //Cycles elements and checks segment position
             for (int i = 0; i < segmentList.Count; i++) {
                 //Detects change in element
                 if (segmentList[i].position.z <= leftThreshold.z) {

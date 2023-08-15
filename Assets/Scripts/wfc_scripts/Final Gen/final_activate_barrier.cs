@@ -57,13 +57,13 @@ namespace HeroicArcade.CC.Core {
                 outcome = Random.Range(1, barrierList.Count);
 
 
-                //only spawns barriers on standard floors
-                if (selfFloorProperty != 0) {
+                //if self or last floor property != standard, disable barrier
+                if (selfFloorProperty != 0 || retro[0].floorProperty != 0) {
                     outcome = 0;
                 }
 
                 //prevents double barriers + creates space on low difficulty
-                if (difficulty <= 1 && (retro[0].barrierProperty != 0 || retro[1].barrierProperty != 0)) {
+                if (difficulty < 2 && (retro[0].barrierProperty != 0 || retro[1].barrierProperty != 0)) {
                     outcome = 0;
                     checkDebugLog(enableDebugLogs, "Prevented DOUBLE barrier and/or created space");
                 }
@@ -73,6 +73,7 @@ namespace HeroicArcade.CC.Core {
                     outcome = 0;
                 }
                 
+                //reroll if upper barrier above nothing
                 if (outcome != 1) {
                     if (Random.value < .5f) {
                         outcome = 1;

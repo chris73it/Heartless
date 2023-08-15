@@ -72,10 +72,11 @@ namespace HeroicArcade.CC.Core {
             reset_spike_set();
 
             var retro = mainLevel.retroList;
+            var selfProperty = transform.parent.GetComponentInChildren<final_activate_wfc>();
 
-            int selfFloorProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().floorProperty;
-            int selfBarrierProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().barrierProperty;
-            int selfPlatformProperty = transform.parent.GetComponentInChildren<final_activate_wfc>().platformProperty;
+            int selfFloorProperty = selfProperty.floorProperty;
+            int selfBarrierProperty = selfProperty.barrierProperty;
+            int selfPlatformProperty = selfProperty.platformProperty;
 
             int setOutcome = 0;
             bool spikePass = Random.value <= probability;
