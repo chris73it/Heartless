@@ -25,5 +25,9 @@ public class mainmusicrandselect : MonoBehaviour
         {
             track3.SetActive(true);
         }
+        else
+        {
+            track1.SetActive(true);
+        }
     }
 }
