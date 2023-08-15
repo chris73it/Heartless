@@ -53,7 +53,9 @@ namespace HeroicArcade.CC.Core
         bool batremains;
         bool batmode;
         bool safeTranformEnd;
-        
+
+        public GameObject batmeterIcon;
+
 
 
 
@@ -70,7 +72,8 @@ namespace HeroicArcade.CC.Core
         public AudioSource JumpWhooshAudio;
         public AudioSource fallDeathYell;
         public AudioSource battransform;
-    
+        public AudioSource fullmeter;
+
         public GameObject windWhoosh1;
         public GameObject windWhooshmax;
         public GameObject farmerCheer;
@@ -303,6 +306,7 @@ namespace HeroicArcade.CC.Core
                 dronionMesh.SetActive(false);
                 NewleftMovement.z = -0.5f;
                 batremains = false;
+                batmeterIcon.SetActive(false);
                 batDronion.GetComponent<BatTimer>().BatStart(5f);
             }
             if (batDronion.GetComponent<BatTimer>().endBat == true && safeTranformEnd == true)
@@ -318,24 +322,15 @@ namespace HeroicArcade.CC.Core
                 dronionMesh.GetComponent<BatTimer>().BatStart(20f);
                 //batremains = false;
             }
-            if(dronionMesh.GetComponent<BatTimer>().endBat == true)
+            if(dronionMesh.GetComponent<BatTimer>().endBat == true && death == false)
             {
-                Debug.Log("batmode ready");
+                //Debug.Log("batmode ready");
+                batmeterIcon.SetActive(true);
                 dronionMesh.GetComponent<BatTimer>().endBat = false;
                 batremains = true;
+                fullmeter.Play();
             }
-            //temp powerup disengage doesnt work well
-            /* else if (firePowerUpPressed && batremains == false && death == false)
-              {
-                  battransform.Play();
-                  deBugModeInvuln = false;
-                  batremains = true;
-                  batmode = false;
-                  batDronion.SetActive(false);
-                  dronionMesh.SetActive(true);
-                  NewleftMovement.z = -0.3f;
-              }
-              */
+          
         }
        
         public void SlidingOver()

@@ -12,6 +12,7 @@ namespace HeroicArcade.CC.Core
        // public float batTime = 5f;
         public bool endBat = false;
         //public bool rerun = false;
+        public float elapsedTime = 0f;
 
 
         void Start()
@@ -23,7 +24,7 @@ namespace HeroicArcade.CC.Core
         {
 
 
-            float elapsedTime = 0f;
+            elapsedTime = 0f;
            
 
             while (elapsedTime < duration)
