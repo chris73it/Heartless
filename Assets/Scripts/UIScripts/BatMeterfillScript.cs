@@ -29,7 +29,7 @@ namespace HeroicArcade.CC.Core
             if (batDronion.activeInHierarchy == true)
             {
               
-                blah.x = batmeterFill.transform.localScale.x - batDronion.GetComponent<BatTimer>().elapsedTime * 0.00067f; //ther 0.0000djsfdiosfno thing is scaling the icon aty a close looking rate
+                blah.x = batmeterFill.transform.localScale.x - batDronion.GetComponent<BatTimer>().elapsedTime * 0.00079f; //ther 0.0000djsfdiosfno thing is scaling the icon aty a close looking rate
                 blah.y = 1;
                 blah.z = 1;
                 batmeterFill.transform.localScale = blah;
@@ -42,7 +42,7 @@ namespace HeroicArcade.CC.Core
             }
             else if (player.GetComponent<Player>().death == false )
             {
-                blah.x = batmeterFill.transform.localScale.x + manDronion.GetComponent<BatTimer>().elapsedTime * 0.00004075f; //ther 0.0000djsfdiosfno thing is scaling the icon aty a close looking rate
+                blah.x = batmeterFill.transform.localScale.x + manDronion.GetComponent<BatTimer>().elapsedTime * 0.0000419f; //ther 0.0000djsfdiosfno thing is scaling the icon aty a close looking rate
                 blah.y = 1;
                 blah.z = 1;
                 batmeterFill.transform.localScale = blah;
