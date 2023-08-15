@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI_Test.unity
     guid: b8eb77d313967434fa252e0c81b2880d
+  - enabled: 1
+    path: Assets/Scenes/cutscene_comic_page.unity
+    guid: 31e7db18df5f66148805ad23518054c6
   m_configObjects: {}

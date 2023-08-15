@@ -17,9 +17,40 @@ public class MainMenu : MonoBehaviour
     public void PlayGame ()
     {
         SelectUI.PlayOneShot(SelectUI.clip);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);  //"_Merged_MainGame_Scene");//SceneManager.GetActiveScene().buildIndex +1);
        
        
+    }
+    public void PlayGamefromtest()
+    {
+        SelectUI.PlayOneShot(SelectUI.clip);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);  //"_Merged_MainGame_Scene");//SceneManager.GetActiveScene().buildIndex +1);
+
+
+    }
+    public void HiddenUI()
+    {
+        SelectUI.PlayOneShot(SelectUI.clip);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);  //"_Merged_MainGame_Scene");//SceneManager.GetActiveScene().buildIndex +1);
+
+    }
+    public void returnUI()
+    {
+        SelectUI.PlayOneShot(SelectUI.clip);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 2);  //"_Merged_MainGame_Scene");//SceneManager.GetActiveScene().buildIndex +1);
+
+    }
+    public void Comic()
+    {
+        SelectUI.PlayOneShot(SelectUI.clip);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);  //"_Merged_MainGame_Scene");//SceneManager.GetActiveScene().buildIndex +1);
+
+    }
+    public void Comicreturntomenu()
+    {
+        SelectUI.PlayOneShot(SelectUI.clip);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 3);  //"_Merged_MainGame_Scene");//SceneManager.GetActiveScene().buildIndex +1);
+
     }
     public void Hover()
     {
