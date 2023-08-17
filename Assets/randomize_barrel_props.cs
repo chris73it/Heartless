@@ -44,7 +44,7 @@ namespace HeroicArcade.CC.Core {
 
         void random_group() {
             propValue = Random.Range(0, propGroupList.Count-1);
-            propGroupList[propValue].gameObject.SetActive(true);
+            propGroupList[propValue].gameObject.SetActive(true); // errors point here for some reason 
         }
 
         public void initiate_randomize_props() {
