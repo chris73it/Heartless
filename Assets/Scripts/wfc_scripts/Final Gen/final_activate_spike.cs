@@ -109,7 +109,7 @@ namespace HeroicArcade.CC.Core {
                 //spikes spawn on 5
                 if (difficulty < 5) {
                     setOutcome = 0;
-                    Debug.Log("Prevented Weak Difficulty");
+                    checkDebugLog(enableDebugLogs, "Prevented Weak Difficulty");
                 }
             }
 
