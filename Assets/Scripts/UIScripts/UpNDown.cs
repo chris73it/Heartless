@@ -9,7 +9,7 @@ public class UpNDown : MonoBehaviour
    
     void Start()
     {
-
+        
         UpStart();
     }
 
@@ -47,7 +47,9 @@ public class UpNDown : MonoBehaviour
     }
     public void UpStart()
     {
+         transform.localPosition = new Vector3(-436.8207f, 148.95f, 0f);
         StartCoroutine(Up(delayTime));
+       
     }
    
 

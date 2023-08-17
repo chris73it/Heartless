@@ -10,7 +10,7 @@ public class Flicker : MonoBehaviour
    
     void Start()
     {
-        lightImage.color = new Vector4(255, 255, 255, 0.1f);
+        
         FlickStart();
     }
 
