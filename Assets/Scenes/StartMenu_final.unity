@@ -3906,6 +3906,7 @@ GameObject:
   - component: {fileID: 769550249}
   - component: {fileID: 769550251}
   - component: {fileID: 769550250}
+  - component: {fileID: 769550252}
   m_Layer: 5
   m_Name: arte (1)
   m_TagString: Untagged
@@ -3972,6 +3973,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769550248}
   m_CullTransparentMesh: 1
+--- !u!114 &769550252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769550248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 533f7be3a8331d846bab1e1e924957cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delayTime: 2
 --- !u!1 &798396241
 GameObject:
   m_ObjectHideFlags: 0
